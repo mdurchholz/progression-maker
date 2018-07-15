@@ -10,12 +10,12 @@ const routes: Routes = [
         component: MapComponent
     },
     {
-        path: 'major',
-        redirectTo: 'major/C'
-    },
-    {
         path: ':scale/:note',
         component: MapComponent
+    },
+    {
+        path: 'major',
+        redirectTo: 'major/C'
     },
     {
         path: 'minor',
