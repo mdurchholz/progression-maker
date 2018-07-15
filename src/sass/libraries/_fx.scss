@@ -1,0 +1,47 @@
+/* -------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// CUSTOM ANIMATIONS.SCSS
+////////////////////////////////////////////////////////////////////////////////////////////////////
+------------------------------------------------------------------------------------------------- */
+/* Keyframes
+----------------------------------------
+////////////////////////////////////// */
+$length: 5px;
+$degrees: 45deg;
+@keyframes openMenuTop
+{
+    0%
+    { transform: translate3d(0,0,0) rotate(0);}
+    33.3333%, 66.6666%
+    { transform: translate3d(0,$length,0) rotate(0);}
+    100%
+    { transform: translate3d(0,$length,0) rotate($degrees);}
+}
+@keyframes openMenuBot
+{
+    0%
+    { transform: translate3d(0,0,0) rotate(0);}
+    33.3333%, 66.6666%
+    { transform: translate3d(0,-$length,0) rotate(0);}
+    100%
+    { transform: translate3d(0,-$length,0) rotate(-$degrees);}
+}
+/**/
+@keyframes closeMenuTop
+{
+    0%
+    { transform: translate3d(0,$length,0) rotate($degrees);}
+    40%, 60%
+    { transform: translate3d(0,$length,0) rotate(0);}
+    100%
+    { transform: translate3d(0,0,0) rotate(0);}
+}
+@keyframes closeMenuBot
+{
+    0%
+    { transform: translate3d(0,-$length,0) rotate(-$degrees);}
+    40%, 60%
+    { transform: translate3d(0,-$length,0) rotate(0);}
+    100%
+    { transform: translate3d(0,0,0) rotate(0);}
+}

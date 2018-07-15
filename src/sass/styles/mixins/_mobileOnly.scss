@@ -1,0 +1,27 @@
+@mixin mobileBreak( $class : '' )
+{
+    @if $class != ''
+    {
+        #{$class}
+        {
+            @include mobileStyles();
+        }
+    }
+    @else
+    {
+        @include mobileStyles();
+    }
+}
+
+
+@mixin mobileStyles()
+{
+    #wrapper, #mobile-wrap { &, .slim-head &                { padding-top: $headerT;}}
+    #header                { &, .slim-head &                { height: $headerT;}}
+
+    #header                                                 { border-color: $grey;
+        .navi, .quick-nav                                   { display: none;}
+    }
+
+    #mobile-button                                          { display: block;}
+}

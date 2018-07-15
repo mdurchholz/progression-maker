@@ -1,0 +1,15 @@
+/********************************
+** Font Sizes can be found in _my-mixins.scss
+*********************************/
+
+@mixin fonts($family, $size:$fontSize-sm , $weight:400, $lineHeight:1.15)
+{
+    font-family: $family;
+    font-weight: $weight;
+    line-height: $lineHeight;
+
+    @if $size!=none
+    {
+        font-size: $size;
+    }
+}

@@ -1,0 +1,54 @@
+/* -------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//  GENERAL
+////////////////////////////////////////////////////////////////////////////////////////////////////
+------------------------------------------------------------------------------------------------- */
+*                                                           { box-sizing: border-box; backface-visibility: hidden;}
+
+body                                                        { font-family: $font-1; font-weight: 400; font-size: 100%; color: $grey-dark;}
+
+img                                                         { max-width: 100%; vertical-align: bottom;}
+                                                            /* Responsive images. Also, fixed spacing at bottom of image sometimes. */
+
+div, span, p,
+ol, ol li,
+ul, ul li                                                   { list-style-type: none; vertical-align: top; padding: 0; margin: 0;}
+                                                            /* Fixes alignment issues */
+
+ h1,  h2,  h3,  h4,  h5,  h6,
+.h1, .h2, .h3, .heading                                     { color: #e0e0e0; font-family: $font-2; font-style: normal; display: block; margin: 0; font-weight: 400;
+    .major-cl                                               { color: #5c87bf;}
+    .minor-cl                                               { color: #92bf90;}
+    sup                                                     { top: -1.25em; font-size: 50%;}
+}
+
+
+
+h1, .h1                                                     { font-size: $fontSize-xxl;}
+h2, .h2                                                     { font-size: $fontSize-xl;}
+h3, .h3                                                     { font-size: $fontSize-lg;}
+h4, .heading, blockquote                                    { font-size: $fontSize-md;}
+p, li, dl, td                                               { font-size: $fontSize-bs; line-height: $fontSize-md;}
+address, th                                                 { font-size: $fontSize-sm;}
+li li                                                       { font-size: 100%;}
+
+.sub-head                                                   { @include fonts($font-2, $fontSize-md); color: $grey-lite; text-transform: uppercase;}
+
+a, i, img                                                   { text-decoration: none; border: none; outline: none; transition: color $speed ease, background $speed ease, border $speed ease;}
+a                                                           { color: $color-1;}
+a:hover,  .btn:hover,
+a:focus,  .btn:focus,
+a:active, .btn:active, .btn:active:focus                    { color: $color-1-lite; outline: 0; text-decoration: none;}
+
+.text, .wysiwyg { p a:not(.btn)                             { text-decoration: underline;}}
+
+svg *                                                       { transition: all $speed ease;}
+
+
+blockquote                                                  { border-left: 5px solid $color-1; @include fonts($font-1,none,300,1.5); font-style: italic; padding: 0 0 0 $elementSpacing; max-width: 80%;}
+blockquote *                                                { font-size: 100%;}
+
+
+dl                                                          { }
+dt                                                          { margin-top: $mobileSpacing;}
+dd                                                          { }

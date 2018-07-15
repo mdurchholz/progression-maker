@@ -1,0 +1,286 @@
+@charset "UTF-8";  /* Sets the encoding of the style sheet to Unicode UTF-8. Don't move it. */
+
+
+/* Libraries
+------------------------------------------------------------------------------------------------- */
+@import "./libraries/animate";
+@import "./libraries/fx";
+@import "./libraries/hide-n-seek";
+
+
+/*--------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//  TABLE OF CONTENTS
+////////////////////////////////////////////////////////////////////////////////////////////////////
+----------------------------------------------------------------------------------------------------
+
+01 - GENERAL STUFF FIRST
+1A   - Patterns
+1B   - Bootstrap Override
+**
+02 - LAYOUT
+2A   - Header
+2B   - Banner
+2C   - Content
+2D   - Footer
+2E   - Internet Explorer
+**
+03 - MEDIAQUERIES
+3A   - High DPI
+3B   - Above widths
+3C   - Dektop
+3D   - Tablets
+3E   - Cellular
+
+/*--------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+01 - STYLE.CSS : GENERAL STUFF FIRST
+////////////////////////////////////////////////////////////////////////////////////////////////////
+------------------------------------------------------------------------------------------------- */
+@import "./styles/general";
+
+
+
+
+/* 1A. Patterns
+ *   - Vertical Align
+ *   - Section Colors
+ *   - SVG Wrap
+ *   - Background Images
+ *   - Responsive iFrames
+ *   - Headers with background color
+ *   - @import Buttons
+ *   - @import Post Previews
+ *   - @import Forms
+ *   - @import Slick Carousel
+----------------------------------------
+////////////////////////////////////// */
+// @import "styles/patterns";
+/*******************
+** Vertical Align
+*******************/
+[class*="va-"]                                              { position: relative; height: 100%; font-size: 0;
+    > *                                                     { display: inline-block; float: none; font-size: 10px;}
+    > .fill                                                 { font-size: 0!important; width: 0; height: 100%;}
+}
+
+.va-t > *                                                   { vertical-align: top;}
+.va-m > *                                                   { vertical-align: middle;}
+.va-b > *                                                   { vertical-align: bottom;}
+
+
+.no-ani                                                     { animation: none!important; transition: none!important;}
+
+
+
+
+/* 1B. Bootstrap Override
+----------------------------------------
+////////////////////////////////////// */
+[class^="container"]                                        { width: 100%; max-width: 100%; margin: 0 auto; transition: padding $speed ease;}
+[class^="container"] [class^="container"]                   { padding-left: 15px; padding-right: 15px;}
+
+section.no-gutter .row                                      { margin: 0 auto;}
+section.no-gutter .row > div                                { padding: 0;}
+
+.row                                                        { position: relative; z-index: 1;}
+
+
+
+/* -------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+02 - STYLE.CSS : LAYOUT
+////////////////////////////////////////////////////////////////////////////////////////////////////
+------------------------------------------------------------------------------------------------- */
+html, body                                                  { width: 100%; height: 100%; overflow: hidden;}
+
+html                                                        { opacity: 0; font-size: 10px;}
+html.ready                                                  { opacity: 1; transition: opacity $speed*2 ease;}
+
+body                                                        { background: #fff; overflow-y: auto; font-size: 100%; font-weight: 400;}
+
+
+.app-wrap                                                   { text-align: center;}
+
+
+#wrapper                                                    { position: relative; z-index: 0; transform: translate3d(0,0,0); max-width: 1000px;}
+
+
+#current-scale                                              { margin: 60px 0; color: $grey-dark;}
+#current-scale .symbol                                      { display: inline-block; vertical-align: top; font-size: 45%;}
+
+
+#nav-wrap                                                   { display: inline-block; text-align: center; margin-bottom: 60px;
+
+    > div                                                   { display: inline-block;}
+
+    .btn                                                    { display: inline-block; width: 45px; margin: 5px 5px 0 0; padding: 10px; border-radius: 2px; border: 1px solid $grey-lite; text-align: center;}
+    .btn.active                                             { background: $color-1; color: #fff; border-color: $color-1;}
+
+    .btn-group                                              { margin-top: 15px;}
+    .btn-group .btn                                         { width: auto; margin: 0; text-align: center; padding: 5px 10px; border-radius: 0;}
+
+    .notes                                                  { width: 200px;}
+
+    .semi                                                   { width: 50px; margin: 0 10px;}
+
+    .scale                                                  { width: 60px;
+        .btn                                                { width: 100%;}
+    }
+
+    .submit.btn                                             { display: block; width: 100%; margin: 15px 0 0;}
+}
+
+
+.selector                                                   { position: absolute; margin: auto; background: $color-1; color: #fff; border: none; cursor: pointer;}
+#note-select                                                { width: 10%; font-size: 18px; padding: 10px; padding-right: 0;}
+#scale-select                                               { display: none; width: 25%; font-size: 60px; text-transform: uppercase;}
+
+
+#map-wrap                                                   { position: relative; margin: 0 0 60px;
+    .map                                                    { width: 100%;}
+}
+
+.note                                                       { position: absolute; width: 14%; height: 24%; background: rgba(255,255,255,0.75); color: #000; font-weight: bold; text-align: center;
+    .spot                                                   { font-size: 28px; display: block;}
+    .spot .type                                             { font-size: 14px; vertical-align: baseline;}
+
+    .root                                                   { font-size: 45px; color: $color-1; background: #fff;
+
+        .enharmonic                                         { display: none;}
+        .friendly                                           { display: inline;}
+
+        .symbol                                             { font-size: 25px;}
+
+        .chord-type                                         { font-size: 35px;
+            &.dim                                           { vertical-align: top;}
+            &.minor                                         { line-height: 2;}
+        }
+    }
+
+    &.hasEnharmonic
+    {
+        .enharmonic                                         { display: inline;}
+        .friendly                                           { display: none;}
+    }
+}
+
+.show_friendly .note.hasEnharmonic
+{
+    .enharmonic                                             { display: none;}
+    .friendly                                               { display: inline;}
+}
+
+
+#major-wrap
+{
+    #scale-select                                           { top: 5%; left: 9%;}
+
+    #note-select                                            { top: 32%; left: 0; right: 4.5%;}
+
+    #note-1                                                 { top: 3%; left: 40.5%;}
+    #note-2                                                 { top: 65%; left: 0%;}
+    #note-3                                                 { top: 65%; left: 26%;}
+    #note-4                                                 { top: 5%; left: 78%;}
+    #note-5                                                 { top: 5%; left: 6%;}
+    #note-6                                                 { top: 65%; left: 55%;}
+    #note-7                                                 { top: 65%; left: 82%;}
+}
+
+
+#minor-wrap
+{
+    #scale-select                                           { top:2%; left: 5%;}
+
+    #note-select                                            { top: 17%; right: 13%;}
+
+    #note-1                                                 { top: 5%; left: 75%;}
+    #note-2                                                 { top: 48%; left: 52%;}
+    #note-3                                                 { top: 48%; left: 28%;}
+    #note-4                                                 { top: 5%; left: 28%;}
+    #note-5                                                 { top: 48%; left: 74.75%;}
+    #note-6                                                 { top: 5%; left: 6.5%;}
+    #note-7                                                 { top: 48%; left: 6%;}
+    #note-7-harmonic                                        { top: 5%; left: 53%;}
+}
+
+
+@media screen and (max-width: 1000px)
+{
+    .note
+    {
+        .spot                                               { font-size: 2.8vw;}
+        .spot .type                                         { font-size: 1.4vw;}
+
+        .root                                               { font-size: 4.5vw;}
+        .root .chord-type                                   { font-size: 3.5vw;}
+        .root .symbol                                       { font-size: 2.5vw;}
+    }
+
+    #note-select                                            { font-size: 2vw;}
+
+    #scale-select                                           { font-size: 6vw;}
+}
+
+
+/* 2A. Header
+----------------------------------------
+////////////////////////////////////// */
+// @import "styles/header";
+
+
+
+
+/* 2B. Banner
+----------------------------------------
+////////////////////////////////////// */
+// @import "styles/banners";
+
+
+
+
+/* 2C. Content
+----------------------------------------
+////////////////////////////////////// */
+// #content                                                    { }
+
+
+
+
+/*******************
+** Element Spacing
+*******************/
+// @include elementSpacing($elementSpacing);
+
+
+
+
+/* 2D. Footer
+----------------------------------------
+////////////////////////////////////// */
+// @import "styles/footer";
+
+
+
+
+/* 2E. Internet Explorer
+----------------------------------------
+////////////////////////////////////// */
+
+html.ie9                                                    { }
+
+html.ie8-7                                                  { }
+
+
+
+
+
+
+
+
+/* -------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+03 - MEDIAQUERIES
+////////////////////////////////////////////////////////////////////////////////////////////////////
+--------------------------------------------------------------------------------------------------*/
+// @import "styles/media";

@@ -1,0 +1,21 @@
+/*--------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//  FOOTER
+////////////////////////////////////////////////////////////////////////////////////////////////////
+--------------------------------------------------------------------------------------------------*/
+#footer                                                     { color: $grey-lite;
+
+    .container > .row > div                                 { border-right: 1px solid $grey;}
+    .container > .row > div:last-child                      { border: none;}
+
+    a                                                       { text-decoration: underline;}
+
+    .logo                                                   { margin: 0 0 $elementSpacing;}
+
+    .heading                                                { margin: $elementSpacing 0;}
+
+    .social { a, a:hover, a:focus                           { text-decoration: none;}}
+
+    .quick-links a                                          { color: $grey-lite; text-decoration: none;}
+    .quick-links a:hover                                    { color: #fff; text-decoration: underline;}
+}

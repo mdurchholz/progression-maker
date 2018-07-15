@@ -1,0 +1,48 @@
+/* -------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+Martin Durchholz
+mdurchholz.com
+HIDE-N-SEEK.SCSS
+V 1.0.0
+////////////////////////////////////////////////////////////////////////////////////////////////////
+------------------------------------------------------------------------------------------------- */
+$classes:
+''     'block',
+'.nl'  'inline',
+'.nlb' 'inline-block';
+
+@each $class in $classes
+{
+.show#{nth($class, 1)},
+.desktop .desk#{nth($class, 1)},
+.mobile .mobi#{nth($class, 1)}                                  { display: #{nth($class, 2)} !important;}
+}
+
+.hide,
+.mobile .desk,
+.desktop .mobi                                                  { display: none              !important;}
+
+/* Loop Through Breakpoints
+----------------------------------------
+////////////////////////////////////// */
+$points: 1024,991,767,667,480,375;
+
+@each $point in $points
+{
+    .show-#{$point}                                             { display: none              !important;}
+
+    @media screen and (max-width: #{$point}px)
+    {
+        @each $class in $classes
+        {
+        .show-#{$point}#{nth($class, 1)}                        { display: #{nth($class, 2)} !important;}
+        }
+
+        table.show-#{$point}                                    { display: table             !important;}
+        table tr.show-#{$point}                                 { display: table-row         !important;}
+        table th.show-#{$point},
+        table td.show-#{$point}                                 { display: table-cell        !important;}
+
+        .hide-#{$point}                                         { display: none              !important;}
+    }
+}

@@ -1,0 +1,296 @@
+/* -------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//  TABLE OF CONTENTS
+////////////////////////////////////////////////////////////////////////////////////////////////////
+----------------------------------------------------------------------------------------------------
+03 - MEDIAQUERIES
+3A   - High DPI
+3B   - Above widths
+3C   - Dektop
+3D   - Tablets
+3E   - Cellular
+/* -------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+04 - MEDIAQUERIES
+////////////////////////////////////////////////////////////////////////////////////////////////////
+----------------------------------------------------------------------------------------------------
+/* 4A. High DPI
+----------------------------------------
+////////////////////////////////////// */
+@media (-webkit-min-device-pixel-ratio: 2),
+       (min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi)
+{
+    .bg-wood                                                { background-image: url('../images/patterns/bg-wood@2x.jpg');}
+    .bg-dirty                                               { background-image: url('../images/patterns/bg-dirty@2x.jpg');}
+    .bg-play-button                                         { background-image: url('../images/icons/icon-play@2x.png');}
+
+    .carousel .arrow                                        { background-image: url('../images/icons/icon-arrows@2x.png');}
+}
+
+
+/* 4B. Mobile Devices
+----------------------------------------
+////////////////////////////////////// */
+@include mobileBreak('.mobile');
+
+
+
+
+/* 4B. Above widths
+----------------------------------------
+////////////////////////////////////// */
+@media screen and (min-width: 1901px)
+{
+    body                                                    { font-size: 115%;}
+
+    [class*="va-"] > *                                      { font-size: 11.5px;}
+
+    .max-w                                                  { max-width: 52%;}
+}
+
+
+@media screen and (min-width: 1601px)
+{
+
+}
+
+
+$spacing: 10.8em;
+@media screen and (min-width: 1200px)
+{
+    [class*="container"]                                    { padding-right: $spacing; padding-left: $spacing;}
+
+    #banner.carousel .arrows                                { left: $spacing;}
+
+    #footer .container > .row                               { margin-left: -$elementSpacing; margin-right: -$elementSpacing;}
+    #footer .container > .row > div                         { padding-left: $elementSpacing; padding-right: $elementSpacing;}
+}
+
+
+@media screen and (min-width: 992px)
+{
+
+}
+
+
+@media screen and (min-width: 768px)
+{
+
+}
+
+
+
+
+/* 4C. Dektop
+----------------------------------------
+////////////////////////////////////// */
+@media screen and (max-width: 1600px)
+{
+
+}
+
+
+@media screen and (max-width: 1400px)
+{
+
+}
+
+
+@media screen and (max-width: 1250px)
+{
+    #beer-slider.carousel.half-wrap
+    {
+        .post-icon                                          { left: $elementSpacing*2;}
+        .post-details                                       { padding-right: $elementSpacing*2; padding-bottom: $elementSpacing*3; padding-left: $elementSpacing*2;}
+    }
+}
+
+
+@media screen and (max-width: 1199px)
+{
+    [class*="col-lg"]
+    {
+        .post-preview                                       { margin: $elementSpacing 0;}
+
+        &:first-child .post-preview:first-child             { margin-top: 0;}
+        &:last-child .post-preview:last-child               { margin-bottom: 0;}
+    }
+}
+
+
+
+
+/* 4D. Tablets
+----------------------------------------
+////////////////////////////////////// */
+@media screen and (max-width: 1024px)
+{
+    @include mobileBreak();
+}
+
+
+@media screen and (max-width: 991px)
+{
+    @include elementSpacing($mobileSpacing);
+
+    [class*="col-md"]
+    {
+        .post-preview                                       { margin: $elementSpacing 0;}
+
+        &:first-child .post-preview:first-child             { margin-top: 0;}
+        &:last-child .post-preview:last-child               { margin-bottom: 0;}
+    }
+
+    #banner.carousel .slick                                 { width: 80%; padding-top: $elementSpacing*2; padding-bottom: $elementSpacing*3;}
+    #banner.carousel .slick-dots                            { top: $mobileSpacing;}
+}
+
+
+@media screen and (max-width: 767px)
+{
+    h1, .h1                                                 { font-size: $fontSize-xxl * .9;}
+    h2, .h2                                                 { font-size: $fontSize-xl  * .9;}
+    h3, .h3                                                 { font-size: $fontSize-lg  * .9;}
+
+    blockquote                                              { font-size: $fontSize-md; max-width: 90%; padding-left: 15px;}
+
+    .post-preview                                           { margin: $elementSpacing 0;}
+
+    .post-image .background                                 { @include absolute(0,0,0,0);}
+
+    .no-gutter .row > div                                   { padding-left: 15px; padding-right: 15px;}
+    .no-gutter .post-preview                                { margin-top: 0;}
+
+    .btn                                                    { padding: 12px 15px;}
+
+
+    .section
+    {
+        &, &.padd-md, &.padd-lg                             { padding-top: $elementSpacing; padding-bottom: $elementSpacing;}
+
+        .row > div:first-child .post-preview:first-child    { margin-top: 0;}
+        .row > div:last-child .post-preview:last-child      { margin-bottom: 0;}
+    }
+
+
+    .half-wrap
+    {
+        .post-preview                                       { padding: 0; display: block; height: auto; min-height: 0;}
+
+        .post-details                                       { display: block;}
+
+        .post-image                                         { position: relative; left: auto; right: auto; width: 100%; padding-top: 55%;
+            .slick-sync                                     { @include absolute(0,0,0,0); width: 100%; height: 100%;}
+        }
+
+        &.carousel .row                                     { margin-bottom: $elementSpacing;}
+
+        &#beer-slider.carousel
+        {
+            .post-icon                                      { left: $elementSpacing;}
+            .post-details                                   { padding: $elementSpacing*3 $elementSpacing $elementSpacing*2;}
+        }
+    }
+
+    .gallery-grid
+    {
+        .item                                               { width: 33.3333%;}
+
+        .tweet                                              { width: 100%; padding: $mobileSpacing 0;
+            &:first-child                                   { padding-top: 0;}
+            &:last-child                                    { padding-bottom: 0;}
+            .text                                           { margin: $mobileSpacing 0;}
+        }
+    }
+
+
+    #breadcrumbs + div                                      { margin-top: $mobileSpacing;}
+
+
+    #banner                                                 { padding: 0;
+        .post-preview                                       { padding: $elementSpacing 0;}
+
+        .image,
+        &.carousel .image                                   { position: relative; width: 100%; padding-top: 55%;
+            .slick-sync,
+            .background                                     { @include absolute(0,0,0,0);}
+        }
+
+        &.carousel .slick                                   { width: 100%;}
+        &.carousel .slick .slick-slide                      { padding: 0;}
+    }
+
+
+    #onTap
+    {
+        &,tbody,thead,tr,th,td                              { display: block;}
+
+        thead                                               { display: none;}
+
+        tr                                                  { float: left; width: 33.3333%; margin: 0 0 $elementSpacing;}
+        td                                                  { padding: 0;}
+
+        tr:last-child                                       { margin: 0;}
+    }
+
+
+    #footer                                                 { text-align: center;
+        .heading                                            { margin: $elementSpacing*1.5 0 $mobileSpacing;}
+        .hours                                              { margin: $mobileSpacing 0 0;}
+    }
+}
+
+
+
+
+/* 4E. Cellular
+----------------------------------------
+////////////////////////////////////// */
+@media screen and (max-width: 667px)
+{
+    body                                                    { font-size: 85%;}
+
+    [class*="va-"] > *                                      { font-size: 8.5px;}
+
+    h1, .h1                                                 { font-size: $fontSize-xxl * .8;}
+    h2, .h2                                                 { font-size: $fontSize-xl  * .8;}
+
+    #wrapper, #mobile-wrap { &, .slim-head &                { padding-top: $headerM;}}
+    #header                { &, .slim-head &                { height: $headerM;}}
+
+
+    #onTap tr                                               { width: 50%;}
+
+
+    #beer-slider.half-wrap.carousel
+    {
+        .post-icon                                          { width: 75px;}
+        .post-details                                       { padding-top: 75px;}
+    }
+}
+
+
+@media screen and (max-width: 600px)
+{
+    #wpadminbar                                             { position: fixed;}
+}
+
+
+@media screen and (max-width: 480px)
+{
+    .wysiwyg { .alignleft, .alignright                      { float: none; max-width: 100%; margin: 20px auto;}}
+
+    .half-wrap.carousel .arrow                              { display: none;}
+}
+
+
+@media screen and (max-width: 375px)
+{
+    .carousel.slider
+    {
+        *[data-mh]                                          { height: auto !important;}
+
+        .slick > div                                        { width: 100%;}
+    }
+}

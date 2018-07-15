@@ -1,0 +1,35 @@
+<!--
+
+<?php foreach($getNotes as $index=>$note): $i=$index+1; ?>
+<div id="note-<?php echo $i; ?>" class="note<?php if( $enh = $note['enharmonic'] ){ echo ' hasEnharmonic'; } ?>">
+	<span class="spot"><?php echo $index ? $i : 'TONIC'; ?></span>
+	<span class="root"><?php
+
+		if( $enh ){ echo '<span class="enharmonic">'.formatNote($note['enharmonic']).'</span>'; }
+
+		echo '<span class="friendly">'.formatNote($note['friendly']).'</span>';
+
+		if( ( $isMinor && ($i==1 || $i==4 || $i==5)) ||
+			(!$isMinor && ($i==2 || $i==3 || $i==6))  )
+			echo '<span class="chord-type minor">m</span>';
+		elseif( ($isMinor && $i==2) || (!$isMinor && $i==7 ) )
+			echo '<span class="chord-type dim">&deg;</span>';
+
+	?></span>
+</div>
+<?php if($isMinor && $i==count($getScale)): ?>
+<div id="note-7-harmonic" class="note">
+	<span class="spot">7<span class="type">(harmonic)</span></span>
+	<span class="root"><?php echo formatNote($note['friendly']); ?><span class="symbol dim">&deg;</span></span>
+</div>
+<?php endif; endforeach; ?>
+
+-->
+
+<div id="map-wrap">
+	<img src="assets/img/major-key-map.jpg" class="map" alt="Major Key Map">
+	<div id="note-1" class="note">
+		<span class="spot">TONIC</span>
+		<span class="root">X</span>
+	</div>
+</div>

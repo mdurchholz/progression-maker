@@ -1,0 +1,78 @@
+/*--------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//  CAROUSEL
+////////////////////////////////////////////////////////////////////////////////////////////////////
+--------------------------------------------------------------------------------------------------*/
+$imageWidth: 45%;
+$pp-padding: 40px;
+
+.carousel                                                   {
+
+    .slick-list                                             { position: relative; z-index: 0;}
+    .slick-slide                                            { position: relative; display: block; float: left;
+        &:focus                                             { outline: none;}
+    }
+
+
+    .arrows                                                 { }
+    /**/
+    .arrow                                                  { margin: auto; cursor: pointer; width: 33px; height: 33px; display: inline-block; background: url('../images/icons/icon-arrows.png') no-repeat; opacity: 0.5; transition: opacity $speed ease;
+        &:hover                                             { opacity: 1;}
+        &.prev                                              { background-position: left center; margin-right: 5px;}
+        &.next                                              { background-position: right center;}
+
+        &.disable                                           { opacity: 0; pointer-events: none;}
+    }
+
+    $buttonSpacing: 6px;
+    .slick-dots                                             { font-size: 0;
+        li                                                  { opacity: 0.35; position: relative; display: inline-block; cursor: pointer; transition: opacity $speed ease;
+            &:hover                                         { opacity: 0.65;}
+            &.slick-active,
+            &.slick-active:hover                            { opacity: 1;
+                button::before                              { border-bottom: 5px solid #fff;}
+            }
+            button                                          { background: none; padding: $buttonSpacing*2 $buttonSpacing; font-size: 0; text-indent: -9999px; border: none; color: transparent;
+                &::before                                   { content: ""; display: block; width: 32px; height: 5px; border-bottom: 2px solid #fff; transition: border $speed ease;}
+                &:focus, &:active                           { outline: none;}
+            }
+        }
+    }
+
+
+    /*******************
+    ** Home Page Banner Slider
+    *******************/
+    &#banner
+    {
+        .image                                              { width: 65%;}
+
+        .slick                                              { width: 55%; padding-top: $elementSpacing*1.5;}
+        .slick .slick-list                                  { overflow: visible;}
+        .slick .slick-slide                                 { margin: 0;}
+
+        .slick-sync { &, *                                  { height: 100%;}}
+
+        .arrows                                             { z-index: 10; @include absolute(auto,auto,$elementSpacing,$mobileSpacing);}
+        .slick-dots                                         { @include absolute(0,auto,auto,-$buttonSpacing);}
+    }
+
+
+    /*******************
+    ** Home Page Beer Slider
+    *******************/
+    &.half-wrap
+    {
+        .row                                                { position: relative;}
+
+        .slick-list                                         { overflow: visible!important;}
+
+        .post-icon                                          { @include absolute(auto,auto,100%,$elementSpacing*3); z-index: 10; transform: translate3d(0,50%,0);}
+        .post-details                                       { padding-bottom: $elementSpacing*3;}
+        &#beer-slider .post-details                         { padding: $elementSpacing*4 $elementSpacing*3 $elementSpacing*3;}
+
+        .arrows                                             { z-index: 10; @include absolute(auto,$elementSpacing,$elementSpacing,auto);}
+
+        .append-dots                                        { @include absolute(auto,0,-$mobileSpacing*3,0); text-align: center;}
+    }
+}

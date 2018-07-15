@@ -1,0 +1,61 @@
+/*--------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//  BUTTONS
+////////////////////////////////////////////////////////////////////////////////////////////////////
+--------------------------------------------------------------------------------------------------*/
+.btn                                                        { display: inline-block; position: relative; background: $color-1; border: 1px solid $color-1; color: #fff; border-radius: 0; height: auto; @include fonts($font-2, $fontSize-bs, 400, 1); padding: 16px 22px; cursor: pointer;  backface-visibility: visible; transition: all $speed ease;
+
+    /* DEFAULT */
+    &:hover, &:active, &:focus, &:active:focus              { background: $color-1-lite; color: #fff;}
+
+
+    /* Grey Button */
+    &.grey                                                  { background: $grey; border: 1px solid $grey;
+        &:hover, &:active, &:focus, &:active:focus          { background: $grey-lite;}
+    }
+
+
+    /* Standard Links */
+    &.link                                                  { background: none; border: none; border-radius: 0; padding: 0; color: $color-1; font-family: $font-1;
+        &:hover, &:active, &:focus, &:active:focus          { background: none; color: $color-1-lite;}
+
+        img                                                 { margin: 0; max-height: 45px;}
+    }
+
+
+    /* Blank */
+    &.blank                                                 { background: none; border: 1px solid $grey; color: $color-1; text-decoration: underline;
+        &:hover, &:active, &:focus, &:active:focus          { background: none;}
+    }
+
+
+    i                                                       { font-size: $fontSize-sm;}
+    i:last-child                                            { margin-right: 0; margin-left: 5px;}
+    i:first-child                                           { margin-right: 5px; margin-left: 0;}
+}
+
+
+/*******************
+** Inline Buttons
+*******************/
+.btns                                                       {
+    .btn                                                    { margin-right: 10px;}
+    .btn:last-child                                         { margin: 0;}
+
+    .link                                                   { padding-right: 10px; margin: 0; position: relative; /* make up space for inline-block */
+        &:last-child                                        { padding-right: 0;}
+        & + .link                                           { padding-left: 15px;
+            &::before                                       { @include absolute(0,auto,0,-1px); margin: auto; width: 2px; height: 16px; background: $grey-lite; content: "";}
+        }
+        & + .btn                                            { margin-left: 0;}
+    }
+}
+
+
+/*******************
+** Button Groups
+*******************/
+.btn-group                                                  {
+
+    .btn.active                                             { z-index: 100;}
+}

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" class="ready">
+<head>
+    <script>
+	Array.prototype.clean = function(deleteValue)
+	{
+		for (var i = 0; i < this.length; i++)
+		{
+			if (this[i] == deleteValue)
+			{
+				this.splice(i, 1);
+				i--;
+			}
+		}
+		return this;
+	};
+
+	var pageKey;
+
+	checkSharp();
+
+	window.addEventListener("hashchange", checkSharp);
+
+	function checkSharp()
+	{
+		var windLoc = window.location,
+			getPath = windLoc.pathname.split('/').clean("");
+
+		pageKey = getPath[getPath.length-1];
+
+		if( (new RegExp('#')).test(windLoc.href) )
+		{
+			window.location.href = windLoc.origin +'/'+ getPath.join('/') + ( pageKey.length==1?'sharp':'');
+		}
+	}
+	</script>
+
+	<meta charset="utf-8" />
+	<link rel="dns-prefetch" href="//ajax.googleapis.com" /><!-- Grabs repo files quicker -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><!-- This + conditionals above destroy edge detection issues -->
+	<meta http-equiv="imagetoolbar" content="false" /><!-- Kills IE6 Image toolbar -->
+
+    <base href="/">
+
+	<title>Chord Progression Maker</title>
+
+	<meta name="author" content="Martin Durchholz" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="rating" content="general" />
+	<meta name="robots" content="index, follow" />
+	<meta name="content-language" content="english">
+	<meta name="audience" content="all" />
+
+	<!-- Disables Scaling on multi-touch interfaces -->
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+
+	<!-- Favicon -->
+    <link type="image/png" rel="icon" href="https://mdurchholz.com/assets/img/favicon.png" />
+</head>
+<body>
+    <app-root></app-root>
+</body>
+</html>

@@ -1,0 +1,146 @@
+/*--------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//  PATTERNS
+////////////////////////////////////////////////////////////////////////////////////////////////////
+--------------------------------------------------------------------------------------------------*/
+/*******************
+** Vertical Align
+*******************/
+[class*="va-"]                                              { position: relative; height: 100%; font-size: 0;
+    > *                                                     { display: inline-block; float: none; font-size: 10px;}
+    > .fill                                                 { font-size: 0!important; width: 0; height: 100%;}
+}
+
+.va-t > *                                                   { vertical-align: top;}
+.va-m > *                                                   { vertical-align: middle;}
+.va-b > *                                                   { vertical-align: bottom;}
+
+
+.no-ani                                                     { animation: none!important; transition: none!important;}
+
+
+
+
+/*******************
+** Section Colors
+*******************/
+.section                                                    { position: relative;}
+/**/
+.shaded                                                     { background-color: $grey-xlite;}
+.shaded-2                                                   { background-color: $grey-lite;}
+.shaded-3                                                   { background-color: $grey;}
+.shaded-4                                                   { background-color: $grey-med;}
+.darken                                                     { background-color: $grey-dark; color: #fff;}
+.darker                                                     { background-color: $grey-darker; color: #fff;}
+
+
+
+
+/*******************
+** SVG Wrap
+*******************/
+.svg-wrap                                                   { position: relative; padding-top: 80px;}
+.svg-wrap svg                                               { @include absolute(0,auto,auto,0); margin: auto; height: 100%;}
+
+
+
+
+/*******************
+** Background Images
+*******************/
+.background                                                 { background-size: cover; background-repeat: no-repeat; background-position: center; width: 100%; height: 100%; transform: scale(1); transition: transform $speed ease;}
+.background.darken::before                                  { content: ""; @include absolute(0,0,0,0); z-index: 0; margin: 0; width: 100%; height: 100%; background: #000; opacity: 0.6;}
+
+.img                                                        { overflow: hidden;}
+.img .background                                            { @include absolute(0,0,0,0); margin: auto;}
+
+a:hover .background                                         { transform: scale(1.1);}
+
+.bg-wood                                                    { background: url('../images/patterns/bg-wood.jpg') repeat center; background-size: 1150px auto;}
+.bg-dirty                                                   { background: url('../images/patterns/bg-dirty.jpg') repeat center; background-size: 400px auto;}
+
+.canPlay::after                                             { content: "";  @include absolute(0,0,0,0); z-index: 10; background: url('../images/icons/icon-play.png') no-repeat center; background-size: 84px 84px;}
+
+
+/*******************
+** Responsive iFrames
+*******************/
+.embed-container                                            { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 0 auto;
+    iframe, object, embed                                   { position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
+}
+
+
+
+
+/*******************
+** Headers with background color
+*******************/
+$add_BG_spacing: 10px;
+.js_add_BG                                                  { text-transform: uppercase; margin-bottom: $elementSpacing+$add_BG_spacing; line-height: 1.4; text-transform: uppercase; text-shadow: none;}
+.js_add_BG > span                                           { display: block; float: left; padding: 0 $add_BG_spacing; margin-bottom: -$add_BG_spacing; margin-right: -$add_BG_spacing; background: $grey-dark; color: #fff; font-size: inherit;}
+
+
+
+
+/*******************
+** Max Width
+*******************/
+.max-w                                                      { max-width: 850px; margin: 0 auto;}
+
+
+
+
+/*******************
+** Yellow Message Box
+*******************/
+.box.alert                                                  { border-radius: 0; border: 2px solid $color-1; display: inline-block; margin: 0;}
+
+
+
+
+/*******************
+** Social Media Icons
+*******************/
+.social                                                 { margin: $elementSpacing 0 0;
+    li                                                  { margin: 0 0 0 8px; padding: 0;
+        &:first-child                                   { margin-left: 0;}
+        a                                               { display: block; color: #fff; border: 1px solid #fff; text-align: center; text-decoration: none; border-radius: 50%; transition: all $speed ease;}
+        i                                               { display: block; color: #fff; padding: 10px; width: 40px; height: 40px; font-size: 20px;}
+        a:hover, a:focus                                { border-color: $color-1; background: $color-1; text-decoration: none;}
+        a:hover, a:focus { i                            { color: $grey-dark;}}
+    }
+}
+
+
+
+
+/*******************
+** Buttons
+*******************/
+@import "buttons";
+
+
+
+
+/*******************
+** Post Previews
+ * - Post Block
+ * - Half Wrap
+*******************/
+@import "post-previews";
+
+
+
+
+/*******************
+** Forms
+*******************/
+@import "forms";
+
+
+
+
+/*******************
+** Slick Carousel
+*******************/
+@import "carousel";

@@ -1,0 +1,88 @@
+@mixin elementSpacing($base)
+{
+    .text, .wysiwyg
+    {
+        h1                                                  { margin-top: $base*3; margin-bottom: $base*.8333;}
+
+        h2, h3                                              { margin-top: $base*1.5;}
+
+        h2, h3, h4, h5, h6                                  { margin-bottom: $base;}
+
+        ul, ol, p, blockquote                               { margin: $base auto;}
+
+        h1,h2,h3 { &:first-child                            { margin-top: 0;}}
+
+        .sub-head
+        {
+            + h1,
+            + h2                                            { margin-top: $base/3;}
+        }
+
+        *:first-child                                       { margin-top: 0;}
+        *:last-child                                        { margin-bottom: 0;}
+
+        ul, ol                                              { padding: 0 5px 0 20px;
+            li                                              { margin-top: 5px;}
+            li:first-child                                  { margin-top: 0;}
+            ul, ol                                          { margin: 0; padding-left: 30px;}
+        }
+        ul li                                               { list-style: disc; }
+        ol li                                               { list-style: decimal;}
+
+        img                                                 { height: auto;}
+
+        .blank img                                          { max-height: 30px;}
+    }
+
+
+    .section
+    {
+        &.padd-xs                                           { padding-top: $base/2; padding-bottom: $base/2;}
+        &.padd-sm                                           { padding-top: $base;   padding-bottom: $base;}
+        &                                                   { padding-top: $base*2; padding-bottom: $base*2;}
+        &.padd-md                                           { padding-top: $base*3; padding-bottom: $base*3;}
+        &.padd-lg                                           { padding-top: $base*4; padding-bottom: $base*4;}
+        &.padd-xl                                           { padding-top: $base*5; padding-bottom: $base*5;}
+        &.padd-nn                                           { padding-top: 0;       padding-bottom: 0;}
+
+
+        &:not(.background):not(.bg-wood) { & + &            { padding-top: 0;}}
+
+
+        .box                                                { padding: $base;}
+        .box-lg                                             { padding: $base*2;}
+
+
+        &.pull-up                                           { padding-bottom: $base*6;}
+        &.pull-up + .section                                { padding-top: 0; position: relative; top: -$base*3; margin-bottom: -$base*3;}
+
+
+        .section                                            { padding: 0; margin-top: $base;}
+        .section:first-child                                { margin-top: 0;}
+    }
+
+    .post-details                                           { padding: $base*2 $base*1.5;
+        &, &>[data-mh]
+        {
+            > *                                             { margin-top: $base*.8;}
+            > :first-child                                  { margin-top: 0;}
+        }
+
+        .tag + *                                            { margin-top: $mobileSpacing;}
+    }
+
+    .post-text
+    {
+        p { &, .btn                                         { margin: $base*.5 0;}
+            &:last-child , .btn:last-child                  { margin-bottom: 0;}
+            &:first-child, .btn:first-child                 { margin-top: 0;}
+        }
+
+        h4, h5, h6                                          { margin: $base 0 $base*.5;}
+    }
+
+    #intro                                                  { padding-top: $base*3;
+        .push-wrap                                          { top: $base*3;}
+        + .section                                          { padding-top: $base*6;}
+    }
+}

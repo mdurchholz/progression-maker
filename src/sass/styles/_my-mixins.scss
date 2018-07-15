@@ -1,0 +1,160 @@
+/* -------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+MIXINS.SCSS
+////////////////////////////////////////////////////////////////////////////////////////////////////
+------------------------------------------------------------------------------------------------- */
+/* Variables
+----------------------------------------
+////////////////////////////////////// */
+$speed : 0.25s;
+
+
+/**********************
+** Consistent Element Spacing
+**********************/
+$elementSpacing : 30px;
+$mobileSpacing  : $elementSpacing/2;
+/*********************/
+
+
+/**********************
+** Header Heights
+**********************/
+$headerH: 160px; // At very stop
+$headerS: 120px; // When scrolling
+$headerT: 100px; // On tablet
+$headerM: 80px;  // On Mobile
+
+
+/**********************
+** Colors
+**********************/
+$grey-xlite   : '';
+$grey-lite    : #999999;
+$grey         : #313131;
+$grey-med     : '';
+$grey-dark    : #1f1f1f;
+$grey-darker  : #181818;
+/**/
+$color-1      : #558682;
+$color-1-lite : #558682;
+/*********************/
+
+
+/********************
+** Font Families
+*********************/
+$font-1 : 'open-sans', 'Arial', sans-serif;
+$font-2 : 'Times New Roman', serif;
+/********************************
+** Font Sizes
+*********************************/
+$fontSize-xxl : 5.0em;  /* 50px => h1 */
+$fontSize-xl  : 3.7em;  /* 37px => h2 */
+$fontSize-lg  : 3.0em;  /* 30px => h3 */
+$fontSize-md  : 1.8em;  /* 18px => h4, .heading, sub headings */
+$fontSize-bs  : 1.4em;  /* 14px => text and buttons */
+$fontSize-sm  : 1.2em;  /* 12px => .tag */
+
+
+/********************
+** Mixin Variables
+******************* */
+$fa-font-path : "assets/fonts/font-awesome/";
+
+$icon-font-path : "assets/fonts/bootstrap/";
+
+
+/* Mixins
+----------------------------------------
+////////////////////////////////////// */
+
+/********************
+** Custom
+*********************/
+// @import "styles/mixins/elementSpacing";
+// @import "styles/mixins/mobileOnly";
+@import "./mixins/fonts";
+
+
+/********************
+** Defaults
+*********************/
+@mixin absolute($top: auto, $right: auto, $bottom: auto, $left: auto)
+{
+  position: absolute;
+       top: $top;
+     right: $right;
+    bottom: $bottom;
+      left: $left;
+}
+
+
+@mixin fixed($top: auto, $right: auto, $bottom: auto, $left: auto)
+{
+  position: fixed;
+       top: $top;
+     right: $right;
+    bottom: $bottom;
+      left: $left;
+}
+
+
+@mixin animation($name: none, $duration: 0s, $delay: 0s, $ease: ease)
+{
+    @include animation-adv($name, $duration, $ease, $delay, 1, normal, both, running);
+}
+
+
+@mixin animation-adv($name: none, $duration: 0s, $timing-function: ease, $delay: 0s, $iteration-count: 1, $direction: normal, $fill-mode: none, $play-state: running)
+{
+    animation-name: $name;
+    animation-duration: $duration;
+    animation-timing-function: $timing-function;
+    animation-delay: $delay;
+    animation-iteration-count: $iteration-count;
+    animation-direction: $direction;
+    animation-fill-mode: $fill-mode;
+    animation-play-state: $play-state;
+}
+
+
+@mixin gradient($color1, $color2)
+{
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/ */
+  background: $color1; /* Old browsers */
+  /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+  background: -moz-linear-gradient(top,  $color1 0%, $color2 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$color1), color-stop(100%,$color2)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  $color1 0%,$color2 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  $color1 0%,$color2 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  $color1 0%,$color2 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  $color1 0%,$color2 100%); /* W3C */
+}
+
+
+@mixin borderTrianlge($direction, $size, $color)
+{
+    $trans: $size solid transparent;
+    $color: $size solid $color;
+
+    width:  0;
+    height: 0;
+
+    @if $direction==up or $direction==down
+    {
+        border-left:   $trans;
+    	border-right:  $trans;
+
+        border-top:    if($direction==up, none, $color);
+        border-bottom: if($direction==up, $color, none);
+    }
+    @elseif $direction==left or $direction==right
+    {
+        border-top:    $trans;
+    	border-bottom: $trans;
+
+        border-left:   if($direction==left, none, $color);
+        border-right:  if($direction==left, $color, none);
+    }
+}

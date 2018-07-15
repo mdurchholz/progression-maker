@@ -1,0 +1,99 @@
+/*--------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//  POST PREVIEWS
+////////////////////////////////////////////////////////////////////////////////////////////////////
+--------------------------------------------------------------------------------------------------*/
+$postImagePadding: 71.4286%;
+
+/*******************
+** Post Block
+*******************/
+.post-preview                                               { position: relative; background: url('../images/patterns/bg-wood.jpg') repeat center; background-size: 1150px auto;}
+
+
+.post-image                                                 { position: relative; z-index: 0; width: 100%; overflow: hidden;  padding-top: $postImagePadding;
+    img                                                     { margin: 0 auto;}
+
+    .background, .slick-slider                              { @include absolute(0,0,0,0);}
+
+    .post-preview:hover & a .background                     { transform: scale(1.1);}
+
+    &.featured-image                                        { width: 45%; padding-top: 25%;}
+    &.short                                                 { padding-top: $postImagePadding*.75;}
+}
+
+.post-details                                               { position: relative; z-index: 1;
+
+    .tag                                                    { font-size: $fontSize-sm; color: $grey-lite; text-transform: uppercase;}
+}
+
+
+.post-icon img                                              { margin: 0 auto; max-height: 150px;}
+/**/
+.post-title-sub                                             { @include fonts($font-2, $fontSize-md); text-transform: uppercase;}
+.post-title-sub { &, a                                      { color: $grey-lite;}}
+.post-title-sub + .post-title                               { margin-top: $mobileSpacing/1.25;}
+.post-title { &, a                                          { color: #fff;}}
+.post-title + .post-title-sub                               { margin-top: $mobileSpacing/2;}
+
+/**/
+.post-text                                                  { color: $grey-lite;
+    a                                                       { font-weight: 600;}
+    a:hover                                                 { text-decoration: underline;}
+    a.btn, a.btn:hover                                      { font-weight: 400; text-decoration: none;}
+
+    ul, ol                                                  { padding: 0 10px 0 20px;}
+    ul li                                                   { list-style: disc; margin-top: 5px;}
+    ol li                                                   { list-style: decimal; margin-top: 5px;}
+
+    .gform_wrapper, .section                                { margin-top: $elementSpacing;}
+}
+/**/
+.post-btn                                                   { }
+
+
+
+
+/*******************
+** Half Wrap
+*******************/
+.half-wrap                                                  {
+
+    .row                                                    { background: url('../images/patterns/bg-wood.jpg') repeat center; background-size: 1150px auto;}
+
+    .post-preview                                           { min-height: 400px; background: none; margin: 0;}
+
+    .post-image { &, *                                      { height: 100%;}}
+}
+
+
+
+
+/*******************
+** Vertical Post Preview
+*******************/
+.pp-extend
+{
+    .post-preview                                           { background: $grey-dark;
+
+        .post-image                                         { @include absolute(0,auto,0,0); width: auto; height: 100%; margin: 0; padding: 0;}
+        .post-image img                                     { height: 100%;}
+        .post-details                                       { padding: $elementSpacing;}
+    }
+
+    &.pp-right .post-image                                  { left: auto; right: 0;}
+}
+
+
+
+
+/*******************
+** CTA Block
+*******************/
+.cta                                                        { text-align: center;
+    .post-preview                                           { display: inline-block;
+        .post-title,
+
+        .post-btn                                           { display: inline-block; vertical-align: middle; margin: 0 $mobileSpacing;}
+    }
+}
