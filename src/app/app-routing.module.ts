@@ -6,21 +6,7 @@ import { MapComponent } from './map/map.component';
 
 const routes: Routes = [
     {
-        path: '',
-        component: MapComponent
-    },
-    {
-        path: 'major',
-        redirectTo: 'major/C',
-        pathMatch: 'full'
-    },
-    {
-        path: 'minor',
-        redirectTo: 'minor/A',
-        pathMatch: 'full'
-    },
-    {
-        path: ':scale/:note',
+        path: '**',
         component: MapComponent
     }
 ];

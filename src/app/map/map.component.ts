@@ -2,28 +2,35 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
 @Component({
-  selector: 'map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+    selector: 'map',
+    templateUrl: './map.component.html',
+    styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
 
-  public scale;
+    public scale;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+    constructor(private route: ActivatedRoute, private router: Router) {
 
-  }
+    }
 
-  ngOnInit() {
+    ngOnInit() {
 
-      // this.route.paramMap.subscribe((params: ParamMap) => {
-      //     let scale = params.get('scale');
-      //     let note  = params.get('note');
-      //
-      //     this.scale = scale ? scale : null;
-      // });
-      //
-      // console.log(this.scale);
-  }
+        var path = window.location.pathname;
 
+        if( path.charAt( 0 ) === '/' )  path = path.slice( 1 );
+
+        var array = path.split('/'),
+            scale = array[0],
+            key   = array[1];
+
+        if( array.length > 2 )
+        {
+            this.router.navigate([scale+'/'+key]);
+        }
+        // else if()
+        // {
+        //
+        // }
+    }
 }
