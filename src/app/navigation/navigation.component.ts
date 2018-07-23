@@ -10,10 +10,10 @@ export class NavigationComponent implements OnInit {
 
   public notes = [];
 
-  constructor(private globalService: GlobalService) { }
+  constructor(private global: GlobalService) { }
 
   ngOnInit() {
-    this.notes = this.globalService.getNotes();
+    this.notes = this.global.getAllNotes;
   }
 
   testClick(){
