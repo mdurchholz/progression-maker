@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ParamMap } from '@angular/router';
+import { Router } from '@angular/router';
+import { GlobalService } from './global.service';
 
 @Component({
   selector: 'app-root',
@@ -8,17 +9,31 @@ import { Router, ParamMap } from '@angular/router';
 })
 export class AppComponent implements OnInit {
 
+    public note;
     public title;
+    public getPaths;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private global: GlobalService ) {
+        const tree = router.parseUrl(window.location.pathname),
+              path = tree.root.children.primary;
 
+        this.getPaths = path ? path.segments : false;
     }
 
     ngOnInit() {
-        let state = 'Minor';
+        function capitalize(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
 
-        this.title = 'C '+state+' Chord Map';
+        if( this.getPaths )
+        {
+            var scale  = capitalize(this.getPaths[0].path),
+                getKey = this.global.parseKey(this.getPaths[1].path);
 
-        // console.log(this.router);
+            this.note  = this.global.formatNote(getKey['base']+getKey['semi']);
+            this.title = scale+' Chord Map';
+        }
+        else
+        {
+            this.title = 'Welcome!';
+        }
     }
 }

@@ -17,35 +17,37 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ):Observable<boolean> | Promise<boolean> | boolean {
 
-    var scale = next.url[0].path.toLowerCase(),
-        key   = next.url[1] ? next.url[1].path.toLowerCase() : null,
+    var getScale = next.url[0].path.toLowerCase(),
+        getKey   = '',
+        redirect = false;
 
-        parseKey = this.global.parseKey(key),
-        keySemi  = parseKey['base']+parseKey['semi'],
-        keyText  = parseKey['base']+parseKey['text'];
-        // enharmonic = getEnharmonics(keySemi);
+    if( getScale!='major' && getScale!='minor' )
+    {
+      getScale = 'major';
+      redirect = true;
+    }
 
-    console.log(keyText);
+    if( next.url[1] )
+    {
+      var checkKey = next.url[1].path,
+          parseKey = this.global.parseKey( checkKey.toLowerCase() ),
+          keySemi  = parseKey['base']+parseKey['semi'],
+          keyText  = parseKey['base']+parseKey['text'],
+          enharmonic = this.global.getEnharmonics(keySemi);
 
-    if( next.url[2] )
-    {
-      this.router.navigate([scale+'/'+key]);
+      if( checkKey != keyText || enharmonic )
+      {
+        getKey = enharmonic ? enharmonic : keyText;
+        redirect = true;
+      }
     }
-    else if( scale!='major' && scale!='minor' )
+    else
     {
-      this.router.navigate(['major/'+(key?key:'C')]);
+      getKey = (getScale=='minor') ? 'A' : 'C';
+      redirect = true;
     }
-    else if( !key || keyText.toLowerCase()!=key )
-    {
-      if( scale == 'minor' )
-        this.router.navigate(['minor/'+(keyText ? keyText : 'A')]);
-      else
-        this.router.navigate(['major/'+(keyText ? keyText : 'C')]);
-    }
-    // else if( enharmonic )
-    // {
-    //     this.router.navigate([scale+'/'+enharmonic]);
-    // }
+
+    if( redirect ) this.router.navigate([getScale+'/'+getKey]);
 
     return true;
   }

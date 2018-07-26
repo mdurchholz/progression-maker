@@ -16,51 +16,65 @@ export class GlobalService {
 
   getAllNotes = ['A',['A#','Bb'],'B','C',['C#','Db'],'D',['D#','Eb'],'E','F',['F#','Gb'],'G',['G#','Ab']];
 
-/*
-  getEnharmonics( note: string, opposite: boolean )
+
+  getEnharmonics( note:string = null, opposite:boolean = false )
   {
-      let notes = {
-          'B#' : 'C',
-          'Cb' : 'B',
+    function getKeyByValue(value, object) { return Object.keys(object).find(key => object[key] === value); }
 
-          'E#' : 'F',
-          'Fb' : 'E'
-      };
+    const notes = {
+        'B#' : 'C',
+        'Cb' : 'B',
 
-      if( note && opposite )
-      {
-          return array_search(note,notes);
-      }
+        'E#' : 'F',
+        'Fb' : 'E'
+    };
 
-      return note ? (array_key_exists(note, notes) ? notes[note] : false) : notes;
+    if( note && opposite ) return getKeyByValue(note,notes);
+
+    return note ? notes[note] : notes;
   }
-*/
+
 
   parseKey( key: string )
   {
     if( key )
     {
-        let count = key.length,
+      const count = key.length,
             base  = key.substr(0,1).toUpperCase();
 
-        if( this.getAllNotes.includes(base) )
-        {
-          let flatT  = key.substr(1,4).toLowerCase(),
+      if( this.getAllNotes.includes(base) )
+      {
+        const flatT  = key.substr(1,4).toLowerCase(),
               shrpT  = key.substr(1,5).toLowerCase(),
               flatS  = flatT.substr(0,1),
               shrpS  = shrpT.substr(0,1),
               isFlat = flatT=='flat'  || flatS=='b',
               isShrp = shrpT=='sharp' || shrpS=='#';
 
-          return {
-            'base' : base,
-            'semi' : isFlat ? 'b'    : (isShrp ? '#'     : ''),
-            'text' : isFlat ? 'flat' : (isShrp ? 'sharp' : '')
-          };
-        }
+        return {
+          'base' : base,
+          'semi' : isFlat ? 'b'    : (isShrp ? '#'     : ''),
+          'text' : isFlat ? 'flat' : (isShrp ? 'sharp' : '')
+        };
+      }
     }
 
     return 'false';
+  }
+
+
+  formatNote( note:string )
+  {
+    var base = note.substr(0,1),
+        syms = note.length > 1 ? note.substr(1,2) : false;
+
+    if( syms )
+    {
+        syms.replace('b', '&#9837;');
+        syms.replace('#', '&#9839;');
+    }
+
+    return base+(syms?('<span class="symbol">'+syms+'</span>'):'');
   }
 
 }
