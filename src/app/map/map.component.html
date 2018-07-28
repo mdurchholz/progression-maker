@@ -1,5 +1,4 @@
 <!--
-
 <?php foreach($getNotes as $index=>$note): $i=$index+1; ?>
 <div id="note-<?php echo $i; ?>" class="note<?php if( $enh = $note['enharmonic'] ){ echo ' hasEnharmonic'; } ?>">
 	<span class="spot"><?php echo $index ? $i : 'TONIC'; ?></span>
@@ -23,13 +22,22 @@
 	<span class="root"><?php echo formatNote($note['friendly']); ?><span class="symbol dim">&deg;</span></span>
 </div>
 <?php endif; endforeach; ?>
-
 -->
+<div id="{{scale}}-wrap" class="va-m app-wrap">
+	<span class="fill"></span>
+	<div>
+		<div id="wrapper">
+            <heading></heading>
 
-<div id="map-wrap">
-	<img src="assets/img/major-key-map.jpg" class="map" alt="Major Key Map">
-	<div id="note-1" class="note">
-		<span class="spot">TONIC</span>
-		<span class="root">X</span>
-	</div>
+			<navigation></navigation>
+
+			<div id="map-wrap">
+				<img src="assets/img/{{scale}}-key-map.jpg" class="map" alt="Major Key Map">
+				<div id="note-1" class="note">
+					<span class="spot">TONIC</span>
+					<span class="root">X</span>
+				</div>
+			</div>
+        </div>
+    </div>
 </div>

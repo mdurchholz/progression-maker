@@ -1,15 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { GlobalService } from './global.service';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { HeadingComponent } from './heading/heading.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { WelcomeComponent } from './welcome/welcome.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
     AppComponent,
     NavigationComponent,
     routingComponents,
-    WelcomeComponent
+    WelcomeComponent,
+    HeadingComponent
   ],
   imports: [
     BrowserModule,

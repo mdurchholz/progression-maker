@@ -1,39 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { GlobalService } from './global.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-    public note;
-    public title;
-    public getPaths;
+    constructor() { }
 
-    constructor(private router: Router, private global: GlobalService ) {
-        const tree = router.parseUrl(window.location.pathname),
-              path = tree.root.children.primary;
+    ngOnInit() { }
 
-        this.getPaths = path ? path.segments : false;
-    }
-
-    ngOnInit() {
-        function capitalize(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
-
-        if( this.getPaths )
-        {
-            var scale  = capitalize(this.getPaths[0].path),
-                getKey = this.global.parseKey(this.getPaths[1].path);
-
-            this.note  = this.global.formatNote(getKey['base']+getKey['semi']);
-            this.title = scale+' Chord Map';
-        }
-        else
-        {
-            this.title = 'Welcome!';
-        }
-    }
 }

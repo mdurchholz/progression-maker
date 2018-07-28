@@ -27,17 +27,18 @@ export class AuthGuard implements CanActivate {
       redirect = true;
     }
 
-    if( next.url[1] )
+    if( next.url.length > 1 )
     {
-      var checkKey = next.url[1].path,
-          parseKey = this.global.parseKey( checkKey.toLowerCase() ),
-          keySemi  = parseKey['base']+parseKey['semi'],
-          keyText  = parseKey['base']+parseKey['text'],
-          enharmonic = this.global.getEnharmonics(keySemi);
+      getKey = next.url[1].path;
 
-      if( checkKey != keyText || enharmonic )
+      var parseKey = this.global.parseKey( getKey.toLowerCase() ),
+          keySemi  = parseKey ? parseKey['base']+parseKey['semi'] : parseKey,
+          keyText  = parseKey ? parseKey['base']+parseKey['text'] : parseKey,
+          enharmonic = keySemi ? this.global.getEnharmonics(keySemi) : keySemi;
+
+      if( getKey != keyText || enharmonic )
       {
-        getKey = enharmonic ? enharmonic : keyText;
+        getKey = enharmonic ? enharmonic : (keyText ? keyText : ( (getScale=='minor') ? 'A' : 'C' ));
         redirect = true;
       }
     }

@@ -35,7 +35,7 @@ export class GlobalService {
   }
 
 
-  parseKey( key: string )
+  parseKey( key:string )
   {
     if( key )
     {
@@ -63,18 +63,20 @@ export class GlobalService {
   }
 
 
-  formatNote( note:string )
+  formatNote( note:string, semi:string )
   {
-    var base = note.substr(0,1),
-        syms = note.length > 1 ? note.substr(1,2) : false;
-
-    if( syms )
+    if( semi )
     {
-        syms.replace('b', '&#9837;');
-        syms.replace('#', '&#9839;');
+        semi.replace('b', '&#9837;');
+        semi.replace('#', '&#9839;');
+
+        semi = '<span class="symbol">'+semi+'</span>';
     }
 
-    return base+(syms?('<span class="symbol">'+syms+'</span>'):'');
+    return note+semi;
   }
+
+
+  capitalize(str:string) { return str.charAt(0).toUpperCase() + str.slice(1); }
 
 }
