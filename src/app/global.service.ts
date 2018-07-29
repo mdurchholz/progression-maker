@@ -9,7 +9,7 @@ export class GlobalService {
   constructor( private router:Router ) {
 
   }
-  
+
   public capitalize(str:string) { return str.charAt(0).toUpperCase() + str.slice(1); }
 
   public getPaths(){
@@ -88,4 +88,96 @@ export class GlobalService {
 
     return note+semi;
   }
+
+  public getNotes( starting:string, scale:string )
+  {
+    var allNotes = this.getAllNotes,
+        cntNotes = allNotes.length,
+
+        newScale = [],
+        parseKey = this.parseKey( starting );
+
+    return parseKey;
+  }
+  /*
+  function getNotes( $starting=null, $scale=null )
+  {
+      if( is_null($starting) || is_null($scale) ){ return false; }
+
+      $allNotes = getAllNotes();
+      $cntNotes = count($allNotes);
+
+      $newScale = [];
+      $parseKey = parseKey( $starting );
+      $position = getNotePosition($parseKey['base'].$parseKey['semi'])[0];
+
+      $shrpFlat = false;
+
+      $checkArr = [];
+      $checkPos = getNotePosition($parseKey['base'])[0];
+      $rearange = array_merge(array_slice($allNotes,$checkPos), array_slice($allNotes,0,$checkPos));
+
+      foreach( $rearange as $note ){ if( !is_array($note) ) array_push($checkArr, $note); }
+
+      foreach( $scale as $index=>$step )
+      {
+          $note       = $allNotes[ $position % $cntNotes ];
+          $noteCheck  = $checkArr[ $index ];
+          $friendly   = $note;
+          $enharmonic = false;
+
+          if( is_array($note) )
+          {
+              foreach( $note as $opt=>$option )
+              {
+                  if( $noteCheck == parseKey($option)['base'] )
+                  {
+                      $shrpFlat = $opt;
+                      $friendly = $note[$shrpFlat];
+                  }
+              }
+          }
+          else if( $note != $noteCheck )
+          {
+              $pKey = parseKey( $note );
+              $pKey = $pKey['base'].$pKey['semi'];
+
+              $enharmonic = getEnharmonics($pKey, true) ?: $noteCheck.($shrpFlat===0?'##':'bb');
+          }
+
+          array_push($newScale, [
+              'options'    => $note,
+              'friendly'   => $friendly,
+              'enharmonic' => $enharmonic,
+              'testing'    => $noteCheck
+          ]);
+
+          $position += $step;
+      }
+
+      return $newScale;
+  }
+
+  function getNotePosition( $key )
+  {
+    $position = null;
+
+    foreach( getAllNotes() as $index=>$note )
+    {
+      if( is_array($note) )
+      {
+        foreach( $note as $s=>$semi )
+        {
+          if( $semi==$key ) $position = [$index, $s];
+        }
+      }
+      elseif( $note==$key )
+      {
+        $position = [$index];
+      }
+    }
+
+    return $position;
+  }
+  */
 }
