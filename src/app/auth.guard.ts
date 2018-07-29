@@ -41,6 +41,10 @@ export class AuthGuard implements CanActivate {
         getKey = enharmonic ? enharmonic : (keyText ? keyText : ( (getScale=='minor') ? 'A' : 'C' ));
         redirect = true;
       }
+      else if( next.url.length > 2 )
+      {
+        redirect = true;
+      }
     }
     else
     {

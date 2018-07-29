@@ -1,23 +1,37 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService {
 
-  constructor() { }
+  constructor( private router:Router ) {
 
-             //   c d e f g a b c
-  getMajorScale = [2,2,1,2,2,2,1];
+  }
+  
+  public capitalize(str:string) { return str.charAt(0).toUpperCase() + str.slice(1); }
 
-             //   a b c d e f g a
-  getMinorScale = [2,1,2,2,1,2,2];
+  public getPaths(){
+    var tree = this.router.parseUrl(window.location.pathname).root.children.primary.segments;
+
+    return {
+      'scale' : tree[0].path,
+      'key'   : this.parseKey(tree[1].path)
+    };
+  }
+
+                    //   c d e f g a b c
+  public getMajorScale = [2,2,1,2,2,2,1];
+
+                    //   a b c d e f g a
+  public getMinorScale = [2,1,2,2,1,2,2];
 
 
-  getAllNotes = ['A',['A#','Bb'],'B','C',['C#','Db'],'D',['D#','Eb'],'E','F',['F#','Gb'],'G',['G#','Ab']];
+  public getAllNotes = ['A',['A#','Bb'],'B','C',['C#','Db'],'D',['D#','Eb'],'E','F',['F#','Gb'],'G',['G#','Ab']];
 
 
-  getEnharmonics( note:string = null, opposite:boolean = false )
+  public getEnharmonics( note:string = null, opposite:boolean = false )
   {
     function getKeyByValue(value, object) { return Object.keys(object).find(key => object[key] === value); }
 
@@ -35,7 +49,7 @@ export class GlobalService {
   }
 
 
-  parseKey( key:string )
+  public parseKey( key:string )
   {
     if( key )
     {
@@ -63,20 +77,15 @@ export class GlobalService {
   }
 
 
-  formatNote( note:string, semi:string )
+  public formatNote( note:string, semi:string )
   {
     if( semi )
     {
-        semi.replace('b', '&#9837;');
-        semi.replace('#', '&#9839;');
+        semi.replace('b', '&#9837;').replace('#', '&#9839;');
 
         semi = '<span class="symbol">'+semi+'</span>';
     }
 
     return note+semi;
   }
-
-
-  capitalize(str:string) { return str.charAt(0).toUpperCase() + str.slice(1); }
-
 }

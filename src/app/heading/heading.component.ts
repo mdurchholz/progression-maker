@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { GlobalService } from '../global.service';
 
 @Component({
@@ -10,25 +10,20 @@ import { GlobalService } from '../global.service';
 export class HeadingComponent implements OnInit {
 
     public title;
-    public getPaths;
 
-    constructor(private router: Router, private global: GlobalService) {
-        this.getPaths = router.parseUrl(window.location.pathname).root.children.primary.segments;
+    constructor( private router:Router, private global:GlobalService ) {
+      this.router.events.subscribe((evt) => {
+        if (evt instanceof NavigationEnd) {
+          this.ngOnInit();
+        }
+      });
     }
 
     ngOnInit() {
-
-      if( this.getPaths )
-      {
-        var scale  = this.global.capitalize(this.getPaths[0].path),
-            getKey = this.global.parseKey(this.getPaths[1].path);
-
-        this.title = this.global.formatNote(getKey['base'],getKey['semi']) + ' ' + scale + ' Chord Map';
-      }
-      else
-      {
-        this.title = 'Welcome!';
-      }
+      this.title = this.formatHeading(this.global.getPaths()['key'], this.global.getPaths()['scale']);
     }
 
+    formatHeading(key, scale){
+      return this.global.formatNote(key['base'],key['semi']) + ' ' + this.global.capitalize(scale) + ' Chord Map';
+    }
 }
