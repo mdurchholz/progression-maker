@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
 import { GlobalService } from '../global.service';
+// import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'navigation',
@@ -9,34 +9,38 @@ import { GlobalService } from '../global.service';
 })
 export class NavigationComponent implements OnInit {
 
-  public notes = [];
-  public scale = '';
-  public key = {};
-  private hasSemi;
+  notes:object;
+  newKey:object;
+  hasSemi:boolean;
 
-  constructor(private global:GlobalService, private router:Router) {
-    this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd) {
-        this.ngOnInit();
-      }
-    });
-  }
+  constructor( private global:GlobalService ) { }
 
   ngOnInit() {
     this.notes = this.global.getAllNotes;
-    this.scale = this.global.getPaths()['scale'];
-    this.key   = this.global.getPaths()['key'];
-    this.hasSemi = this.key['text'] ? true : false;
+
+    this.global.appKey.subscribe(
+      gKey => (
+        this.newKey  = gKey,
+        this.hasSemi = gKey.note.semi ? true : false
+      )
+    );
   }
 
-  semiButtons( semi ) {
-         if(   !this.hasSemi   ) this.hasSemi = true;
-    else if( this.key['text'] == semi ) this.hasSemi = false;
+  semiButtons( type ) {
+    if( !this.hasSemi )
+      this.hasSemi = true;
+    else if( this.newKey['note']['semi'] == type )
+      this.hasSemi = false;
 
-    this.key['text'] = this.hasSemi ? semi : '';
+    this.newKey['note']['semi'] = this.hasSemi ? type : '';
   }
 
-  changeMap( scale, key, semi ) {
-    this.router.navigate([scale+'/'+key+semi]);
+  changeMap( newKey ) {
+
+    newKey.note = this.global.getEnharmonics(newKey.note);
+
+    this.global.setKey( newKey );
+
+    // this.router.navigate([scale+'/'+key+semi]);
   }
 }

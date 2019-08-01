@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
 import { GlobalService } from '../global.service';
+// import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'heading',
@@ -9,21 +9,15 @@ import { GlobalService } from '../global.service';
 })
 export class HeadingComponent implements OnInit {
 
-    public title;
+    title:string;
 
-    constructor( private router:Router, private global:GlobalService ) {
-      this.router.events.subscribe((evt) => {
-        if (evt instanceof NavigationEnd) {
-          this.ngOnInit();
-        }
-      });
-    }
+    constructor( private global:GlobalService ) { }
 
     ngOnInit() {
-      this.title = this.formatHeading(this.global.getPaths()['key'], this.global.getPaths()['scale']);
+      this.global.appKey.subscribe( gKey => this.title = this.formatHeading(gKey) );
     }
 
-    formatHeading(key, scale){
-      return this.global.formatNote(key['base'],key['semi']) + ' ' + this.global.capitalize(scale) + ' Chord Map';
+    formatHeading( getKey ) {
+      return this.global.formatNote(getKey.note) + ' ' + this.global.capitalize(getKey.scale) + ' Chord Map';
     }
 }

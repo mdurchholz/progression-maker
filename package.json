@@ -22,6 +22,7 @@
     "@angular/router": "^6.0.9",
     "bootstrap-sass": "^3.3.7",
     "core-js": "^2.5.4",
+    "help": "^3.0.2",
     "rxjs": "^6.2.2",
     "zone.js": "^0.8.26"
   },

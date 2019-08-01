@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
 import { GlobalService } from '../global.service';
 
 @Component({
@@ -7,19 +6,21 @@ import { GlobalService } from '../global.service';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
+
 export class MapComponent implements OnInit {
 
-  public scale;
+  scale:string;
+  baseN:string;
 
-  constructor(private router:Router, private global:GlobalService) {
-    this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd) {
-        this.ngOnInit();
-      }
-    });
-  }
+  constructor( private global:GlobalService ) {  }
 
   ngOnInit() {
-    this.scale = this.global.getPaths()['scale'];
+    this.global.appKey.subscribe(
+        gKey => (
+            this.scale = gKey.scale,
+            this.baseN = this.global.formatNote(gKey.note)
+        )
+    )
   }
+
 }

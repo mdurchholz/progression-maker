@@ -1,74 +1,80 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+// import { Router } from '@angular/router';
 
-@Injectable({
-  providedIn: 'root'
-})
+// @Injectable({
+//   providedIn: 'root'
+// })
+@Injectable()
 export class GlobalService {
 
-  constructor( private router:Router ) {
-
-  }
+  // constructor( private router:Router ) { }
+  constructor( ) { }
 
   public capitalize(str:string) { return str.charAt(0).toUpperCase() + str.slice(1); }
 
-  public getPaths(){
-    var tree = this.router.parseUrl(window.location.pathname).root.children.primary.segments;
+  // public getPaths(){
+  //   var tree = this.router.parseUrl(window.location.pathname).root.children.primary.segments;
+  //
+  //   return {
+  //     'scale' : tree[0].path,
+  //     'key'   : this.parseNote(tree[1].path)
+  //   };
+  // }
 
-    return {
-      'scale' : tree[0].path,
-      'key'   : this.parseKey(tree[1].path)
-    };
-  }
+             //   c d e f g a b c
+  getMajorScale = [2,2,1,2,2,2,1];
 
-                    //   c d e f g a b c
-  public getMajorScale = [2,2,1,2,2,2,1];
-
-                    //   a b c d e f g a
-  public getMinorScale = [2,1,2,2,1,2,2];
-
-
-  public getAllNotes = ['A',['A#','Bb'],'B','C',['C#','Db'],'D',['D#','Eb'],'E','F',['F#','Gb'],'G',['G#','Ab']];
+             //   a b c d e f g a
+  getMinorScale = [2,1,2,2,1,2,2];
 
 
-  public getEnharmonics( note:string = null, opposite:boolean = false )
+  getAllNotes = ['A',['A#','Bb'],'B','C',['C#','Db'],'D',['D#','Eb'],'E','F',['F#','Gb'],'G',['G#','Ab']];
+
+  enharmonics = { 'B#':'C', 'Cb':'B', 'E#':'F', 'Fb':'E' };
+
+
+  private keySource = new BehaviorSubject<any>({ note:{base:'C',semi:''}, scale:'major' });
+
+  public appKey = this.keySource.asObservable();
+
+  public getKey() { return this.appKey; }
+
+  public setKey( newKey:any ) { this.keySource.next(Object.assign(this.keySource.value,{ note:newKey.note, scale:newKey.scale })); }
+
+  public getKeyByValue( value, object ) { return Object.keys(object).find(key => object[key] === value); }
+
+  public getEnharmonics( note:any, opposite:boolean = false )
   {
-    function getKeyByValue(value, object) { return Object.keys(object).find(key => object[key] === value); }
+    var newNote = note,
+        txtNote = note.base+note.semi;
 
-    const notes = {
-        'B#' : 'C',
-        'Cb' : 'B',
-
-        'E#' : 'F',
-        'Fb' : 'E'
-    };
-
-    if( note && opposite ) return getKeyByValue(note,notes);
-
-    return note ? notes[note] : notes;
-  }
-
-
-  public parseKey( key:string )
-  {
-    if( key )
+    if( this.enharmonics[txtNote] )
     {
-      const count = key.length,
-            base  = key.substr(0,1).toUpperCase();
+        newNote.base = this.enharmonics[txtNote];
+        newNote.semi = '';
+    }
+
+    return newNote;
+  }
+
+
+  public parseNote( note:string )
+  {
+    if( note )
+    {
+      const base = note.substr(0,1).toUpperCase();
+
+      console.log(base);
 
       if( this.getAllNotes.includes(base) )
       {
-        const flatT  = key.substr(1,4).toLowerCase(),
-              shrpT  = key.substr(1,5).toLowerCase(),
-              flatS  = flatT.substr(0,1),
-              shrpS  = shrpT.substr(0,1),
-              isFlat = flatT=='flat'  || flatS=='b',
-              isShrp = shrpT=='sharp' || shrpS=='#';
+        const isFlat = note.substr(1,1).toLowerCase()=='b',
+              isShrp = note.substr(1,1).toLowerCase()=='#';
 
         return {
           'base' : base,
-          'semi' : isFlat ? 'b'    : (isShrp ? '#'     : ''),
-          'text' : isFlat ? 'flat' : (isShrp ? 'sharp' : '')
+          'semi' : isFlat ? 'b' : (isShrp ? '#' : '')
         };
       }
     }
@@ -77,17 +83,46 @@ export class GlobalService {
   }
 
 
-  public formatNote( note:string, semi:string )
+  public formatNote( note:any )
   {
+    var semi = note.semi,
+        html = note.base;
+
     if( semi )
     {
-        semi.replace('b', '&#9837;').replace('#', '&#9839;');
+      semi = semi.replace('b', '&#9837;').replace('#', '&#9839;');
 
-        semi = '<span class="symbol">'+semi+'</span>';
+      html += '<span class="symbol">'+semi+'</span>';
     }
 
-    return note+semi;
+    return html;
   }
+
+
+  public getNotePosition( key:string )
+  {
+    var position = null;
+
+    for(var i=0; i<this.getAllNotes.length; i++)
+    {
+      var note = this.getAllNotes[i];
+
+      if( typeof note == 'object' )
+      {
+        for(var j=0; j<note.length; j++)
+        {
+          if( note[j]==key ) position = [i, j];
+        }
+      }
+      else if( note==key )
+      {
+        position = [i];
+      }
+    }
+
+    return position;
+  }
+
 
   public getNotes( starting:string, scale:string )
   {
@@ -95,10 +130,21 @@ export class GlobalService {
         cntNotes = allNotes.length,
 
         newScale = [],
-        parseKey = this.parseKey( starting );
+        getNote = this.parseNote( starting ),
+        position = this.getNotePosition(getNote['base']+getNote['semi'])[0],
 
-    return parseKey;
+        shrpFlat = false,
+
+        checkArr = [],
+        checkPos = this.getNotePosition(getNote['base'])[0];
+        // $rearange = array_mergearray_slice($allNotes,$checkPos), array_slice($allNotes,0,$checkPos));
+
+    // console.log(parseNote['base']);
+    // console.log(checkPos);
+
+    return position;
   }
+
   /*
   function getNotes( $starting=null, $scale=null )
   {
@@ -108,13 +154,13 @@ export class GlobalService {
       $cntNotes = count($allNotes);
 
       $newScale = [];
-      $parseKey = parseKey( $starting );
-      $position = getNotePosition($parseKey['base'].$parseKey['semi'])[0];
+      $parseNote = parseNote( $starting );
+      $position = getNotePosition($parseNote['base'].$parseNote['semi'])[0];
 
       $shrpFlat = false;
 
       $checkArr = [];
-      $checkPos = getNotePosition($parseKey['base'])[0];
+      $checkPos = getNotePosition($parseNote['base'])[0];
       $rearange = array_merge(array_slice($allNotes,$checkPos), array_slice($allNotes,0,$checkPos));
 
       foreach( $rearange as $note ){ if( !is_array($note) ) array_push($checkArr, $note); }
@@ -130,7 +176,7 @@ export class GlobalService {
           {
               foreach( $note as $opt=>$option )
               {
-                  if( $noteCheck == parseKey($option)['base'] )
+                  if( $noteCheck == parseNote($option)['base'] )
                   {
                       $shrpFlat = $opt;
                       $friendly = $note[$shrpFlat];
@@ -139,7 +185,7 @@ export class GlobalService {
           }
           else if( $note != $noteCheck )
           {
-              $pKey = parseKey( $note );
+              $pKey = parseNote( $note );
               $pKey = $pKey['base'].$pKey['semi'];
 
               $enharmonic = getEnharmonics($pKey, true) ?: $noteCheck.($shrpFlat===0?'##':'bb');
@@ -156,28 +202,6 @@ export class GlobalService {
       }
 
       return $newScale;
-  }
-
-  function getNotePosition( $key )
-  {
-    $position = null;
-
-    foreach( getAllNotes() as $index=>$note )
-    {
-      if( is_array($note) )
-      {
-        foreach( $note as $s=>$semi )
-        {
-          if( $semi==$key ) $position = [$index, $s];
-        }
-      }
-      elseif( $note==$key )
-      {
-        $position = [$index];
-      }
-    }
-
-    return $position;
-  }
+  // }
   */
 }

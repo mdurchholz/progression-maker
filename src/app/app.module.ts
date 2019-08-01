@@ -7,10 +7,9 @@ import { AppRoutingModule, routingComponents } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { GlobalService } from './global.service';
-import { WelcomeComponent } from './welcome/welcome.component';
 import { HeadingComponent } from './heading/heading.component';
 import { NavigationComponent } from './navigation/navigation.component';
-
+import { MapComponent } from './map/map.component';
 
 
 @NgModule({
@@ -18,8 +17,8 @@ import { NavigationComponent } from './navigation/navigation.component';
     AppComponent,
     NavigationComponent,
     routingComponents,
-    WelcomeComponent,
-    HeadingComponent
+    HeadingComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

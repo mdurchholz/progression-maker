@@ -137,8 +137,9 @@ body                                                        { background: #fff; 
 #scale-select                                               { display: none; width: 25%; font-size: 60px; text-transform: uppercase;}
 
 
-#map-wrap                                                   { position: relative; margin: 0 0 60px;}
-#map-wrap .map                                              { display: none; width: 100%;}
+.map-wrap                                                   { position: relative; margin: 0 0 60px;
+    .map                                                    { display: none; width: 100%;}
+}
 
 #major-wrap .map.major,
 #minor-wrap .map.minor                                      { display: block;}
@@ -180,11 +181,11 @@ body                                                        { background: #fff; 
 
     #note-select                                            { top: 32%; left: 0; right: 4.5%;}
 
-    #note-1                                                 { top: 3%; left: 40.5%;}
+    #note-1                                                 { top: 3%;  left: 40.5%;}
     #note-2                                                 { top: 65%; left: 0%;}
     #note-3                                                 { top: 65%; left: 26%;}
-    #note-4                                                 { top: 5%; left: 78%;}
-    #note-5                                                 { top: 5%; left: 6%;}
+    #note-4                                                 { top: 5%;  left: 78%;}
+    #note-5                                                 { top: 5%;  left: 6%;}
     #note-6                                                 { top: 65%; left: 55%;}
     #note-7                                                 { top: 65%; left: 82%;}
 }
@@ -196,14 +197,14 @@ body                                                        { background: #fff; 
 
     #note-select                                            { top: 17%; right: 13%;}
 
-    #note-1                                                 { top: 5%; left: 75%;}
+    #note-1                                                 { top: 5%;  left: 75%;}
     #note-2                                                 { top: 48%; left: 52%;}
     #note-3                                                 { top: 48%; left: 28%;}
-    #note-4                                                 { top: 5%; left: 28%;}
+    #note-4                                                 { top: 5%;  left: 28%;}
     #note-5                                                 { top: 48%; left: 74.75%;}
-    #note-6                                                 { top: 5%; left: 6.5%;}
+    #note-6                                                 { top: 5%;  left: 6.5%;}
     #note-7                                                 { top: 48%; left: 6%;}
-    #note-7-harmonic                                        { top: 5%; left: 53%;}
+    #note-7-harmonic                                        { top: 5%;  left: 53%;}
 }
 
 

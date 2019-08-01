@@ -31,9 +31,9 @@ export class AuthGuard implements CanActivate {
     {
       getKey = next.url[1].path;
 
-      var parseKey = this.global.parseKey( getKey.toLowerCase() ),
-          keySemi  = parseKey ? parseKey['base']+parseKey['semi'] : parseKey,
-          keyText  = parseKey ? parseKey['base']+parseKey['text'] : parseKey,
+      var parseNote  = this.global.parseNote( getKey.toLowerCase() ),
+          keySemi    = parseNote ? parseNote['base']+parseNote['semi'] : parseNote,
+          keyText    = parseNote ? parseNote['base']+parseNote['text'] : parseNote,
           enharmonic = keySemi ? this.global.getEnharmonics(keySemi) : keySemi;
 
       if( getKey != keyText || enharmonic )
