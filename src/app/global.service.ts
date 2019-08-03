@@ -90,7 +90,7 @@ export class GlobalService {
 
     if( semi )
     {
-      semi = semi.replace('b', '&#9837;').replace('#', '&#9839;');
+      semi = semi.replace('#', '&#9839;').replace('b', '&#9837;');
 
       html += '<span class="symbol">'+semi+'</span>';
     }
