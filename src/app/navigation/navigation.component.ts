@@ -9,38 +9,43 @@ import { GlobalService } from '../global.service';
 })
 export class NavigationComponent implements OnInit {
 
-  notes:object;
   newKey:object;
   hasSemi:boolean;
+  allNotes:object;
 
   constructor( private global:GlobalService ) { }
 
   ngOnInit() {
-    this.notes = this.global.getAllNotes;
+
+    this.allNotes = this.global.getAllNotes;
 
     this.global.appKey.subscribe(
       gKey => (
-        this.newKey  = gKey,
-        this.hasSemi = gKey.note.semi ? true : false
+          this.newKey  = gKey,
+          this.hasSemi = gKey['note']['semi'] ? true : false
       )
     );
+
   }
 
   semiButtons( type ) {
-    if( !this.hasSemi )
+    if( !this.hasSemi ) {
       this.hasSemi = true;
-    else if( this.newKey['note']['semi'] == type )
+    } else if( this.newKey['note']['semi'] == type ) {
       this.hasSemi = false;
+    }
 
     this.newKey['note']['semi'] = this.hasSemi ? type : '';
   }
 
-  changeMap( newKey ) {
+  changeMap( changeKey ) {
+    changeKey['note'] = this.global.checkEnharmonic( changeKey['note'] );
 
-    newKey.note = this.global.getEnharmonics(newKey.note);
+    console.log(changeKey['note']);
 
-    this.global.setKey( newKey );
+    // console.log(changeKey);
 
-    // this.router.navigate([scale+'/'+key+semi]);
+    // this.global.setKey( changeKey );
   }
+
 }

@@ -1,16 +1,16 @@
 <div id="nav-wrap" data-current="">
 	<div class="notes">
-    <ng-template ngFor [ngForOf]="notes" let-note let-i="index">
-		<div class="btn" *ngIf="note.length==1" [class.active]="newKey.note.base==note" (click)="newKey.note.base=note">{{note}}</div>
-    </ng-template>
+	    <ng-template ngFor [ngForOf]="allNotes" let-note let-i="index">
+		<div class="btn" *ngIf="note.length==1" [class.active]="newKey['note']['base']==note" (click)="newKey['note']['base']=note">{{note}}</div>
+	    </ng-template>
 	</div>
 	<div class="semi">
-		<div class="btn" [class.active]="newKey.note.semi=='#'" (click)="semiButtons('#')">&#9839;</div>
-		<div class="btn" [class.active]="newKey.note.semi=='b'" (click)="semiButtons('b')">&#9837;</div>
+		<div class="btn" [class.active]="newKey['note']['semi']=='#'" (click)="semiButtons('#')">&#9839;</div>
+		<div class="btn" [class.active]="newKey['note']['semi']=='b'"  (click)="semiButtons('b')">&#9837;</div>
 	</div>
 	<div class="scale">
-		<div class="btn" [class.active]="newKey.scale=='major'" (click)="newKey.scale='major'">Major</div>
-		<div class="btn" [class.active]="newKey.scale=='minor'" (click)="newKey.scale='minor'">Minor</div>
+		<div class="btn" [class.active]="newKey['scale']=='major'" (click)="newKey['scale']='major'">Major</div>
+		<div class="btn" [class.active]="newKey['scale']=='minor'" (click)="newKey['scale']='minor'">Minor</div>
 	</div>
 	<div id="change_scale" class="submit btn" (click)="changeMap(newKey)">Go</div>
 	<!-- <div class="btn-group">

@@ -17,6 +17,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ):Observable<boolean> | Promise<boolean> | boolean {
 
+/*
     var getScale = next.url[0].path.toLowerCase(),
         getKey   = '',
         redirect = false;
@@ -53,6 +54,7 @@ export class AuthGuard implements CanActivate {
     }
 
     if( redirect ) this.router.navigate([getScale+'/'+getKey]);
+    */
 
     return true;
   }

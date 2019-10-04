@@ -9,7 +9,7 @@ import { GlobalService } from '../global.service';
 })
 export class AppWrapComponent implements OnInit {
 
-  constructor( private global:GlobalService ) {  }
+  constructor( private global:GlobalService ) { }
 
   ngOnInit() { }
 

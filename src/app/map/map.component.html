@@ -1,10 +1,13 @@
 <div id="{{scale}}-wrap" class="map-wrap">
 	<img src="assets/img/major-key-map.jpg" class="major map" alt="Major Key Map">
 	<img src="assets/img/minor-key-map.jpg" class="minor map" alt="Minor Key Map">
-	<div id="note-1" class="note">
-		<span class="spot">TONIC</span>
-		<span class="root" [innerHTML]=baseN></span>
+
+	<ng-template ngFor [ngForOf]="getNotes" let-note let-i="index">
+	<div id="note-{{i+1}}" class="note">
+		<span class="spot">{{!i ? 'TONIC' : i+1}}</span>
+		<span class="root" [innerHTML]="noteOpts(note, i)"></span>
 	</div>
+	</ng-template>
 </div>
 <!--
 <?php foreach($getNotes as $index=>$note): $i=$index+1; ?>
