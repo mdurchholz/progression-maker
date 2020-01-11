@@ -25,27 +25,26 @@ export class NavigationComponent implements OnInit {
           this.hasSemi = gKey['note']['semi'] ? true : false
       )
     );
-
   }
 
-  semiButtons( type ) {
+  baseButtonClick( base ) {
+    this.newKey['note']['base'] = base;
+  }
+
+  semiButtonClick( semi ) {
     if( !this.hasSemi ) {
       this.hasSemi = true;
-    } else if( this.newKey['note']['semi'] == type ) {
+  } else if( this.newKey['note']['semi'] == semi ) {
       this.hasSemi = false;
     }
 
-    this.newKey['note']['semi'] = this.hasSemi ? type : '';
+    this.newKey['note']['semi'] = this.hasSemi ? semi : '';
   }
 
   changeMap( changeKey ) {
     changeKey['note'] = this.global.checkEnharmonic( changeKey['note'] );
 
-    console.log(changeKey['note']);
-
-    // console.log(changeKey);
-
-    // this.global.setKey( changeKey );
+    this.global.setKey( changeKey );
   }
 
 }

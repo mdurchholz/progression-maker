@@ -11,6 +11,7 @@ export class MapComponent implements OnInit {
 
   scale:string;
   getNotes:any;
+  getNotesTest:any;
 
   constructor( private global:GlobalService ) { }
 
@@ -19,19 +20,23 @@ export class MapComponent implements OnInit {
       gKey => (
         this.scale = gKey['scale'],
 
-        this.getNotes = this.global.getScaleNotes(gKey)
+        this.getNotes = this.global.getScaleNotes(gKey),
+        this.getNotesTest = 0
       )
     )
-
-    // console.log(this.getNotes);
   }
 
-  noteOpts( details, test ) {
-    var html = details['friendly'].note;
+  noteOpts( details ) {
+    var friendly = details['friendly'],
+        noteHTML = '<span class="friendly">'+this.global.noteObjectToString(details['friendly'], true);
 
-    html = '<span class="friendly">'+this.global.formatNote(html, true)+'</span>';
+    if( details['technical'] ) {
 
-    return html;
+    }
+
+    noteHTML += '</span>';
+
+    return noteHTML;
   }
 
 }

@@ -16,7 +16,7 @@ export class GlobalService {
 
     return {
       'scale' : tree[0].path,
-      'key'   : this.parseNote(tree[1].path)
+      'key'   : this.noteStringToObject(tree[1].path)
     };
   }
 */
@@ -35,7 +35,7 @@ export class GlobalService {
 
   public getKey() { return this.appKey; }
 
-  public setKey( newKey:object ) { this.keySource.next( Object.assign(this.keySource.value,{ note:newKey['note'], scale:newKey['scale'] }) ); }
+  public setKey( newKey:object ) { this.keySource.next( Object.assign(this.keySource.value, newKey) ); }
 
   private getKeyByValue( value, object ) { return Object.keys(object).find(key => object[key] === value); }
 
@@ -51,29 +51,43 @@ export class GlobalService {
     return steps;
   }
 
-
-  public checkEnharmonic( note:any, opposite:boolean = false ) {
+  public checkEnharmonic( note:object ) {
     var newNote = note,
-        txtNote = this.formatNote(note);
+        hasNote = this.enharmonics[ this.noteObjectToString(note) ];
 
-    if( this.enharmonics[txtNote] ) {
-        newNote = this.parseNote( this.enharmonics[txtNote] );
-      // console.log( newNote );
-    }
+    if( hasNote ) newNote = this.noteStringToObject( hasNote );
 
-    // return opposite ? this.getKeyByValue(newNote,this.enharmonics) : newNote;
     return newNote;
   }
 
+  public getEnharmonic( note:object ) {
+    console.log('getEnharmonic note:'+note);
 
-  public formatNote( note:object, html:boolean = false ) {
-    var text = note['base'];
+    var newNote  = this.noteObjectToString( note ),
+        position = this.getNotePosition( note );
 
-    if( note['semi'] ) {
+    if( typeof position === 'object' ) {
+      newNote = this.getAllNotes[position[0]][position[1] ? 0 : 1];
+    }else{
+
+    }
+
+    console.log('getEnharmonic newNote:'+newNote);
+
+    return this.noteStringToObject( newNote );
+  }
+
+
+  // Object to string. Option to retun HTML
+  public noteObjectToString( note:object, html:boolean = false ) {
+    var text = note['base'],
+        semi = note['semi'];
+
+    if( semi ) {
       if( html ) {
-        text += '<span class="symbol">'+note['semi'].replace('#', '&sharp;').replace('b', '&flat;')+'</span>';
+        text += '<span class="symbol">'+semi.replace('#', '&sharp;').replace('b', '&flat;')+'</span>';
       } else {
-        text += note['semi'];
+        text += semi;
       }
     }
 
@@ -81,27 +95,29 @@ export class GlobalService {
   }
 
 
-  public parseNote( note:string ) {
-    var object = { note : { base:note.substr(0,1), semi:null }};
+  // String to Note Object
+  public noteStringToObject( newNote:string ) {
+    var object = { base:newNote.substr(0,1), semi:null };
 
-    if( note.length > 1 ) { object['note']['semi'] = note.substr(1,1); }
+    if( newNote.substr(1,1) ) { object['semi'] = newNote.substr(1,1); }
 
     return object;
   }
 
 
-  public getNotePosition( checkNote:object ) {
+  // Get array positioning of note object
+  public getNotePosition( noteObject:object ) {
     var position = null,
-        chckNote = this.formatNote(checkNote);
+        noteString = this.noteObjectToString(noteObject);
 
     for(var i=0; i<this.getAllNotes.length; i++) {
       var note = this.getAllNotes[i];
 
       if( typeof note == 'object' ) {
         for(var j=0; j<note.length; j++) {
-          if( note[j]==chckNote ) position = [i, j];
+          if( note[j]==noteString ) { position = [i, j]; }
         }
-    } else if( note==chckNote ) {
+    } else if( note==noteString ) {
         position = [i];
       }
     }
@@ -111,66 +127,51 @@ export class GlobalService {
 
 
   public getScaleNotes( key:object ) {
+
     var allNotes = this.getAllNotes,
         getSteps = this.getScaleSteps( key['scale'] ),
         newScale = [],
 
         getPosi  = this.getNotePosition( key['note'] ),
         getStart = getPosi[0],
-        getSemi  = getPosi[1],
+        shrpFlat = getPosi[1] ? getPosi[1] : 0,
 
-        rearange = allNotes.slice(getStart).concat( allNotes.slice(0,getStart) );
+        rearange = allNotes.slice(getStart).concat( allNotes.slice(0,getStart) ),
+
+        checkArr = [];
+
+    for( var note=0; note < rearange.length; note++ ) {
+      if( typeof rearange[note] !== 'object' && (checkArr.length < getSteps.length) ) {
+        checkArr.push(rearange[note]);
+    } else if( !note && !shrpFlat ) {
+        checkArr.push( rearange[note][shrpFlat].substr(0,1) );
+      }
+    }
 
     for( var i=0,position=0; i < getSteps.length; i++ ) {
-        var newNote = rearange[position];
+        var newNote = rearange[position],
+            technical = null,
+            friendly  = null;
 
-        if( typeof newNote === 'object' ) {
-            newNote = rearange[position][getSemi];
+        if( typeof newNote === 'object' ) newNote = rearange[position][shrpFlat];
+
+        friendly = this.noteStringToObject(newNote);
+
+        if( checkArr[i] != friendly['base'] ) {
+
+            friendly = this.getEnharmonic( friendly );
+
+            console.log('getScaleNotes change newNote '+(i+1)+': ', friendly);
+
+            // technical = true;
         }
 
-        newScale[i] = {
-            technical : '',
-            friendly  : this.parseNote( newNote )
-        };
+        newScale[i] = { technical:technical, friendly:friendly };
 
         position += getSteps[i];
     }
-/*
-    for( var note=0; note < rearange.length; note++ ) {
-      if( typeof rearange[note] === 'object' )
-        checkArr.push(rearange[note]);
-    }
 
-    for( var index=0; index < getScale.length; index++ ) {
-      var noteStart  = allNotes[ position % allNotes.length ],
-          noteCheck  = checkArr[ index ],
-          // scaleNote  = this.parseNote( noteStart ),
-          enharmonic = false;
-
-         console.log( noteStart );
-
-      if( typeof noteStart == 'object' ) {
-        // for( var opt=0; opt<noteStart.length; opt++ ) {
-        //   if( noteCheck == noteStart[opt].substr(0,1) ) {
-        //     shrpFlat = opt;
-        //     friendly['semi'] = noteStart[opt];
-        //   }
-        // }
-      } else if( noteStart != noteCheck ) {
-        var checkEnhar = this.getEnharmonics(noteStart, true);
-
-        enharmonic = checkEnhar ? checkEnhar: noteCheck+(!shrpFlat?'##':'bb');
-      }
-
-      newScale.push({
-         // 'friendly' : friendly,
-        // 'enharmonic' : enharmonic
-      });
-
-      position += getScale[index];
-    }
-*/
-    // console.log( newScale );
+    console.log('getScaleNotes newScale: ', newScale);
 
     return newScale;
   }

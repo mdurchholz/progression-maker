@@ -1,12 +1,12 @@
 <div id="nav-wrap" data-current="">
 	<div class="notes">
 	    <ng-template ngFor [ngForOf]="allNotes" let-note let-i="index">
-		<div class="btn" *ngIf="note.length==1" [class.active]="newKey['note']['base']==note" (click)="newKey['note']['base']=note">{{note}}</div>
+		<div class="btn" *ngIf="note.length==1" [class.active]="newKey['note']['base']==note" (click)="baseButtonClick(note)">{{note}}</div>
 	    </ng-template>
 	</div>
 	<div class="semi">
-		<div class="btn" [class.active]="newKey['note']['semi']=='#'" (click)="semiButtons('#')">&#9839;</div>
-		<div class="btn" [class.active]="newKey['note']['semi']=='b'"  (click)="semiButtons('b')">&#9837;</div>
+		<div class="btn" [class.active]="newKey['note']['semi']=='#'" (click)="semiButtonClick('#')">&#9839;</div>
+		<div class="btn" [class.active]="newKey['note']['semi']=='b'"  (click)="semiButtonClick('b')">&#9837;</div>
 	</div>
 	<div class="scale">
 		<div class="btn" [class.active]="newKey['scale']=='major'" (click)="newKey['scale']='major'">Major</div>
