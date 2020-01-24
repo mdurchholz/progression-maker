@@ -25,6 +25,8 @@ export class NavigationComponent implements OnInit {
         this.hasSemi = this.global.getNoteSemi(gKey['note']) !=='' ? true : false
       )
     );
+
+    this.global.isFriendly.subscribe( value => this.showFriendly = value );
   }
 
   baseButtonClick( base ) { this.newKey['base'] = base; }
@@ -39,8 +41,15 @@ export class NavigationComponent implements OnInit {
     this.newKey['semi'] = this.hasSemi ? semi : '';
   }
 
+  friendlyButtonClick( isFriendly ) {
+      this.global.setFriendly(isFriendly);
+  }
+
   changeMap( newKey ) {
-    this.global.setKey( { note: this.global.checkEnharmonic(newKey['base']+newKey['semi']), scale:newKey['scale'] } );
+    this.global.setKey({
+        note  : this.global.checkEnharmonic(newKey['base']+newKey['semi']),
+        scale : newKey['scale']
+    });
   }
 
 }

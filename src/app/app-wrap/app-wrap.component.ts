@@ -9,8 +9,12 @@ import { GlobalService } from '../global.service';
 })
 export class AppWrapComponent implements OnInit {
 
+  showFriendly:boolean;
+
   constructor( private global:GlobalService ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+      this.global.isFriendly.subscribe( value => this.showFriendly = value );
+  }
 
 }

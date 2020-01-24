@@ -150,8 +150,8 @@ body                                                        { background: #fff; 
 
     .root                                                   { font-size: 45px; color: $color-1; background: #fff;
 
-        .technical                                          { display: none;}
-        .friendly                                           { display: inline;}
+        // .technical                                          { display: none;}
+        // .friendly                                           { display: inline;}
 
         .symbol                                             { font-size: 25px;}
 
@@ -166,11 +166,10 @@ body                                                        { background: #fff; 
     }
 }
 
-.show_friendly .note
+.showFriendly .note
 {
-    .technical                                              { display: none;
-        + .friendly                                         { display: inline;}
-    }
+    .technical                                              { display: none;}
+    .friendly                                               { display: inline;}
 }
 
 

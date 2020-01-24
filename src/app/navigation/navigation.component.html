@@ -14,7 +14,7 @@
 	</div>
 	<div id="change_scale" class="submit btn" (click)="changeMap(newKey)">Go</div>
 	<div class="btn-group">
-		<div id="js_technical" class="btn" [class.active]="">Technical</div>
-		<div id="js_friendly" class="btn" [class.active]="">Friendly</div>
+		<div id="js_technical" class="btn" [class.active]="!this.showFriendly" (click)="friendlyButtonClick( false )">Technical</div>
+		<div id="js_friendly"  class="btn" [class.active]="this.showFriendly"  (click)="friendlyButtonClick( true )">Friendly</div>
 	</div>
 </div>

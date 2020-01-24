@@ -14,18 +14,23 @@ export class GlobalService {
 
   getAllNotes = ['A',['A#','Bb'],'B','C',['C#','Db'],'D',['D#','Eb'],'E','F',['F#','Gb'],'G',['G#','Ab']];
 
-  private keySource = new BehaviorSubject<object>({ note:'C', scale:'major' });
+  private keySource  = new BehaviorSubject<object>({ note:'C', scale:'major' });
 
-  public appKey = this.keySource.asObservable();
+  private isFriendly = new BehaviorSubject<boolean>(true);
+
+
+  // Get a key inside an object by the value of th key
+  private getKeyByValue( value, object ) { return Object.keys(object).find(key => object[key] === value); }
+
 
   // Get the current key
+  public appKey = this.keySource.asObservable();
   public getKey() { return this.appKey; }
 
   // Set a new key
   public setKey( newKey:object ) { this.keySource.next( Object.assign(this.keySource.value, newKey) ); }
+  public setFriendly( isFriendly:boolean ) { this.isFriendly.next( isFriendly ); }
 
-  // Get a key inside an object by the value of th key
-  private getKeyByValue( value, object ) { return Object.keys(object).find(key => object[key] === value); }
 
   // Get the base note
   public getNoteBase( note:string ) { return note.substr(0,1); }
