@@ -150,7 +150,7 @@ body                                                        { background: #fff; 
 
     .root                                                   { font-size: 45px; color: $color-1; background: #fff;
 
-        .enharmonic                                         { display: none;}
+        .technical                                          { display: none;}
         .friendly                                           { display: inline;}
 
         .symbol                                             { font-size: 25px;}
@@ -161,17 +161,16 @@ body                                                        { background: #fff; 
         }
     }
 
-    &.hasEnharmonic
-    {
-        .enharmonic                                         { display: inline;}
-        .friendly                                           { display: none;}
+    .technical                                          { display: inline;
+        + .friendly                                     { display: none;}
     }
 }
 
-.show_friendly .note.hasEnharmonic
+.show_friendly .note
 {
-    .enharmonic                                             { display: none;}
-    .friendly                                               { display: inline;}
+    .technical                                              { display: none;
+        + .friendly                                         { display: inline;}
+    }
 }
 
 

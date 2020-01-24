@@ -21,30 +21,26 @@ export class NavigationComponent implements OnInit {
 
     this.global.appKey.subscribe(
       gKey => (
-          this.newKey  = gKey,
-          this.hasSemi = gKey['note']['semi'] ? true : false
+        this.newKey  = { base:this.global.getNoteBase(gKey['note']), semi:this.global.getNoteSemi(gKey['note']), scale:gKey['scale'] },
+        this.hasSemi = this.global.getNoteSemi(gKey['note']) !=='' ? true : false
       )
     );
   }
 
-  baseButtonClick( base ) {
-    this.newKey['note']['base'] = base;
-  }
+  baseButtonClick( base ) { this.newKey['base'] = base; }
 
   semiButtonClick( semi ) {
     if( !this.hasSemi ) {
       this.hasSemi = true;
-  } else if( this.newKey['note']['semi'] == semi ) {
+  } else if( this.newKey['semi'] == semi ) {
       this.hasSemi = false;
     }
 
-    this.newKey['note']['semi'] = this.hasSemi ? semi : '';
+    this.newKey['semi'] = this.hasSemi ? semi : '';
   }
 
-  changeMap( changeKey ) {
-    changeKey['note'] = this.global.checkEnharmonic( changeKey['note'] );
-
-    this.global.setKey( changeKey );
+  changeMap( newKey ) {
+    this.global.setKey( { note: this.global.checkEnharmonic(newKey['base']+newKey['semi']), scale:newKey['scale'] } );
   }
 
 }

@@ -1,44 +1,40 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-// import { Router } from '@angular/router';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-@Injectable()
+@Injectable( )
+
 export class GlobalService {
-
-/*
-  constructor( private router:Router ) { }
-
-  public getPaths(){
-    var tree = this.router.parseUrl(window.location.pathname).root.children.primary.segments;
-
-    return {
-      'scale' : tree[0].path,
-      'key'   : this.noteStringToObject(tree[1].path)
-    };
-  }
-*/
 
   constructor( ) { }
 
+  // Capitalize the first letter of a string
   public capitalize(str:string) { return str.charAt(0).toUpperCase() + str.slice(1); }
 
   enharmonics = { 'B#':'C', 'Cb':'B', 'E#':'F', 'Fb':'E' };
 
   getAllNotes = ['A',['A#','Bb'],'B','C',['C#','Db'],'D',['D#','Eb'],'E','F',['F#','Gb'],'G',['G#','Ab']];
 
-  private keySource = new BehaviorSubject<object>({ note:{base:'C',semi:null}, scale:'major' });
+  private keySource = new BehaviorSubject<object>({ note:'C', scale:'major' });
 
   public appKey = this.keySource.asObservable();
 
+  // Get the current key
   public getKey() { return this.appKey; }
 
+  // Set a new key
   public setKey( newKey:object ) { this.keySource.next( Object.assign(this.keySource.value, newKey) ); }
 
+  // Get a key inside an object by the value of th key
   private getKeyByValue( value, object ) { return Object.keys(object).find(key => object[key] === value); }
 
+  // Get the base note
+  public getNoteBase( note:string ) { return note.substr(0,1); }
+
+  // Get the half note symbol, if any
+  public getNoteSemi( note:string ) { return note.substr(1,1); }
+
+
+  // Get an array of scale steps
   private getScaleSteps( scale:any ) {
     var steps = [];
 
@@ -51,73 +47,39 @@ export class GlobalService {
     return steps;
   }
 
-  public checkEnharmonic( note:object ) {
-    var newNote = note,
-        hasNote = this.enharmonics[ this.noteObjectToString(note) ];
 
-    if( hasNote ) newNote = this.noteStringToObject( hasNote );
+  // Check to see if the note has an enharmonic
+  public checkEnharmonic( note:string, opposite:boolean = false ) {
+    var newNote = note,
+        hasNote = opposite ? this.getKeyByValue(newNote,this.enharmonics) : this.enharmonics[newNote];
+
+    if( hasNote ) newNote = hasNote;
 
     return newNote;
   }
 
-  public getEnharmonic( note:object ) {
-    console.log('getEnharmonic note:'+note);
-
-    var newNote  = this.noteObjectToString( note ),
-        position = this.getNotePosition( note );
-
-    if( typeof position === 'object' ) {
-      newNote = this.getAllNotes[position[0]][position[1] ? 0 : 1];
-    }else{
-
-    }
-
-    console.log('getEnharmonic newNote:'+newNote);
-
-    return this.noteStringToObject( newNote );
-  }
-
 
   // Object to string. Option to retun HTML
-  public noteObjectToString( note:object, html:boolean = false ) {
-    var text = note['base'],
-        semi = note['semi'];
+  public noteStringToHtml( note:string ) {
+    var text = this.getNoteBase(note),
+        semi = this.getNoteSemi(note);
 
-    if( semi ) {
-      if( html ) {
-        text += '<span class="symbol">'+semi.replace('#', '&sharp;').replace('b', '&flat;')+'</span>';
-      } else {
-        text += semi;
-      }
-    }
+    if( semi ) text += '<span class="symbol">'+semi.replace('#', '&sharp;').replace('b', '&flat;')+'</span>';
 
     return text;
   }
 
 
-  // String to Note Object
-  public noteStringToObject( newNote:string ) {
-    var object = { base:newNote.substr(0,1), semi:null };
-
-    if( newNote.substr(1,1) ) { object['semi'] = newNote.substr(1,1); }
-
-    return object;
-  }
-
-
-  // Get array positioning of note object
-  public getNotePosition( noteObject:object ) {
-    var position = null,
-        noteString = this.noteObjectToString(noteObject);
+  // Get array positioning of note
+  public getNotePosition( noteString:string ) {
+    var position = null;
 
     for(var i=0; i<this.getAllNotes.length; i++) {
       var note = this.getAllNotes[i];
 
       if( typeof note == 'object' ) {
-        for(var j=0; j<note.length; j++) {
-          if( note[j]==noteString ) { position = [i, j]; }
-        }
-    } else if( note==noteString ) {
+        for(var j=0; j<note.length; j++){ if( note[j]==noteString ) position = [i, j]; }
+      } else if( note==noteString ) {
         position = [i];
       }
     }
@@ -130,59 +92,43 @@ export class GlobalService {
 
     var allNotes = this.getAllNotes,
         getSteps = this.getScaleSteps( key['scale'] ),
+
         newScale = [],
+        position = this.getNotePosition( key['note'] )[0],
 
-        getPosi  = this.getNotePosition( key['note'] ),
-        getStart = getPosi[0],
-        shrpFlat = getPosi[1] ? getPosi[1] : 0,
+        shrpFlat = null,
 
-        rearange = allNotes.slice(getStart).concat( allNotes.slice(0,getStart) ),
+        checkArr = [],
+        checkPos = this.getNotePosition( this.getNoteBase(key['note']) ),
+        rearange = allNotes.slice(checkPos).concat( allNotes.slice(0,checkPos) );
 
-        checkArr = [];
+    // Create array of ascending base notes in order to check for technical notes
+    for( var note=0; note < rearange.length; note++ ) { if( typeof rearange[note] !== 'object' ) checkArr.push(rearange[note]); }
 
-    for( var note=0; note < rearange.length; note++ ) {
-      if( typeof rearange[note] !== 'object' && (checkArr.length < getSteps.length) ) {
-        checkArr.push(rearange[note]);
-    } else if( !note && !shrpFlat ) {
-        checkArr.push( rearange[note][shrpFlat].substr(0,1) );
-      }
-    }
+    for( var step=0; step < getSteps.length; step++ ) {
+      var getNote   = allNotes[ position % allNotes.length ],
+          noteCheck = checkArr[ step ],
+          friendly  = getNote,
+          technical = null;
 
-    for( var i=0,position=0; i < getSteps.length; i++ ) {
-        var newNote = rearange[position],
-            technical = null,
-            friendly  = null;
-
-        if( typeof newNote === 'object' ) newNote = rearange[position][shrpFlat];
-
-        friendly = this.noteStringToObject(newNote);
-
-        if( checkArr[i] != friendly['base'] ) {
-
-            friendly = this.getEnharmonic( friendly );
-
-            console.log('getScaleNotes change newNote '+(i+1)+': ', friendly);
-
-            // technical = true;
+      if( typeof getNote === 'object' ) {
+        for(var opt=0;opt<getNote.length;opt++) {
+          if( noteCheck == this.getNoteBase(getNote[opt]) ) {
+            if (!shrpFlat) shrpFlat = opt;
+            friendly = getNote[shrpFlat];
+          }
         }
+      } else if( getNote != noteCheck ) {
+        var enharmonic = this.checkEnharmonic(getNote, true);
 
-        newScale[i] = { technical:technical, friendly:friendly };
+        technical = (enharmonic != getNote) ? enharmonic : noteCheck+(shrpFlat===0?'𝄪':'&flat;&flat;');
+      }
 
-        position += getSteps[i];
+      newScale[step] = { technical:technical, friendly:friendly };
+
+      position += getSteps[step];
     }
-
-    console.log('getScaleNotes newScale: ', newScale);
 
     return newScale;
   }
 }
-
-
-
-
-/*
-
-input key
-
-
-*/

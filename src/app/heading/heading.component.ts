@@ -18,7 +18,7 @@ export class HeadingComponent implements OnInit {
     }
 
     formatHeading( getKey ) {
-      return this.global.noteObjectToString(getKey.note, true) + ' ' + this.global.capitalize(getKey.scale) + ' Chord Map';
+      return this.global.noteStringToHtml(getKey.note) + ' ' + this.global.capitalize(getKey.scale) + ' Chord Map';
     }
 
 }
