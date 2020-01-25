@@ -1,6 +1,6 @@
 <div id="nav-wrap" data-current="">
 	<div class="notes">
-	    <ng-template ngFor [ngForOf]="allNotes" let-note let-i="index">
+	    <ng-template ngFor [ngForOf]="this.global.getAllNotes" let-note let-i="index">
 		<div class="btn" *ngIf="note.length==1" [class.active]="newKey['base']==note" (click)="baseButtonClick(note)">{{note}}</div>
 	    </ng-template>
 	</div>
@@ -13,8 +13,8 @@
 		<div class="btn" [class.active]="newKey['scale']=='minor'" (click)="newKey['scale']='minor'">Minor</div>
 	</div>
 	<div id="change_scale" class="submit btn" (click)="changeMap(newKey)">Go</div>
-	<div class="btn-group">
-		<div id="js_technical" class="btn" [class.active]="!this.showFriendly" (click)="friendlyButtonClick( false )">Technical</div>
-		<div id="js_friendly"  class="btn" [class.active]="this.showFriendly"  (click)="friendlyButtonClick( true )">Friendly</div>
+	<div class="btn-group" *ngIf="showFriendly">
+		<div id="js_technical" class="btn" [class.active]="!this.isFriendly" (click)="friendlyButtonClick( false )">Technical</div>
+		<div id="js_friendly"  class="btn" [class.active]="this.isFriendly"  (click)="friendlyButtonClick( true )">Friendly</div>
 	</div>
 </div>

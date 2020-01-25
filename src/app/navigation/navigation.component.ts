@@ -11,45 +11,51 @@ export class NavigationComponent implements OnInit {
 
   newKey:object;
   hasSemi:boolean;
-  allNotes:object;
+  isFriendly:boolean;
+  showFriendly:boolean;
 
   constructor( private global:GlobalService ) { }
 
   ngOnInit() {
-
-    this.allNotes = this.global.getAllNotes;
-
     this.global.appKey.subscribe(
       gKey => (
-        this.newKey  = { base:this.global.getNoteBase(gKey['note']), semi:this.global.getNoteSemi(gKey['note']), scale:gKey['scale'] },
-        this.hasSemi = this.global.getNoteSemi(gKey['note']) !=='' ? true : false
+        this.newKey = { base:this.global.getNoteBase(gKey['note']), semi:this.global.getNoteSemi(gKey['note']), scale:gKey['scale'] },
+        this.hasSemi = this.global.getNoteSemi(gKey['note']) !=='' ? true : false,
+        this.showFriendly = this.checkFriendly(gKey)
       )
     );
 
-    this.global.isFriendly.subscribe( value => this.showFriendly = value );
+    this.global.isFriendly.subscribe( value => this.isFriendly = value );
   }
 
-  baseButtonClick( base ) { this.newKey['base'] = base; }
+  private baseButtonClick( base ) { this.newKey['base'] = base; }
 
-  semiButtonClick( semi ) {
-    if( !this.hasSemi ) {
+  private semiButtonClick( semi ) {
+    if( !this.hasSemi )
       this.hasSemi = true;
-  } else if( this.newKey['semi'] == semi ) {
+    else if( this.newKey['semi'] == semi )
       this.hasSemi = false;
-    }
 
     this.newKey['semi'] = this.hasSemi ? semi : '';
   }
 
-  friendlyButtonClick( isFriendly ) {
-      this.global.setFriendly(isFriendly);
-  }
+  private friendlyButtonClick( isFriendly ) { this.global.setFriendly(isFriendly); }
 
-  changeMap( newKey ) {
+  private changeMap( newKey ) {
     this.global.setKey({
         note  : this.global.checkEnharmonic(newKey['base']+newKey['semi']),
         scale : newKey['scale']
     });
+  }
+
+  private checkFriendly( key:object ) {
+    var getNotes = this.global.getScaleNotes(key),
+        hasTech  = false;
+
+    for(var note=0; note<getNotes.length; note++) {
+      if( getNotes[note]['technical'] && !hasTech ) hasTech = true;
+    }
+    return hasTech;
   }
 
 }

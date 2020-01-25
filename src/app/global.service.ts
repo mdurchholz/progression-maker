@@ -14,22 +14,23 @@ export class GlobalService {
 
   getAllNotes = ['A',['A#','Bb'],'B','C',['C#','Db'],'D',['D#','Eb'],'E','F',['F#','Gb'],'G',['G#','Ab']];
 
-  private keySource  = new BehaviorSubject<object>({ note:'C', scale:'major' });
+  private keySource = new BehaviorSubject<object>({ note:'C', scale:'major' });
 
-  private isFriendly = new BehaviorSubject<boolean>(true);
+  private friendly  = new BehaviorSubject<boolean>(true);
 
 
   // Get a key inside an object by the value of th key
   private getKeyByValue( value, object ) { return Object.keys(object).find(key => object[key] === value); }
 
 
-  // Get the current key
+  //
   public appKey = this.keySource.asObservable();
-  public getKey() { return this.appKey; }
-
-  // Set a new key
+  public getKey( object:string = null ) { var key = this.appKey.source['_value']; return object ? key[object] : key; }
   public setKey( newKey:object ) { this.keySource.next( Object.assign(this.keySource.value, newKey) ); }
-  public setFriendly( isFriendly:boolean ) { this.isFriendly.next( isFriendly ); }
+
+  //
+  public isFriendly = this.friendly.asObservable();
+  public setFriendly( isFriendly:boolean ) { this.friendly.next( isFriendly ); }
 
 
   // Get the base note
@@ -37,6 +38,9 @@ export class GlobalService {
 
   // Get the half note symbol, if any
   public getNoteSemi( note:string ) { return note.substr(1,1); }
+
+  // Check if key is in minor
+  public isMinor(){ return this.getKey('scale') == 'minor'; }
 
 
   // Get an array of scale steps
