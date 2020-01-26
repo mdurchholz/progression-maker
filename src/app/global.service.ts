@@ -73,7 +73,7 @@ export class GlobalService {
     var text = this.getNoteBase(note),
         semi = this.getNoteSemi(note);
 
-    if( semi ) text += '<span class="symbol">'+semi.replace('#', '&sharp;').replace('b', '&flat;')+'</span>';
+    if( semi ) text += '<span class="symbol">'+semi.replace('#', '&#9839;').replace('b', '&#9837;')+'</span>';
 
     return text;
   }
@@ -130,7 +130,7 @@ export class GlobalService {
       } else if( getNote != noteCheck ) {
         var enharmonic = this.checkEnharmonic(getNote, true);
 
-        technical = (enharmonic != getNote) ? enharmonic : noteCheck+(shrpFlat===0?'𝄪':'&flat;&flat;');
+        technical = (enharmonic != getNote) ? enharmonic : noteCheck+(!shrpFlat ? 'ds' : 'ff');
       }
 
       newScale[step] = { technical:technical, friendly:friendly };

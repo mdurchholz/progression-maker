@@ -2,9 +2,7 @@
 	<img src="assets/img/major-key-map.jpg" class="major map" alt="Major Key Map">
 	<img src="assets/img/minor-key-map.jpg" class="minor map" alt="Minor Key Map">
 
-	<ng-template ngFor [ngForOf]="getNotes" let-note let-i="index">
-	<div id="note-{{i+1}}" class="note" [innerHTML]="noteOpts(note, i+1)"></div>
-	</ng-template>
+	<div id="note-{{i+1}}" class="note" *ngFor="let note of getNotes; index as i" [innerHTML]="noteOpts(note, i+1)"></div>
 
-	<div id="note-7-harmonic" class="note" *ngIf="this.isMinor" [innerHTML]="noteOpts(getNotes[6], 7)"></div>
+	<div id="note-7-harmonic" class="note" *ngIf="this.isMinor" [innerHTML]="note7Harmonic(getNotes[6], 7)"></div>
 </div>
