@@ -149,7 +149,7 @@ $icon-font-path : "assets/fonts/bootstrap/";
         border-top:    if($direction==up, none, $color);
         border-bottom: if($direction==up, $color, none);
     }
-    @elseif $direction==left or $direction==right
+    @else if $direction==left or $direction==right
     {
         border-top:    $trans;
     	border-bottom: $trans;
