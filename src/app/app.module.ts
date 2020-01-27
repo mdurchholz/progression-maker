@@ -11,6 +11,7 @@ import { HeadingComponent } from './heading/heading.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { MapComponent } from './map/map.component';
 
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { MapComponent } from './map/map.component';
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [GlobalService],
+  providers: [GlobalService, CookieService],
   bootstrap: [AppComponent]
 })
 

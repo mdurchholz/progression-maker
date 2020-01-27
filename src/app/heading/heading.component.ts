@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from '../global.service';
-// import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'heading',
@@ -17,8 +16,13 @@ export class HeadingComponent implements OnInit {
       this.global.appKey.subscribe( gKey => this.title = this.formatHeading(gKey) );
     }
 
+    // Format heading HTML
     private formatHeading( getKey ) {
-      return this.global.noteStringToHtml(getKey.note) + ' ' + this.global.capitalize(getKey.scale) + ' Chord Map';
+      return this.global.noteStringToHtml(getKey.note) + ' ' + this.capitalize(getKey.scale) + ' Chord Map';
     }
 
+    // Capitalize the first letter of a string
+    private capitalize(str:string) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
 }

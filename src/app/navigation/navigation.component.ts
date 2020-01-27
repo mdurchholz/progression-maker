@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from '../global.service';
-// import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'navigation',
@@ -28,8 +27,6 @@ export class NavigationComponent implements OnInit {
     this.global.isFriendly.subscribe( value => this.isFriendly = value );
   }
 
-  private baseButtonClick( base ) { this.newKey['base'] = base; }
-
   private semiButtonClick( semi ) {
     if( !this.hasSemi )
       this.hasSemi = true;
@@ -39,13 +36,13 @@ export class NavigationComponent implements OnInit {
     this.newKey['semi'] = this.hasSemi ? semi : '';
   }
 
-  private friendlyButtonClick( isFriendly ) { this.global.setFriendly(isFriendly); }
-
   private changeMap( newKey ) {
-    this.global.setKey({
+    var key = {
         note  : this.global.checkEnharmonic(newKey['base']+newKey['semi']),
         scale : newKey['scale']
-    });
+    };
+
+    this.global.setKey(key);
   }
 
   private checkFriendly( key:object ) {
@@ -55,6 +52,7 @@ export class NavigationComponent implements OnInit {
     for(var note=0; note<getNotes.length; note++) {
       if( getNotes[note]['technical'] && !hasTech ) hasTech = true;
     }
+
     return hasTech;
   }
 

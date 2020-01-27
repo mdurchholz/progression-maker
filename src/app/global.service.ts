@@ -1,43 +1,57 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable( )
 
+
 export class GlobalService {
 
-  constructor( ) { }
+  constructor( private cookieService:CookieService ) { }
 
-  // Capitalize the first letter of a string
-  public capitalize(str:string) { return str.charAt(0).toUpperCase() + str.slice(1); }
+  // Get a key inside an object by the value of th key
+  private getKeyByValue( value, object ) { return Object.keys(object).find(key => object[key] === value); }
 
   enharmonics = { 'B#':'C', 'Cb':'B', 'E#':'F', 'Fb':'E' };
 
   getAllNotes = ['A',['A#','Bb'],'B','C',['C#','Db'],'D',['D#','Eb'],'E','F',['F#','Gb'],'G',['G#','Ab']];
 
-  private keySource = new BehaviorSubject<object>({ note:'C', scale:'major' });
-
-  private friendly  = new BehaviorSubject<boolean>(true);
-
-
-  // Get a key inside an object by the value of th key
-  private getKeyByValue( value, object ) { return Object.keys(object).find(key => object[key] === value); }
-
-
-  //
+  // Set/Get app key
+  private keySource = new BehaviorSubject<object>( this.checkPastKey() );
   public appKey = this.keySource.asObservable();
   public getKey( object:string = null ) { var key = this.appKey.source['_value']; return object ? key[object] : key; }
-  public setKey( newKey:object ) { this.keySource.next( Object.assign(this.keySource.value, newKey) ); }
+  public setKey( newKey:object ) {
+      this.keySource.next( Object.assign(this.keySource.value, newKey) );
 
-  //
+      this.cookieService.set( 'musicKey', JSON.stringify( this.getKey() ) );
+  }
+  private checkPastKey() {
+    var cookieChk = this.cookieService.get('musicKey');
+
+    return cookieChk ? JSON.parse( cookieChk ) : { note:'C', scale:'major' };
+  }
+
+
+  // Set friendly status
+  private friendly  = new BehaviorSubject<boolean>( this.checkPastFriendly() );
   public isFriendly = this.friendly.asObservable();
-  public setFriendly( isFriendly:boolean ) { this.friendly.next( isFriendly ); }
+  public setFriendly( isFriendly:boolean ) {
+      this.friendly.next( isFriendly );
+
+      this.cookieService.set( 'isFriendly', JSON.stringify( isFriendly ) );
+  }
+  private checkPastFriendly() {
+    var cookieChk = this.cookieService.get('isFriendly');
+
+    return cookieChk ? JSON.parse( cookieChk ) : true;
+  }
 
 
   // Get the base note
   public getNoteBase( note:string ) { return note.substr(0,1); }
 
   // Get the half note symbol, if any
-  public getNoteSemi( note:string ) { return note.substr(1,1); }
+  public getNoteSemi( note:string ) { return note.substr(1,(note.length-1)); }
 
   // Check if key is in minor
   public isMinor(){ return this.getKey('scale') == 'minor'; }
@@ -71,9 +85,10 @@ export class GlobalService {
   // Object to string. Option to retun HTML
   public noteStringToHtml( note:string ) {
     var text = this.getNoteBase(note),
-        semi = this.getNoteSemi(note);
+        semi = this.getNoteSemi(note).replace('#', '&#9839;')
+                                     .replace(/b/g, '&#9837;');
 
-    if( semi ) text += '<span class="symbol">'+semi.replace('#', '&#9839;').replace('b', '&#9837;')+'</span>';
+    if( semi ) text += '<span class="symbol">'+semi+'</span>';
 
     return text;
   }
@@ -121,16 +136,17 @@ export class GlobalService {
           technical = null;
 
       if( typeof getNote === 'object' ) {
-        for(var opt=0;opt<getNote.length;opt++) {
-          if( noteCheck == this.getNoteBase(getNote[opt]) ) {
-            if (!shrpFlat) shrpFlat = opt;
-            friendly = getNote[shrpFlat];
+        if (!shrpFlat) {
+          for(var opt=0;opt<getNote.length;opt++) {
+              if( noteCheck == this.getNoteBase(getNote[opt]) ) shrpFlat = opt;
           }
         }
+
+        friendly = getNote[shrpFlat];
       } else if( getNote != noteCheck ) {
         var enharmonic = this.checkEnharmonic(getNote, true);
 
-        technical = (enharmonic != getNote) ? enharmonic : noteCheck+(!shrpFlat ? 'ds' : 'ff');
+        technical = (enharmonic != getNote) ? enharmonic : noteCheck+(!shrpFlat ? '𝄪' : 'bb');
       }
 
       newScale[step] = { technical:technical, friendly:friendly };
