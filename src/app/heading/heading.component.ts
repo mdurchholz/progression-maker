@@ -10,14 +10,14 @@ export class HeadingComponent implements OnInit {
 
     title:string;
 
-    constructor( private global:GlobalService ) { }
+    constructor( public global:GlobalService ) { }
 
     ngOnInit() {
       this.global.appKey.subscribe( gKey => this.title = this.formatHeading(gKey) );
     }
 
     // Format heading HTML
-    private formatHeading( getKey ) {
+    public formatHeading( getKey ) {
       return this.global.noteStringToHtml(getKey.note) + ' ' + this.capitalize(getKey.scale) + ' Chord Map';
     }
 

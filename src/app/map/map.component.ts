@@ -12,7 +12,7 @@ export class MapComponent implements OnInit {
   getNotes:object;
   isMinor:boolean;
 
-  constructor( private global:GlobalService ) { }
+  constructor( public global:GlobalService ) { }
 
   ngOnInit() {
 
@@ -26,7 +26,7 @@ export class MapComponent implements OnInit {
   }
 
   // Build note HTML of notes 1 - 7
-  private noteOpts( details, i ) {
+  public noteOpts( details, i ) {
     var noteHTML = '<span class="spot">'+ (i==1 ? 'TONIC' : i) + '</span><span class="root">';
 
     // Check for technical note
@@ -45,7 +45,7 @@ export class MapComponent implements OnInit {
     return noteHTML + '</span>';
   }
 
-  private note7Harmonic( details, i ) {
+  public note7Harmonic( details, i ) {
     var noteHTML = '<span class="spot">7<span class="type">(harmonic)</span></span><span class="root">';
 
     // Check for technical note

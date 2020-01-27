@@ -17,7 +17,7 @@ export class GlobalService {
   getAllNotes = ['A',['A#','Bb'],'B','C',['C#','Db'],'D',['D#','Eb'],'E','F',['F#','Gb'],'G',['G#','Ab']];
 
   // Set/Get app key
-  private keySource = new BehaviorSubject<object>( this.checkPastKey() );
+  public keySource = new BehaviorSubject<object>( this.checkPastKey() );
   public appKey = this.keySource.asObservable();
   public getKey( object:string = null ) { var key = this.appKey.source['_value']; return object ? key[object] : key; }
   public setKey( newKey:object ) {
@@ -25,7 +25,7 @@ export class GlobalService {
 
       this.cookieService.set( 'musicKey', JSON.stringify( this.getKey() ) );
   }
-  private checkPastKey() {
+  public checkPastKey() {
     var cookieChk = this.cookieService.get('musicKey');
 
     return cookieChk ? JSON.parse( cookieChk ) : { note:'C', scale:'major' };
@@ -33,14 +33,14 @@ export class GlobalService {
 
 
   // Set friendly status
-  private friendly  = new BehaviorSubject<boolean>( this.checkPastFriendly() );
+  public friendly  = new BehaviorSubject<boolean>( this.checkPastFriendly() );
   public isFriendly = this.friendly.asObservable();
   public setFriendly( isFriendly:boolean ) {
       this.friendly.next( isFriendly );
 
       this.cookieService.set( 'isFriendly', JSON.stringify( isFriendly ) );
   }
-  private checkPastFriendly() {
+  public checkPastFriendly() {
     var cookieChk = this.cookieService.get('isFriendly');
 
     return cookieChk ? JSON.parse( cookieChk ) : true;

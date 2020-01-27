@@ -13,7 +13,7 @@ export class NavigationComponent implements OnInit {
   isFriendly:boolean;
   showFriendly:boolean;
 
-  constructor( private global:GlobalService ) { }
+  constructor( public global:GlobalService ) { }
 
   ngOnInit() {
     this.global.appKey.subscribe(
@@ -27,7 +27,7 @@ export class NavigationComponent implements OnInit {
     this.global.isFriendly.subscribe( value => this.isFriendly = value );
   }
 
-  private semiButtonClick( semi ) {
+  public semiButtonClick( semi ) {
     if( !this.hasSemi )
       this.hasSemi = true;
     else if( this.newKey['semi'] == semi )
@@ -36,7 +36,7 @@ export class NavigationComponent implements OnInit {
     this.newKey['semi'] = this.hasSemi ? semi : '';
   }
 
-  private changeMap( newKey ) {
+  public changeMap( newKey ) {
     var key = {
         note  : this.global.checkEnharmonic(newKey['base']+newKey['semi']),
         scale : newKey['scale']
