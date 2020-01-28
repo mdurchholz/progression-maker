@@ -144,11 +144,11 @@ body                                                        { background: #fff; 
 #major-wrap .map.major,
 #minor-wrap .map.minor                                      { display: block;}
 
-.note                                                       { position: absolute; width: 14%; height: 24%; background: rgba(255,255,255,0.75); color: #000; font-weight: bold; text-align: center;
+.note                                                       { display: block; position: absolute; width: 14%; height: 24%; color: #000; font-weight: bold; text-align: center;
     .spot                                                   { font-size: 28px; display: block;}
     .spot .type                                             { font-size: 14px; vertical-align: baseline;}
 
-    .root                                                   { font-size: 45px; color: $color-1; background: #fff;
+    .root                                                   { font-size: 45px; color: $color-1;
 
         .symbol                                             { font-size: 25px;}
 
@@ -161,6 +161,12 @@ body                                                        { background: #fff; 
     .technical                                              { display: inline;
         + .friendly                                         { display: none;}
     }
+}
+
+// .map-wrap .map img                                          { opacity: 0;}
+
+.note                                                       { background: rgba(255,255,255,0.75);
+    .root                                                   { background: #fff;}
 }
 
 .showFriendly .note

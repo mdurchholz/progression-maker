@@ -45,6 +45,7 @@ export class MapComponent implements OnInit {
     return noteHTML + '</span>';
   }
 
+  // Build note HTML of minor 7 harmonic
   public note7Harmonic( details, i ) {
     var noteHTML = '<span class="spot">7<span class="type">(harmonic)</span></span><span class="root">';
 

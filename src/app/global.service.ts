@@ -4,13 +4,9 @@ import { CookieService } from 'ngx-cookie-service';
 
 @Injectable( )
 
-
 export class GlobalService {
 
   constructor( private cookieService:CookieService ) { }
-
-  // Get a key inside an object by the value of th key
-  private getKeyByValue( value, object ) { return Object.keys(object).find(key => object[key] === value); }
 
   enharmonics = { 'B#':'C', 'Cb':'B', 'E#':'F', 'Fb':'E' };
 
@@ -70,6 +66,9 @@ export class GlobalService {
     return steps;
   }
 
+
+  // Get a key inside an object by the value of th key
+  private getKeyByValue( value, object ) { return Object.keys(object).find(key => object[key] === value); }
 
   // Check to see if the note has an enharmonic
   public checkEnharmonic( note:string, opposite:boolean = false ) {

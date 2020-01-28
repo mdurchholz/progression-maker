@@ -1,0 +1,43 @@
+@import '~src/sass/my-mixins';
+
+$arrowS : 20px;
+
+.lines                                                      { @include absolute(0,0,0,0); margin: auto;
+    .line                                                   { @include absolute(0,auto,auto,0); z-index: 0; width: 20%; height: 0.75%; background: #000; transform-origin: top;
+
+        div                                                 { @include absolute(0,0,0,0); height: $arrowS; width: auto; margin: auto; cursor: pointer;}
+
+        &[class*="arr"]
+        {
+            div { &::before, &::after                       {  @include absolute(auto,auto,auto,auto); width: $arrowS; height: $arrowS; margin: auto; border: none; border-width: 3px; border-color: #000; transform: rotate(45deg);}}
+
+            &[class*="-l"] div::before                      { content: ""; top: 0; bottom: 0; left: 0; border-right-style: none; border-left-style: solid; border-bottom-style: solid;}
+            &[class*="-r"] div::after                       { content: ""; top: 0; bottom: 0; right: 0; border-left-style: none; border-right-style: solid; border-top-style: solid;}
+        }
+
+        &:hover                                             { background: $color-1; z-index: 1;
+            div { &::before, &::after                       { border-color: $color-1;}}
+        }
+    }
+}
+
+.major
+{
+    #line_2-3                                               { top: 80%; left: 11%; width: 14%;}
+    #line_2-5                                               { top: 46%; left: 1.5%; width: 18%; transform: rotate(-69deg);}
+
+    #line_3-4                                               { top: 48.5%; left: 36%; width: 40%; transform: rotate(-30.5deg);}
+    #line_3-6                                               { top: 80%; left: 39%; width: 16%;}
+
+    #line_4-1                                               { top: 16.75%; left: 54%; width: 21%;}
+    #line_4-2                                               { top: 47%; left: 8%; width: 68%; transform: rotate(-23deg);}
+    #line_4-7                                               { top: 47%; left: 77.75%; width: 19%; transform: rotate(81deg);}
+
+    #line_5-1                                               { top: 16.75%; left: 20.5%; width: 21%;}
+    #line_5-6                                               { top: 48%; left: 14.5%; width: 46%; transform: rotate(35deg);}
+    #line_5-7                                               { top: 45%; left: 17%; width: 69%; transform: rotate(24deg);}
+
+    #line_6-4                                               { top: 51%; left: 60%; width: 22%; transform: rotate(-57deg);}
+
+    #line_7-1                                               { top: 48%; left: 49%; width: 41%; transform: rotate(35deg);}
+}
