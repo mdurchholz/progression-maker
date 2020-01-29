@@ -114,11 +114,13 @@ body                                                        { background: #fff; 
 
     > div                                                   { display: inline-block;}
 
-    .btn                                                    { display: inline-block; width: 45px; margin: 5px 5px 0 0; padding: 10px; border-radius: 2px; border: 1px solid $grey-lite; text-align: center;}
-    .btn.active                                             { background: $color-1; color: #fff; border-color: $color-1;}
+    .btn                                                    { display: inline-block; width: 45px; margin: 5px 5px 0 0; padding: 10px; border-radius: 2px; border: 1px solid $grey-lite; text-align: center;
+        &.active                                            { background: $color-1; color: #fff; border-color: $color-1;}
+    }
 
-    .btn-group                                              { margin-top: 15px;}
-    .btn-group .btn                                         { width: auto; margin: 0; text-align: center; padding: 5px 10px; border-radius: 0;}
+    .btn-group                                              { margin-top: 15px;
+        .btn                                                { width: auto; margin: 0; text-align: center; padding: 5px 10px; border-radius: 0;}
+    }
 
     .notes                                                  { width: 200px;}
 
@@ -144,16 +146,19 @@ body                                                        { background: #fff; 
 #major-wrap .map.major,
 #minor-wrap .map.minor                                      { display: block;}
 
-.note                                                       { display: block; position: absolute; width: 14%; height: 24%; color: #000; font-weight: bold; text-align: center;
-    .spot                                                   { font-size: 28px; display: block;}
-    .spot .type                                             { font-size: 14px; vertical-align: baseline;}
+.note                                                       { display: block; position: absolute; width: 12.5%; height: 23%; color: #000; border-radius: 50%; border: 1px solid #ccc; font-weight: bold; text-align: center;
+    .spot                                                   { font-size: 28px; line-height: 1; display: block;
+        .type                                               { font-size: 14px; vertical-align: baseline;}
+    }
 
-    .root                                                   { font-size: 45px; color: $color-1;
+    .root                                                   { position: relative; font-size: 45px; color: $color-1;
+
+        span                                                { vertical-align: baseline;}
 
         .symbol                                             { font-size: 25px;}
 
         .chord-type                                         { font-size: 35px;
-            &.dim                                           { vertical-align: top;}
+            &.dim                                           { position: absolute; left: 100%; top: -4px; vertical-align: top;}
             &.minor                                         { line-height: 2;}
         }
     }
@@ -163,11 +168,11 @@ body                                                        { background: #fff; 
     }
 }
 
-// .map-wrap .map img                                          { opacity: 0;}
 
-.note                                                       { background: rgba(255,255,255,0.75);
-    .root                                                   { background: #fff;}
-}
+.map-wrap .major.map img                                          { opacity: 0;}
+// .note                                                       { background: rgba(255,255,255,0.75);
+//     .root                                                   { background: #fff;}
+// }
 
 .showFriendly .note
 {

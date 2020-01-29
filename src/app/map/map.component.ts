@@ -8,9 +8,8 @@ import { GlobalService } from '../global.service';
 })
 export class MapComponent implements OnInit {
 
-  scale:string;
-  getNotes:object;
   isMinor:boolean;
+  getNotes:object;
 
   constructor( public global:GlobalService ) { }
 
@@ -18,8 +17,7 @@ export class MapComponent implements OnInit {
 
     this.global.appKey.subscribe(
       gKey => (
-        this.scale = gKey['scale'],
-        this.isMinor = this.scale=='minor',
+        this.isMinor = gKey['scale']=='minor',
         this.getNotes = this.global.getScaleNotes(gKey)
       )
     )
@@ -52,7 +50,7 @@ export class MapComponent implements OnInit {
     // Check for technical note
     if( details['technical'] ) noteHTML += '<span class="technical">'+this.global.noteStringToHtml( details['technical'] )+'</span>';
 
-    noteHTML += '<span class="friendly">'+this.global.noteStringToHtml( details['friendly'] )+'</span><span class="symbol dim">&deg;</span></span>';
+    noteHTML += '<span class="friendly">'+this.global.noteStringToHtml( details['friendly'] )+'</span><span class="chord-type dim">&deg;</span></span>';
 
     return noteHTML;
   }

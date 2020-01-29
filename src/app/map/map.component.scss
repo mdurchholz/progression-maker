@@ -1,22 +1,50 @@
 @import '~src/sass/my-mixins';
 
-$arrowS : 20px;
+$arrowS : 16px;
+$lineW  : 2px;
 
 .lines                                                      { @include absolute(0,0,0,0); margin: auto;
-    .line                                                   { @include absolute(0,auto,auto,0); z-index: 0; width: 20%; height: 0.75%; background: #000; transform-origin: top;
+    [class*="line"]                                         { @include absolute(0,auto,auto,0); z-index: 0; height: $lineW; background: #000; transform-origin: top left; transform: rotate(0deg);
 
-        div                                                 { @include absolute(0,0,0,0); height: $arrowS; width: auto; margin: auto; cursor: pointer;}
+        &.pos-r                                             { left: auto; right: 0; transform-origin: top right;}
+
+        span                                                { @include absolute(0,0,0,0); height: $arrowS; width: auto; margin: auto; cursor: pointer; display: block;}
 
         &[class*="arr"]
         {
-            div { &::before, &::after                       {  @include absolute(auto,auto,auto,auto); width: $arrowS; height: $arrowS; margin: auto; border: none; border-width: 3px; border-color: #000; transform: rotate(45deg);}}
+            span { &::before, &::after                      { @include absolute(auto,auto,auto,auto); width: $arrowS; height: $arrowS; margin: auto; border: none; border-width: $lineW; border-color: #000; transform: rotate(45deg);}}
 
-            &[class*="-l"] div::before                      { content: ""; top: 0; bottom: 0; left: 0; border-right-style: none; border-left-style: solid; border-bottom-style: solid;}
-            &[class*="-r"] div::after                       { content: ""; top: 0; bottom: 0; right: 0; border-left-style: none; border-right-style: solid; border-top-style: solid;}
+            &[class*="-l"] span::before                     { content: ""; top: 0; bottom: 0; left: $lineW; border-right-style: none; border-left-style: solid; border-bottom-style: solid;}
+            &[class*="-r"] span::after                      { content: ""; top: 0; bottom: 0; right: $lineW; border-left-style: none; border-right-style: solid; border-top-style: solid;}
         }
 
         &:hover                                             { background: $color-1; z-index: 1;
-            div { &::before, &::after                       { border-color: $color-1;}}
+            [class*="line"]                                 { background: $color-1;}
+            span { &::before, &::after                      { border-color: $color-1;}}
+        }
+    }
+
+    .hook
+    {
+        .line-l                                             { left: $lineW; right: auto; transform: rotate(-90deg); transform-origin: bottom left;}
+        .line-r                                             { right: $lineW; left: auto; transform: rotate(90deg); transform-origin: bottom right;}
+
+        .arr
+        {
+            span { &::before, &::after                      { content: none;}}
+
+            &[class*="-l"] span::after                      { content: ""; top: 0; bottom: 0; right: $lineW; border-left-style: none; border-right-style: solid; border-top-style: solid;}
+            &[class*="-r"] span::before                     { content: ""; top: 0; bottom: 0; left: $lineW; border-right-style: none; border-left-style: solid; border-bottom-style: solid;}
+        }
+
+        &.top                                               { top: 0; bottom: auto;
+            .line-l                                         { transform: rotate(90deg); transform-origin: top left;}
+            .line-r                                         { transform: rotate(270deg); transform-origin: top right;}
+        }
+
+        &.bot                                               { top: auto; bottom: 0;
+            .line-l                                         { transform: rotate(-90deg); transform-origin: bottom left;}
+            .line-r                                         { transform: rotate(90deg); transform-origin: bottom right;}
         }
     }
 }
@@ -24,20 +52,29 @@ $arrowS : 20px;
 .major
 {
     #line_2-3                                               { top: 80%; left: 11%; width: 14%;}
-    #line_2-5                                               { top: 46%; left: 1.5%; width: 18%; transform: rotate(-69deg);}
+    #line_2-4                                               { top: 23%; right: 26%; width: 70%; transform: rotate(-22.5deg);}
+    #line_2-5                                               { top: 63%; left: 7%; width: 18%; transform: rotate(-69deg);}
+    #line_2-7                                               { bottom: -8.75%; left: 6%; width: 84%;
+        > div                                               { width: 12%;}
+    }
 
-    #line_3-4                                               { top: 48.5%; left: 36%; width: 40%; transform: rotate(-30.5deg);}
+    #line_3-4                                               { top: 30%; right: 27%; width: 41%; transform: rotate(-30.5deg);}
     #line_3-6                                               { top: 80%; left: 39%; width: 16%;}
 
     #line_4-1                                               { top: 16.75%; left: 54%; width: 21%;}
-    #line_4-2                                               { top: 47%; left: 8%; width: 68%; transform: rotate(-23deg);}
-    #line_4-7                                               { top: 47%; left: 77.75%; width: 19%; transform: rotate(81deg);}
+    #line_4-5                                               { top: -6%; left: 13%; width: 72%;
+        > div                                               { width: 6%;}
+    }
+    #line_4-7                                               { top: 33%; left: 86%; width: 19%; transform: rotate(81deg);}
 
     #line_5-1                                               { top: 16.75%; left: 20.5%; width: 21%;}
-    #line_5-6                                               { top: 48%; left: 14.5%; width: 46%; transform: rotate(35deg);}
-    #line_5-7                                               { top: 45%; left: 17%; width: 69%; transform: rotate(24deg);}
+    #line_5-6                                               { top: 24%; left: 19%; width: 45%; transform: rotate(35deg);}
+    #line_5-7                                               { top: 19%; left: 20%; width: 70%; transform: rotate(24deg);}
 
-    #line_6-4                                               { top: 51%; left: 60%; width: 22%; transform: rotate(-57deg);}
+    #line_6-2                                               { left: 10%; width: 52%;
+        > div                                               { width: 10%;}
+    }
+    #line_6-4                                               { top: 35%; right: 23%; width: 21%; transform: rotate(-56deg);}
 
-    #line_7-1                                               { top: 48%; left: 49%; width: 41%; transform: rotate(35deg);}
+    #line_7-1                                               { top: 27%; left: 53%; width: 41%; transform: rotate(35deg);}
 }
