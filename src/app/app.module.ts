@@ -12,6 +12,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { MapComponent } from './map/map.component';
 
 import { CookieService } from 'ngx-cookie-service';
+import { NotesComponent } from './notes/notes.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { CookieService } from 'ngx-cookie-service';
     NavigationComponent,
     routingComponents,
     HeadingComponent,
-    MapComponent
+    MapComponent,
+    NotesComponent
   ],
   imports: [
     BrowserModule,

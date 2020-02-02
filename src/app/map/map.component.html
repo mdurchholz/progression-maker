@@ -43,8 +43,25 @@
 		</div>
 	</div>
 
-	<a href="javascript:;" id="note-{{i+1}}" class="note" *ngFor="let note of getNotes; index as i" [innerHTML]="noteOpts(note, i+1)"></a>
+	<div id="note-{{i+1}}" class="note va-m" *ngFor="let note of getNotes; index as i" [innerHTML]="noteOpts(note, i+1)"></div>
 
-	<a href="javascript:;" id="note-7-harmonic" class="note" *ngIf="this.isMinor" [innerHTML]="note7Harmonic(getNotes[6], 7)"></a>
+	<div id="note-7-harmonic" class="note va-m" *ngIf="this.isMinor" [innerHTML]="note7Harmonic(getNotes[6], 7)"></div>
 
+	<div class="ruler h top"></div>
+	<div class="ruler h top" style="top: 14%"></div>
+	<div class="ruler h top" style="top: 21%"></div>
+	<div class="ruler"></div>
+	<div class="ruler" style="right: auto;"></div>
+	<div class="ruler" style="left: -33.3333%;"></div>
+	<div class="ruler" style="left: -66.6667%;"></div>
+	<div class="ruler" style="left: auto; right: 33.3333%;"></div>
+	<div class="ruler" style="left: auto; right: 16.6667%;"></div>
+	<div class="ruler" style="left: auto;"></div>
+
+	<div class="ruler h" style="bottom: -41.6667%"></div>
+	<div class="ruler h" style=""></div>
+	<div class="ruler h" style="top: -41.6667%"></div>
+
+	<div class="ruler h bot" style="bottom: 14%"></div>
+	<div class="ruler h bot"></div>
 </div>

@@ -97,24 +97,26 @@ html, body                                                  { width: 100%; heigh
 html                                                        { opacity: 0; font-size: 10px;}
 html.ready                                                  { opacity: 1; transition: opacity $speed*2 ease;}
 
-body                                                        { background: #fff; overflow-y: auto; font-size: 100%; font-weight: 400;}
+body                                                        { overflow-y: auto; font-size: 100%; font-weight: 400; background: $grey-xlite;}
 
 
-.app-wrap                                                   { text-align: center;}
+#app-wrap                                                   { text-align: center;
+    > div                                                   { width: 100%;}
+}
 
 
-#wrapper                                                    { position: relative; z-index: 0; transform: translate3d(0,0,0); max-width: 1000px;}
+#wrapper                                                    { position: relative; z-index: 0; transform: translate3d(0,0,0); width: 100%; max-width: 1000px; margin: 0 auto;}
 
 
 #current-scale                                              { margin: 60px 0; color: $grey-dark;}
 #current-scale .symbol                                      { display: inline-block; vertical-align: top; font-size: 45%;}
 
 
-#nav-wrap                                                   { display: inline-block; text-align: center; margin-bottom: 60px;
+#nav-wrap                                                   { display: inline-block; text-align: center;
 
     > div                                                   { display: inline-block;}
 
-    .btn                                                    { display: inline-block; width: 45px; margin: 5px 5px 0 0; padding: 10px; border-radius: 2px; border: 1px solid $grey-lite; text-align: center;
+    .btn                                                    { display: inline-block; width: 45px; margin: 5px 5px 0 0; padding: 10px; border-radius: 2px; background: #fff; border: 1px solid $grey-lite; text-align: center;
         &.active                                            { background: $color-1; color: #fff; border-color: $color-1;}
     }
 
@@ -134,20 +136,17 @@ body                                                        { background: #fff; 
 }
 
 
+
+
+
+
 .selector                                                   { position: absolute; margin: auto; background: $color-1; color: #fff; border: none; cursor: pointer;}
 #note-select                                                { width: 10%; font-size: 18px; padding: 10px; padding-right: 0;}
 #scale-select                                               { display: none; width: 25%; font-size: 60px; text-transform: uppercase;}
 
+.note                                                       { /* border-radius: 50%; */ display: block; position: absolute; top: auto; width: 14%; height: 28%; color: #000; border: 1px solid #ccc; font-weight: bold; text-align: center; margin: auto; cursor: pointer; background: #fff; /*transform: translate3d(-50%,0,0);*/
 
-.map-wrap                                                   { position: relative; margin: 0 0 60px;
-    .map                                                    { display: none; width: 100%;}
-}
-
-#major-wrap .map.major,
-#minor-wrap .map.minor                                      { display: block;}
-
-.note                                                       { display: block; position: absolute; width: 12.5%; height: 23%; color: #000; border-radius: 50%; border: 1px solid #ccc; font-weight: bold; text-align: center;
-    .spot                                                   { font-size: 28px; line-height: 1; display: block;
+    .spot                                                   { font-size: 20px; line-height: 1; display: block;
         .type                                               { font-size: 14px; vertical-align: baseline;}
     }
 
@@ -166,13 +165,11 @@ body                                                        { background: #fff; 
     .technical                                              { display: inline;
         + .friendly                                         { display: none;}
     }
+
+    &:hover                                                 { background: $color-1; border-color: $color-1;
+        &, *                                                { color: #fff;}
+    }
 }
-
-
-.map-wrap .major.map img                                          { opacity: 0;}
-// .note                                                       { background: rgba(255,255,255,0.75);
-//     .root                                                   { background: #fff;}
-// }
 
 .showFriendly .note
 {
@@ -180,56 +177,29 @@ body                                                        { background: #fff; 
     .friendly                                               { display: inline;}
 }
 
-
-#major-wrap
-{
-    #scale-select                                           { top: 5%; left: 9%;}
-
-    #note-select                                            { top: 32%; left: 0; right: 4.5%;}
-
-    #note-1                                                 { top: 3%;  left: 40.5%;}
-    #note-2                                                 { top: 65%; left: 0%;}
-    #note-3                                                 { top: 65%; left: 26%;}
-    #note-4                                                 { top: 5%;  left: 78%;}
-    #note-5                                                 { top: 5%;  left: 6%;}
-    #note-6                                                 { top: 65%; left: 55%;}
-    #note-7                                                 { top: 65%; left: 82%;}
-}
-
-
-#minor-wrap
-{
-    #scale-select                                           { top:2%; left: 5%;}
-
-    #note-select                                            { top: 17%; right: 13%;}
-
-    #note-1                                                 { top: 5%;  left: 75%;}
-    #note-2                                                 { top: 48%; left: 52%;}
-    #note-3                                                 { top: 48%; left: 28%;}
-    #note-4                                                 { top: 5%;  left: 28%;}
-    #note-5                                                 { top: 48%; left: 74.75%;}
-    #note-6                                                 { top: 5%;  left: 6.5%;}
-    #note-7                                                 { top: 48%; left: 6%;}
-    #note-7-harmonic                                        { top: 5%;  left: 53%;}
-}
-
-
 @media screen and (max-width: 1000px)
 {
     .note
     {
-        .spot                                               { font-size: 2.8vw;}
-        .spot .type                                         { font-size: 1.4vw;}
+        .spot                                               { font-size: 2.0vw;
+            .type                                           { font-size: 1.4vw;}
+        }
 
-        .root                                               { font-size: 4.5vw;}
-        .root .chord-type                                   { font-size: 3.5vw;}
-        .root .symbol                                       { font-size: 2.5vw;}
+        .root                                               { font-size: 4.5vw;
+            .chord-type                                     { font-size: 3.5vw;}
+            .symbol                                         { font-size: 2.5vw;}
+        }
     }
 
     #note-select                                            { font-size: 2vw;}
 
     #scale-select                                           { font-size: 6vw;}
 }
+
+
+
+
+
 
 
 /* 2A. Header

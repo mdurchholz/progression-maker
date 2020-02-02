@@ -25,7 +25,8 @@ export class MapComponent implements OnInit {
 
   // Build note HTML of notes 1 - 7
   public noteOpts( details, i ) {
-    var noteHTML = '<span class="spot">'+ (i==1 ? 'TONIC' : i) + '</span><span class="root">';
+
+    var noteHTML = '<span class="fill"></span><div><div class="spot">'+ (i==1 ? 'TONIC' : i) + '</div><div class="root">';
 
     // Check for technical note
     if( details['technical'] ) noteHTML += '<span class="technical">'+this.global.noteStringToHtml( details['technical'] )+'</span>';
@@ -40,7 +41,7 @@ export class MapComponent implements OnInit {
     else if( (this.isMinor && i==2) || (!this.isMinor && i==7 ) )
       noteHTML += '<span class="chord-type dim">&deg;</span>';
 
-    return noteHTML + '</span>';
+    return noteHTML + '</div>';
   }
 
   // Build note HTML of minor 7 harmonic
@@ -50,7 +51,7 @@ export class MapComponent implements OnInit {
     // Check for technical note
     if( details['technical'] ) noteHTML += '<span class="technical">'+this.global.noteStringToHtml( details['technical'] )+'</span>';
 
-    noteHTML += '<span class="friendly">'+this.global.noteStringToHtml( details['friendly'] )+'</span><span class="chord-type dim">&deg;</span></span>';
+    noteHTML += '<span class="friendly">'+this.global.noteStringToHtml( details['friendly'] )+'</span><span class="chord-type dim">&deg;</span></span></div>';
 
     return noteHTML;
   }
