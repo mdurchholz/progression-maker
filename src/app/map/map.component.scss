@@ -7,47 +7,6 @@
 #major-wrap .map.major,
 #minor-wrap .map.minor                                      { display: block;}
 
-
-
-
-#major-wrap
-{
-    &::before                                               { content: ""; display: block; width: 100%; padding: 50% 0 0;}
-    img                                                     { display: none;}
-
-    #scale-select                                           { top: 5%; left: 9%;}
-
-    #note-select                                            { top: 32%; left: 0; right: 4.5%;}
-
-    .note                                                   { left: 0; right: 0;}
-
-    #note-1                                                 { top: 0;}
-    #note-2                                                 { bottom: 0; left: -100%;}
-    #note-3                                                 { bottom: 0; left: -33.3333%;}
-    #note-4                                                 { top: 0; right: -66.6667%;}
-    #note-5                                                 { top: 0; left: -66.667%;}
-    #note-6                                                 { bottom: 0; right: -33.3333%;}
-    #note-7                                                 { bottom: 0; right: -100%;}
-}
-
-
-#minor-wrap
-{
-    #scale-select                                           { top:2%; left: 5%;}
-
-    #note-select                                            { top: 17%; right: 13%;}
-
-    #note-1                                                 { top: 5%;  left: 75%;}
-    #note-2                                                 { top: 48%; left: 52%;}
-    #note-3                                                 { top: 48%; left: 28%;}
-    #note-4                                                 { top: 5%;  left: 28%;}
-    #note-5                                                 { top: 48%; left: 74.75%;}
-    #note-6                                                 { top: 5%;  left: 6.5%;}
-    #note-7                                                 { top: 48%; left: 6%;}
-    #note-7-harmonic                                        { top: 5%;  left: 53%;}
-}
-
-
 $arrowS : 20px;
 $lineW  : 2px;
 

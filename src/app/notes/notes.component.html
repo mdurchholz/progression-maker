@@ -1,1 +1,15 @@
-<p>notes works!</p>
+<div id="note-{{i+1}}" class="note va-m" *ngFor="let note of getNotes; index as i">
+    <span class="fill"></span>
+    <div>
+        <div class="spot">{{!i ? 'TONIC' : i+1}}</div>
+        <div class="root" [innerHTML]="noteOpts(note, i)"></div>
+    </div>
+</div>
+
+<div id="note-7-harmonic" class="note va-m" *ngIf="this.global.isMinor()">
+    <span class="fill"></span>
+    <div>
+        <div class="spot">7<span class="type">(harmonic)</span></div>
+        <div class="root" [innerHTML]="noteOpts(getNotes[getNotes.length-1], getNotes.length, true)"></div>
+    </div>
+</div>

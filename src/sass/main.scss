@@ -136,39 +136,8 @@ body                                                        { overflow-y: auto; 
 }
 
 
-
-
-
-
-.selector                                                   { position: absolute; margin: auto; background: $color-1; color: #fff; border: none; cursor: pointer;}
-#note-select                                                { width: 10%; font-size: 18px; padding: 10px; padding-right: 0;}
-#scale-select                                               { display: none; width: 25%; font-size: 60px; text-transform: uppercase;}
-
-.note                                                       { /* border-radius: 50%; */ display: block; position: absolute; top: auto; width: 14%; height: 28%; color: #000; border: 1px solid #ccc; font-weight: bold; text-align: center; margin: auto; cursor: pointer; background: #fff; /*transform: translate3d(-50%,0,0);*/
-
-    .spot                                                   { font-size: 20px; line-height: 1; display: block;
-        .type                                               { font-size: 14px; vertical-align: baseline;}
-    }
-
-    .root                                                   { position: relative; font-size: 45px; color: $color-1;
-
-        span                                                { vertical-align: baseline;}
-
-        .symbol                                             { font-size: 25px;}
-
-        .chord-type                                         { font-size: 35px;
-            &.dim                                           { position: absolute; left: 100%; top: -4px; vertical-align: top;}
-            &.minor                                         { line-height: 2;}
-        }
-    }
-
-    .technical                                              { display: inline;
-        + .friendly                                         { display: none;}
-    }
-
-    &:hover                                                 { background: $color-1; border-color: $color-1;
-        &, *                                                { color: #fff;}
-    }
+.technical                                              { display: inline;
+    + .friendly                                         { display: none;}
 }
 
 .showFriendly .note
@@ -177,23 +146,43 @@ body                                                        { overflow-y: auto; 
     .friendly                                               { display: inline;}
 }
 
-@media screen and (max-width: 1000px)
+
+
+#major-wrap
 {
-    .note
-    {
-        .spot                                               { font-size: 2.0vw;
-            .type                                           { font-size: 1.4vw;}
-        }
+    &::before                                               { content: ""; display: block; width: 100%; padding: 50% 0 0;}
+    img                                                     { display: none;}
 
-        .root                                               { font-size: 4.5vw;
-            .chord-type                                     { font-size: 3.5vw;}
-            .symbol                                         { font-size: 2.5vw;}
-        }
-    }
+    #scale-select                                           { top: 5%; left: 9%;}
 
-    #note-select                                            { font-size: 2vw;}
+    #note-select                                            { top: 32%; left: 0; right: 4.5%;}
 
-    #scale-select                                           { font-size: 6vw;}
+    .note                                                   { left: 0; right: 0;}
+
+    #note-1                                                 { top: 0;}
+    #note-2                                                 { bottom: 0; left: -100%;}
+    #note-3                                                 { bottom: 0; left: -33.3333%;}
+    #note-4                                                 { top: 0; right: -66.6667%;}
+    #note-5                                                 { top: 0; left: -66.667%;}
+    #note-6                                                 { bottom: 0; right: -33.3333%;}
+    #note-7                                                 { bottom: 0; right: -100%;}
+}
+
+
+#minor-wrap
+{
+    #scale-select                                           { top:2%; left: 5%;}
+
+    #note-select                                            { top: 17%; right: 13%;}
+
+    #note-1                                                 { top: 5%;  left: 75%;}
+    #note-2                                                 { top: 48%; left: 52%;}
+    #note-3                                                 { top: 48%; left: 28%;}
+    #note-4                                                 { top: 5%;  left: 28%;}
+    #note-5                                                 { top: 48%; left: 74.75%;}
+    #note-6                                                 { top: 5%;  left: 6.5%;}
+    #note-7                                                 { top: 48%; left: 6%;}
+    #note-7-harmonic                                        { top: 5%;  left: 53%;}
 }
 
 

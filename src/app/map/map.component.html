@@ -43,9 +43,7 @@
 		</div>
 	</div>
 
-	<div id="note-{{i+1}}" class="note va-m" *ngFor="let note of getNotes; index as i" [innerHTML]="noteOpts(note, i+1)"></div>
-
-	<div id="note-7-harmonic" class="note va-m" *ngIf="this.isMinor" [innerHTML]="note7Harmonic(getNotes[6], 7)"></div>
+	<notes></notes>
 
 	<div class="ruler h top"></div>
 	<div class="ruler h top" style="top: 14%"></div>

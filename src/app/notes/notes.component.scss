@@ -1,0 +1,40 @@
+@import '~src/sass/my-mixins';
+
+.note                                                       { /* border-radius: 50%; */ display: block; position: absolute; top: auto; width: 14%; height: 28%; color: #000; border: 1px solid #ccc; font-weight: bold; text-align: center; margin: auto; cursor: pointer; background: #fff; /*transform: translate3d(-50%,0,0);*/
+
+    .spot                                                   { font-size: 20px; line-height: 1; display: block;
+        .type                                               { font-size: 14px; vertical-align: baseline;}
+    }
+
+    .root                                                   { position: relative; font-size: 45px; color: $color-1;
+
+        span                                                { vertical-align: baseline;}
+
+        .symbol                                             { font-size: 25px;}
+
+        .chord-type                                         { font-size: 35px;
+            &.dim                                           { vertical-align: top; /*position: absolute; left: 100%; top: -4px;*/}
+            &.minor                                         { line-height: 2;}
+        }
+    }
+
+    &:hover                                                 { background: $color-1; border-color: $color-1;
+        &, *                                                { color: #fff;}
+    }
+}
+
+
+@media screen and (max-width: 1000px)
+{
+    .note
+    {
+        .spot                                               { font-size: 2.0vw;
+            .type                                           { font-size: 1.4vw;}
+        }
+
+        .root                                               { font-size: 4.5vw;
+            .chord-type                                     { font-size: 3.5vw;}
+            .symbol                                         { font-size: 2.5vw;}
+        }
+    }
+}
