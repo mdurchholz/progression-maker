@@ -8,9 +8,16 @@ import { GlobalService } from '../global.service';
 })
 export class MapComponent implements OnInit {
 
+  getScale:string;
+
   constructor( public global:GlobalService ) { }
 
   ngOnInit() {
+    this.global.appKey.subscribe(
+      gKey => (
+        this.getScale = gKey['scale']
+      )
+    )
   }
 
 }

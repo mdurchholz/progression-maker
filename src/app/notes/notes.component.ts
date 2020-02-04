@@ -9,37 +9,43 @@ import { GlobalService } from '../global.service';
 export class NotesComponent implements OnInit {
 
   getNotes:object;
+  harmonic:object;
+  showFriendly:boolean;
 
   constructor( public global:GlobalService ) { }
 
   ngOnInit() {
     this.global.appKey.subscribe(
       gKey => (
-        this.getNotes = this.global.getScaleNotes(gKey)
+        this.getNotes = this.global.getScaleNotes(gKey),
+        this.harmonic = this.getNotes[ Object.keys(this.getNotes).length - 1 ]
       )
     )
+
+    this.global.isFriendly.subscribe( value => this.showFriendly = value );
   }
 
+  //
+  public checkTechnical( note ) { return note['technical'] && !this.showFriendly; }
+
+  //
+  public checkFriendly( note ) { return note['technical'] ? this.showFriendly : true; }
 
   // Build note HTML of notes 1 - 7
   public noteOpts( details, i, harmonic:boolean = false ) {
 
-    var noteHTML = '';
-
-    // Check for technical note
-    if( details['technical'] ) noteHTML += '<span class="technical">'+this.global.noteStringToHtml( details['technical'] )+'</span>';
-
-    // Add friendly note
-    noteHTML += '<span class="friendly">'+this.global.noteStringToHtml( details['friendly'] )+'</span>';
+    var noteHTML = null;
 
     // Check for minor or diminished chords
-    if( ( this.global.isMinor && (i==1 || i==4 || i==5)) ||
-        (!this.global.isMinor && (i==2 || i==3 || i==6))  )
-      noteHTML += '<span class="chord-type minor">m</span>';
-    else if( (this.global.isMinor && i==2) || (!this.global.isMinor && i==7 ) )
-      noteHTML += '<span class="chord-type dim">&deg;</span>';
-    else if( harmonic )
-      noteHTML += '<span class="chord-type dim">&deg;</span></div>';
+    if( ( this.global.isMinor() && (i==1 || i==4 || i==5)) ||
+        (!this.global.isMinor() && (i==2 || i==3 || i==6))  )
+    {
+      noteHTML = {class:'minor', html:'m'};
+    }
+    else if( (this.global.isMinor() && i==2) || (!this.global.isMinor() && i==7 ) || harmonic )
+    {
+      noteHTML = {class:'dim', html:'&deg;'};
+    }
 
     return noteHTML;
   }

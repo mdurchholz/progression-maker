@@ -1,0 +1,24 @@
+@import '~src/sass/my-mixins';
+
+#nav-wrap                                                   { display: inline-block; text-align: center;
+
+    > div                                                   { display: inline-block;}
+
+    .btn                                                    { display: inline-block; width: 45px; margin: 5px 5px 0 0; padding: 10px; border-radius: 2px; background: #fff; border: 1px solid $grey-lite; text-align: center;
+        &.active                                            { background: $color-1; color: #fff; border-color: $color-1;}
+    }
+
+    .btn-group                                              { margin-top: 15px;
+        .btn                                                { width: auto; margin: 0; text-align: center; padding: 5px 10px; border-radius: 0;}
+    }
+
+    .notes                                                  { width: 200px;}
+
+    .semi                                                   { width: 50px; margin: 0 10px;}
+
+    .scale                                                  { width: 60px;
+        .btn                                                { width: 100%;}
+    }
+
+    .submit.btn                                             { display: block; width: 100%; margin: 15px 0 0;}
+}

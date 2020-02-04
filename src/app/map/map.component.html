@@ -1,7 +1,7 @@
-<div id="{{this.global.getKey('scale')}}-wrap" class="map-wrap">
-	<div class="major map">
-		<img src="assets/img/major-key-map.jpg" alt="Major Key Map">
-		<div class="lines">
+<div id="{{this.getScale}}-wrap" class="map-wrap">
+	<div class="{{this.getScale}} map">
+		<img src="assets/img/{{this.getScale}}-key-map.jpg" alt="{{this.getScale}} Key Map">
+		<div *ngIf="!this.global.isMinor()" class="lines">
 			<div id="line_2-3" class="line arr-l-r"><span></span></div>
 			<div id="line_2-4" class="line arr-l pos-r"><span></span></div>
 			<div id="line_2-5" class="line arr-r"><span></span></div>
@@ -35,12 +35,7 @@
 
 			<div id="line_7-1" class="line arr-l"><span></span></div>
 		</div>
-	</div>
-
-	<div class="minor map">
-		<img src="assets/img/minor-key-map.jpg" alt="Minor Key Map">
-		<div class="lines">
-		</div>
+		<div *ngIf="this.global.isMinor()" class="lines"></div>
 	</div>
 
 	<notes></notes>

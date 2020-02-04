@@ -1,11 +1,9 @@
 @import '~src/sass/my-mixins';
 
 .map-wrap                                                   { position: relative; margin: 90px 7%;
-    .map                                                    { display: none; width: 100%;}
+    .map                                                    { width: 100%;}
 }
 
-#major-wrap .map.major,
-#minor-wrap .map.minor                                      { display: block;}
 
 $arrowS : 20px;
 $lineW  : 2px;

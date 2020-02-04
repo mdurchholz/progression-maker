@@ -108,54 +108,14 @@ body                                                        { overflow-y: auto; 
 #wrapper                                                    { position: relative; z-index: 0; transform: translate3d(0,0,0); width: 100%; max-width: 1000px; margin: 0 auto;}
 
 
-#current-scale                                              { margin: 60px 0; color: $grey-dark;}
-#current-scale .symbol                                      { display: inline-block; vertical-align: top; font-size: 45%;}
-
-
-#nav-wrap                                                   { display: inline-block; text-align: center;
-
-    > div                                                   { display: inline-block;}
-
-    .btn                                                    { display: inline-block; width: 45px; margin: 5px 5px 0 0; padding: 10px; border-radius: 2px; background: #fff; border: 1px solid $grey-lite; text-align: center;
-        &.active                                            { background: $color-1; color: #fff; border-color: $color-1;}
-    }
-
-    .btn-group                                              { margin-top: 15px;
-        .btn                                                { width: auto; margin: 0; text-align: center; padding: 5px 10px; border-radius: 0;}
-    }
-
-    .notes                                                  { width: 200px;}
-
-    .semi                                                   { width: 50px; margin: 0 10px;}
-
-    .scale                                                  { width: 60px;
-        .btn                                                { width: 100%;}
-    }
-
-    .submit.btn                                             { display: block; width: 100%; margin: 15px 0 0;}
-}
-
-
-.technical                                              { display: inline;
-    + .friendly                                         { display: none;}
-}
-
-.showFriendly .note
-{
-    .technical                                              { display: none;}
-    .friendly                                               { display: inline;}
-}
-
+.symbol                                                     { /*display: inline-block;*/ vertical-align: top; font-size: 45%;}
 
 
 #major-wrap
 {
     &::before                                               { content: ""; display: block; width: 100%; padding: 50% 0 0;}
+
     img                                                     { display: none;}
-
-    #scale-select                                           { top: 5%; left: 9%;}
-
-    #note-select                                            { top: 32%; left: 0; right: 4.5%;}
 
     .note                                                   { left: 0; right: 0;}
 
@@ -171,10 +131,6 @@ body                                                        { overflow-y: auto; 
 
 #minor-wrap
 {
-    #scale-select                                           { top:2%; left: 5%;}
-
-    #note-select                                            { top: 17%; right: 13%;}
-
     #note-1                                                 { top: 5%;  left: 75%;}
     #note-2                                                 { top: 48%; left: 52%;}
     #note-3                                                 { top: 48%; left: 28%;}
@@ -184,10 +140,6 @@ body                                                        { overflow-y: auto; 
     #note-7                                                 { top: 48%; left: 6%;}
     #note-7-harmonic                                        { top: 5%;  left: 53%;}
 }
-
-
-
-
 
 
 
