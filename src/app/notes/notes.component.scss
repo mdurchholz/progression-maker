@@ -1,9 +1,9 @@
 @import '~src/sass/my-mixins';
 
-.note                                                       { /* border-radius: 50%; */ display: block; position: absolute; top: auto; width: 14%; height: 28%; color: #000; border: 1px solid #ccc; font-weight: bold; text-align: center; margin: auto; cursor: pointer; background: #fff; /*transform: translate3d(-50%,0,0);*/
+.note                                                       { display: block; @include absolute(auto,0,auto,0); width: 14%; height: 28%; line-height: 1; color: #000; border: 1px solid #ccc; font-weight: bold; text-align: center; margin: auto; cursor: pointer; background: #fff;
 
-    .spot                                                   { font-size: 20px; line-height: 1; display: block;
-        .type                                               { font-size: 14px; vertical-align: baseline;}
+    .spot                                                   { font-size: 14px; line-height: 1; display: block; @include absolute(-1px,-1px,auto,auto); border: 1px solid #ccc; padding: 2px 4px; min-width: 25px; font-weight: 300; background: #fff; color: $grey;
+        .type                                               { font-size: 60%; vertical-align: super;}
     }
 
     .root                                                   { position: relative; font-size: 45px; color: $color-1;
@@ -12,19 +12,17 @@
 
         .chord-type                                         { font-size: 35px;
             &.dim                                           { vertical-align: top;}
-            &.minor                                         { line-height: 2;}
+            // &.minor                                         { line-height: 2;}
         }
     }
 
     &:hover                                                 { background: $color-1; border-color: $color-1;
-        &, *                                                { color: #fff;}
+        &, .root                                            { color: #fff;}
     }
 
     @media screen and (max-width: 1000px)
     {
-        .spot                                               { font-size: 2.0vw;
-            .type                                           { font-size: 1.4vw;}
-        }
+        .spot                                               { font-size: 1.4vw;}
 
         .root                                               { font-size: 4.5vw;
             .chord-type                                     { font-size: 3.5vw;}

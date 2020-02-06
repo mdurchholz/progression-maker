@@ -1,11 +1,14 @@
 @import '~src/sass/my-mixins';
 
-.map-wrap                                                   { position: relative; margin: 90px 7%;
+.map-wrap                                                   { position: relative; margin: 90px 12%;
+    &::before                                               { content: ""; display: block; width: 100%; padding: 50% 0 0;}
+
     .map                                                    { width: 100%;}
+
+    img                                                     { display: none; @include absolute(0,auto,auto,0); margin: auto; width: 100%;}
 }
 
 
-$arrowS : 20px;
 $lineW  : 2px;
 
 .lines                                                      { @include absolute(0,0,0,0); margin: auto;
@@ -13,11 +16,21 @@ $lineW  : 2px;
 
         &.pos-r                                             { left: auto; right: 0; transform-origin: top right;}
 
-        span                                                { @include absolute(0,0,0,0); height: $arrowS; width: auto; margin: auto; cursor: pointer; display: block;}
+        span                                                { @include absolute(0,0,0,0); height: 30px; width: auto; margin: auto; cursor: pointer; display: block;}
+
+        &.top                                               { top: 0; bottom: auto;}
+        &.bot                                               { top: auto; bottom: 0;}
+
+        &.left                                              { right: auto; left: 0;}
+        &.right                                             { right: 0; left: auto;}
 
         &[class*="arr"]
         {
-            span { &::before, &::after                      { @include absolute(auto,auto,auto,auto); width: $arrowS; height: $arrowS; margin: auto; border: none; border-width: $lineW; border-color: #000; transform: rotate(45deg);}}
+            span { &::before, &::after                      { @include absolute(auto,auto,auto,auto); width: 20px; height: 20px; margin: auto; border: none; border-width: $lineW; border-color: #000; box-shadow: none; outline: none; backface-visibility: hidden; transform: rotate(45deg);
+                @media screen and (max-width: 991px)        { width: 15px; height: 15px;}
+                @media screen and (max-width: 767px)        { width: 12px; height: 12px;}
+                @media screen and (max-width: 575px)        { width: 10px; height: 10px;}
+            }}
 
             &[class*="-l"] span::before                     { content: ""; top: 0; bottom: 0; left: $lineW; border-right-style: none; border-left-style: solid; border-bottom-style: solid;}
             &[class*="-r"] span::after                      { content: ""; top: 0; bottom: 0; right: $lineW; border-left-style: none; border-right-style: solid; border-top-style: solid;}
@@ -42,54 +55,84 @@ $lineW  : 2px;
             &[class*="-r"] span::before                     { content: ""; top: 0; bottom: 0; left: $lineW + 1px; border-right-style: none; border-left-style: solid; border-bottom-style: solid;}
         }
 
-        &.top                                               { top: 0; bottom: auto;
+        &.top
+        {
             .line-l                                         { transform: rotate(90deg); transform-origin: top left;}
             .line-r                                         { transform: rotate(270deg); transform-origin: top right;}
         }
 
-        &.bot                                               { top: auto; bottom: 0;
+        &.bot
+        {
             .line-l                                         { transform: rotate(-90deg); transform-origin: bottom left;}
             .line-r                                         { transform: rotate(90deg); transform-origin: bottom right;}
         }
     }
 }
 
-.major
+#major-wrap
 {
-    #line_2-3  { top: 86%; left: 7.75%; width: 17.5%;}
-    #line_2-4  { top: 19%; right: 24.6667%; width: 72.5%; transform: rotate(-20.75deg);}
-    #line_2-5  { top: 70.5%; left: 0; width: 22.3333%; transform: rotate(-66.5deg);}
-    #line_2-7  { bottom: -15%; left: 0; width: 100%;
-        > div  { width: 7%;}
+    #major_line_2-3                                         { top: 86%; left: 7.75%; width: 17.5%;}
+    #major_line_2-4                                         { top: 19%; right: 24.6667%; width: 72.5%; transform: rotate(-20.75deg);}
+    #major_line_2-5                                         { top: 70.5%; left: 0; width: 22.3333%; transform: rotate(-66.5deg);}
+    #major_line_2-7                                         { bottom: -15%; left: 0; width: 100%;
+        > div                                               { width: 7%;}
     }
 
-    #line_3-4  { top: 29.25%; right: 24.5%; width: 40%; transform: rotate(-31deg);}
-    #line_3-6  { top: 86%; left: 41%; width: 17.5%;}
+    #major_line_3-4                                         { top: 29.25%; right: 24.5%; width: 40%; transform: rotate(-31deg);}
+    #major_line_3-6                                         { top: 86%; left: 41%; width: 17.5%;}
 
-    #line_4-1  { top: 14%; left: 58%; width: 17.75%;}
-    #line_4-5  { top: -11%; left: 16.6667%; width: 67%;
-        > div  { width: 7%;}
+    #major_line_4-1                                         { top: 14%; left: 58%; width: 17.75%;}
+    #major_line_4-5                                         { top: -11%; left: 16.6667%; width: 67%;
+        > div                                               { width: 7%;}
     }
-    #line_4-7  { top: 29.25%; left: 91%; width: 22.5%; transform: rotate(66.5deg);}
+    #major_line_4-7                                         { top: 29.25%; left: 91%; width: 22.5%; transform: rotate(66.5deg);}
 
-    #line_5-1  { top: 14%; left: 24.1667%; width: 17.75%;}
-    #line_5-6  { top: 29.25%; left: 24.5%; width: 40%; transform: rotate(31deg);}
-    #line_5-7  { top: 19%; left: 24.5%; width: 75.5%; transform: rotate(26.1666deg);}
+    #major_line_5-1                                         { top: 14%; left: 24.1667%; width: 17.75%;}
+    #major_line_5-6                                         { top: 29.25%; left: 24.5%; width: 40%; transform: rotate(31deg);}
+    #major_line_5-7                                         { top: 19%; left: 24.5%; width: 75.5%; transform: rotate(26.1666deg);}
 
-    #line_6-2  { left: 3.5%; bottom: -10.25%; width: 63.1667%;
-        > div  { width: 7%;}
+    #major_line_6-2                                         { left: 3.5%; bottom: -10.25%; width: 63.1667%;
+        > div                                               { width: 7%;}
     }
-    #line_6-4  { top: 29.25%; right: 17%; width: 26.5%; transform: rotate(-51.5deg);}
+    #major_line_6-4                                         { top: 29.25%; right: 17%; width: 26.5%; transform: rotate(-51.5deg);}
 
-    #line_7-1  { top: 29.25%; left: 57.75%; width: 40.5%; transform: rotate(30.75deg);}
+    #major_line_7-1                                         { top: 29.25%; left: 57.75%; width: 40.5%; transform: rotate(30.75deg);}
 }
 
-.ruler, .note::before { display: none;}
+#minor-wrap
+{
+    // img                                                     { display: block; opacity: 0.5;}
 
-.note::before { content: ""; @include absolute(0,0,0,0); margin: auto; border: 1px solid #00f; transform: scale(1.11);}
-.ruler { @include absolute(0,0,auto,0); margin: auto; width: 1px; height: 100%; background: #f00; z-index: 99;
-    &.h  { width: 100%; height: 1px; bottom: 0; right: auto;}
+    #minor_line_2-7h                                        { top: 29.5%; left: 66.6667%; width: 20.5%; transform: rotate(90deg);}
+    #minor_line_2-5                                         { bottom: 14%; left: 74%; width: 18.25%;}
 
-    &.top  { bottom: auto;}
-    &.bot  { top: auto;}
+    #minor_line_3-2                                         { bottom: 14%; left: 40.75%; width: 18.25%;}
+    #minor_line_3-4                                         { top: 29.5%; left: 33.333%; width: 20.5%; transform: rotate(90deg);}
+    #minor_line_3-6                                         { top: 29%; left: 7.6667%; width: 28%; transform: rotate(49deg);}
+
+    #major_line_4-1                                         { top: -11%; left: 33.3333%; width: 67%;
+        > div                                               { width: 7%;}
+    }
+    #minor_line_4-2                                         { top: 28%; left: 41%; width: 30.5%; transform: rotate(44deg);}
+    #minor_line_4-5                                         { top: 21%; left: 41%; width: 57%; transform: rotate(26deg);}
+    #minor_line_4-7h                                        { top: 14%; left: 40.75%; width: 18.25%;}
+
+    #minor_line_5-1                                         { top: 29.5%; left: 100%; width: 20.5%; transform: rotate(90deg);}
+    #major_line_5-6                                         { bottom: -10%; left: -12%; width: 109%;
+        .line-l                                             { width: 44%;
+            .line-r                                         { transform: rotate(-90deg); transform-origin: top right; width: 7%;}
+        }
+        .line-r                                             { width: 4%;}
+    }
+
+    #minor_line_6-2                                         { top: 21%; left: 7.6667%; width: 58%; transform: rotate(28deg);}
+    #minor_line_6-4                                         { top: 14%; left: 7.3333%; width: 18.25%;}
+    #minor_line_6-7                                         { top: 29.5%; left: 0; width: 20.5%; transform: rotate(90deg);}
+
+    #minor_line_7-3                                         { bottom: 14%; left: 7.3333%; width: 18.25%;}
+    #major_line_7-5                                         { bottom: -16%; left: 0; width: 103.5%;
+        > div                                               { width: 7%;}
+    }
+
+    #minor_line_7h-1                                        { top: 14%; left: 74%; width: 18.25%;}
 }

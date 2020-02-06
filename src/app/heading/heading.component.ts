@@ -22,8 +22,6 @@ export class HeadingComponent implements OnInit {
     }
 
     // Capitalize the first letter of a string
-    private capitalize(str:string) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    }
+    private capitalize(str:string) { return str.charAt(0).toUpperCase() + str.slice(1); }
 
 }
