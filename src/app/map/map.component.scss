@@ -9,14 +9,14 @@
 }
 
 
-$lineW  : 2px;
+$lineW : 2px;
 
-.lines                                                      { @include absolute(0,0,0,0); margin: auto;
-    [class*="line"]                                         { @include absolute(0,auto,auto,0); z-index: 0; height: $lineW; background: #000; transform-origin: top left; transform: rotate(0deg);
+.lines                                                      { @include absolute(0,0,0,0); margin: auto; pointer-events: none;
+    [class*="line"]                                         { @include absolute(0,auto,auto,0); z-index: 0; height: $lineW; background: #333; color: #333; transform-origin: top left; transform: rotate(0deg); transition: all $speed ease; backface-visibility: hidden;
 
         &.pos-r                                             { left: auto; right: 0; transform-origin: top right;}
 
-        span                                                { @include absolute(0,0,0,0); height: 30px; width: auto; margin: auto; cursor: pointer; display: block;}
+        span                                                { @include absolute(0,0,0,0); height: 30px; width: auto; margin: auto; display: block;}
 
         &.top                                               { top: 0; bottom: auto;}
         &.bot                                               { top: auto; bottom: 0;}
@@ -26,7 +26,7 @@ $lineW  : 2px;
 
         &[class*="arr"]
         {
-            span { &::before, &::after                      { @include absolute(auto,auto,auto,auto); width: 20px; height: 20px; margin: auto; border: none; border-width: $lineW; border-color: #000; box-shadow: none; outline: none; backface-visibility: hidden; transform: rotate(45deg);
+            span { &::before, &::after                      { @include absolute(auto,auto,auto,auto); width: 20px; height: 20px; margin: auto; border: none; border-width: $lineW; border-color: inherit; box-shadow: none; outline: none; backface-visibility: hidden; transform: rotate(45deg); transition: all $speed ease;
                 @media screen and (max-width: 991px)        { width: 15px; height: 15px;}
                 @media screen and (max-width: 767px)        { width: 12px; height: 12px;}
                 @media screen and (max-width: 575px)        { width: 10px; height: 10px;}
@@ -35,24 +35,19 @@ $lineW  : 2px;
             &[class*="-l"] span::before                     { content: ""; top: 0; bottom: 0; left: $lineW; border-right-style: none; border-left-style: solid; border-bottom-style: solid;}
             &[class*="-r"] span::after                      { content: ""; top: 0; bottom: 0; right: $lineW; border-left-style: none; border-right-style: solid; border-top-style: solid;}
         }
-
-        &:hover                                             { background: $color-1; z-index: 1;
-            [class*="line"]                                 { background: $color-1;}
-            span { &::before, &::after                      { border-color: $color-1;}}
-        }
     }
 
     .hook
     {
-        .line-l                                             { left: $lineW; right: auto; transform: rotate(-90deg); transform-origin: bottom left;}
-        .line-r                                             { right: $lineW; left: auto; transform: rotate(90deg); transform-origin: bottom right;}
+        .line-l                                             { left: $lineW - 1px; right: auto; transform: rotate(-90deg); transform-origin: bottom left;}
+        .line-r                                             { right: $lineW - 1px; left: auto; transform: rotate(90deg); transform-origin: bottom right;}
 
         .arr
         {
             span { &::before, &::after                      { content: none;}}
 
-            &[class*="-l"] span::after                      { content: ""; top: 0; bottom: 0; right: $lineW + 1px; border-left-style: none; border-right-style: solid; border-top-style: solid;}
-            &[class*="-r"] span::before                     { content: ""; top: 0; bottom: 0; left: $lineW + 1px; border-right-style: none; border-left-style: solid; border-bottom-style: solid;}
+            &[class*="-l"] span::after                      { content: ""; top: 0; bottom: 0; right: $lineW - 1px; border-left-style: none; border-right-style: solid; border-top-style: solid;}
+            &[class*="-r"] span::before                     { content: ""; top: 0; bottom: 0; left: $lineW - 1px; border-right-style: none; border-left-style: solid; border-bottom-style: solid;}
         }
 
         &.top
@@ -67,6 +62,8 @@ $lineW  : 2px;
             .line-r                                         { transform: rotate(90deg); transform-origin: bottom right;}
         }
     }
+
+    .line                                                   { pointer-events: auto;}
 }
 
 #major-wrap

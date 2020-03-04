@@ -2,6 +2,8 @@
 
 @import "./sass/my-mixins";
 
-@import "./node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "../node_modules/compass-mixins-fixed/lib/compass";
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/font-awesome/scss/font-awesome";
 
 @import "./sass/main";

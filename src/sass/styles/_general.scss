@@ -3,9 +3,9 @@
 //  GENERAL
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ------------------------------------------------------------------------------------------------- */
-*                                                           { box-sizing: border-box; backface-visibility: hidden;}
+*                                                           { box-sizing: border-box; backface-visibility: hidden; user-select: none;}
 
-body                                                        { font-family: $font-1; font-weight: 400; font-size: 100%; color: $grey-dark;}
+body                                                        { font-family: $font-1; font-size: 100%; font-weight: 400; color: $grey-dark; background: $grey-xlite;}
 img                                                         { max-width: 100%; vertical-align: bottom;}
                                                             /* Responsive images. Also, fixed spacing at bottom of image sometimes. */
 
@@ -15,12 +15,11 @@ ul, ul li                                                   { list-style-type: n
                                                             /* Fixes alignment issues */
 
  h1,  h2,  h3,  h4,  h5,  h6,
-.h1, .h2, .h3, .heading                                     { color: #e0e0e0; font-family: $font-2; font-style: normal; display: block; margin: 0; font-weight: 400;
+.h1, .h2, .h3, .heading                                     { color: inherit; font-family: $font-2; font-style: normal; display: block; margin: 0; font-weight: 400;
     .major-cl                                               { color: #5c87bf;}
     .minor-cl                                               { color: #92bf90;}
     sup                                                     { top: -1.25em; font-size: 50%;}
 }
-
 
 
 h1, .h1                                                     { font-size: $fontSize-xxl;}
@@ -30,6 +29,8 @@ h4, .heading, blockquote                                    { font-size: $fontSi
 p, li, dl, td                                               { font-size: $fontSize-bs; line-height: $fontSize-md;}
 address, th                                                 { font-size: $fontSize-sm;}
 li li                                                       { font-size: 100%;}
+
+sup                                                         { font-size: 60%;}
 
 .sub-head                                                   { @include fonts($font-2, $fontSize-md); color: $grey-lite; text-transform: uppercase;}
 

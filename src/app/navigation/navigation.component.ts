@@ -10,50 +10,70 @@ export class NavigationComponent implements OnInit {
 
   newKey:object;
   hasSemi:boolean;
-  isFriendly:boolean;
-  showFriendly:boolean;
+  showBtn:boolean;
 
   constructor( public global:GlobalService ) { }
 
   ngOnInit() {
     this.global.appKey.subscribe(
       gKey => (
-        this.newKey = { base:this.global.getNoteBase(gKey['note']), semi:this.global.getNoteSemi(gKey['note']), scale:gKey['scale'] },
-        this.hasSemi = this.global.getNoteSemi(gKey['note']) !=='' ? true : false,
-        this.showFriendly = this.checkFriendly(gKey)
+        this.newKey = this.setNewKey( gKey ),
+        this.hasSemi = this.global.getNoteSemi( gKey['note'] ) !=='' ? true : false
       )
     );
 
-    this.global.isFriendly.subscribe( value => this.isFriendly = value );
+    this.showBtn = false;
   }
 
-  public semiButtonClick( semi ) {
-    if( !this.hasSemi )
-      this.hasSemi = true;
-    else if( this.newKey['semi'] == semi )
-      this.hasSemi = false;
+  public buttonClick( type:string, value:string = '' ) {
+    switch (type) {
+      case 'note':
+        this.newKey['base'] = value;
+        break;
 
-    this.newKey['semi'] = this.hasSemi ? semi : '';
-  }
+      case 'semi':
+        if( !this.hasSemi )
+          this.hasSemi = true;
+        else if( this.newKey['semi'] == value )
+          this.hasSemi = false;
 
-  public changeMap( newKey ) {
-    var key = {
-        note  : this.global.checkEnharmonic(newKey['base']+newKey['semi']),
-        scale : newKey['scale']
-    };
+        this.newKey['semi'] = this.hasSemi ? value : '';
+        break;
 
-    this.global.setKey(key);
-  }
+      case 'scale':
+        this.newKey['scale'] = value;
+        break;
 
-  private checkFriendly( key:object ) {
-    var getNotes = this.global.getScaleNotes(key),
-        hasTech  = false;
+      case 'submit':
+        if(this.showBtn) this.global.setKey( this.newKeyToObject() );
+        break;
 
-    for(var note=0; note<getNotes.length; note++) {
-      if( getNotes[note]['technical'] && !hasTech ) hasTech = true;
+      case 'clear':
+        this.newKey = this.setNewKey( this.global.getKey() );
+        break;
+
+      default:
+        return false;
     }
 
-    return hasTech;
+    var object_1 = this.global.getKey(),
+        object_2 = this.newKeyToObject();
+
+    this.showBtn = ( object_1['note'] != object_2['note'] || object_1['scale'] != object_2['scale'] );
   }
 
+  public newList( ) {
+      console.log('new list');
+  }
+
+  public setNewKey( key:object ) {
+    return { base:this.global.getNoteBase(key['note']), semi:this.global.getNoteSemi(key['note']), scale:key['scale'] };
+  }
+
+  public newKeyToObject() {
+    return {
+      note  : this.global.checkEnharmonic(this.newKey['base']+this.newKey['semi']),
+      scale : this.newKey['scale']
+    };
+  }
 }

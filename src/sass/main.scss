@@ -1,13 +1,4 @@
 @charset "UTF-8";  /* Sets the encoding of the style sheet to Unicode UTF-8. Don't move it. */
-
-
-/* Libraries
-------------------------------------------------------------------------------------------------- */
-@import "./libraries/animate";
-@import "./libraries/fx";
-@import "./libraries/hide-n-seek";
-
-
 /*--------------------------------------------------------------------------------------------------
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //  TABLE OF CONTENTS
@@ -92,20 +83,106 @@ section.no-gutter .row > div                                { padding: 0;}
 02 - STYLE.CSS : LAYOUT
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ------------------------------------------------------------------------------------------------- */
-html, body                                                  { width: 100%; height: 100%; overflow: hidden;}
-
 html                                                        { opacity: 0; font-size: 10px;}
 html.ready                                                  { opacity: 1; transition: opacity $speed*2 ease;}
 
-body                                                        { overflow-y: auto; font-size: 100%; font-weight: 400; background: $grey-xlite;}
+html, body                                                  { width: 100%; height: 100%; overflow: hidden;}
 
-#app-wrap                                                   { text-align: center;
-    > div                                                   { width: 100%;}
+.symbol                                                     { /*display: inline-block;*/ vertical-align: top; font-size: 45%; letter-spacing: 0.01em;}
+
+#app-wrap                                                   { @include absolute(0,0,$sideNavW,$sideNavW); z-index: 0;
+    &::before                                               { content: ""; @include fixed(0,0,0,0); z-index: 0; margin: auto; opacity: 0.05; background: rgb(0,0,0); background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 75%);}
 }
 
-#wrapper                                                    { position: relative; z-index: 0; transform: translate3d(0,0,0); width: 100%; max-width: 1000px; margin: 0 auto;}
+.window                                                     { @include absolute(0,auto,auto,0); width: 100%; height: 100%; overflow: auto; text-align: center; transition: all $speed ease;
+    > div                                                   { position: relative; z-index: 1; margin: 0 auto; width: 100%;}
+}
 
-.symbol                                                     { /*display: inline-block;*/ vertical-align: top; font-size: 45%;}
+#map-wrap                                                   { transform: translate3d(0,0,0); text-align: center;
+    .inner                                                  { max-width: 1000px; min-width: 600px; margin: 0 auto;}
+}
+
+.note                                                       { display: block; text-align: center;
+    .root                                                   { position: relative;
+
+        span                                                { vertical-align: baseline;}
+
+        .symbol                                             { vertical-align: top; line-height: 0.4;}
+
+        .chord-type
+        {
+            &.dim                                           { vertical-align: top;}
+        }
+    }
+}
+
+#tool-wrap                                                  { opacity: 0; pointer-events: none; background: #fff;
+    .inner                                                  { padding: spacing(1.5) spacing(); min-width: 400px;
+        @include media-breakpoint-down(md)                  { padding: spacing(1/2);}
+    }
+
+    table                                                   { width: 100%; table-layout: fixed; border: 1px solid transparent; box-shadow: 0px 1px 5px -2px rgba(0,0,0,0.5);
+        @include media-breakpoint-down(md)                  { margin: 15px auto;}
+
+        + table                                             { margin-top: spacing();}
+
+        th, td                                              { padding: 4px; font-size: 12px;
+            @include media-breakpoint-up(mb)                { font-size: 14px; padding: 8px;}
+        }
+
+        thead
+        {
+            tr.header th                                    { border: 1px solid $color-1;  background: $color-1; color: $white;}
+
+            tr.positions th                                 { border: 1px solid $grey-dark; font-family: 'Times New Roman', serif; font-size: 14px; font-weight: 700; background: $grey-dark; color: $white; cursor: default;
+                @include media-breakpoint-up(mb)            { font-size: 16px;}
+            }
+        }
+
+        tbody
+        {
+            td                                              { border: 1px solid #000;
+                &:first-child                               { color: $color-1; font-weight: 700;
+                    .root                                   { font-size: 16px;
+                        .symbol                             { font-size: 70%;}
+                    }
+                }
+
+                .root                                       { font-size: 12px; letter-spacing: 1px;
+                    span                                    { display: inline-block;}
+                }
+            }
+
+            .cell                                           { padding: 5px; cursor: pointer;
+                .symbol                                     { font-size: 85%; line-height: 1.5;}
+                .dim                                        { font-size: 200%;}
+            }
+
+            /*     A      *//*   A#/Bb    *//*     B      *//*      C     *//*    C#/Db   *//*     D      *//*    D#/Eb   *//*      E     *//*      F     *//*    F#/Gb   *//*      G     *//*   G#/Ab    */
+            $cellColors : ((#ff6300, #000),(#ffec00, #000),(#99ff00, #000),(#28ff00, #000),(#00ffe8, #000),(#007cff, #000),(#0500ff, #fff),(#4500ea, #fff),(#57009e, #fff),(#55004f, #fff),(#740000, #fff),(#ee0000, #000));
+
+            tr
+            {
+                &.active:not(:hover)                        { background: $color-1;
+                    td:not(.active)                         { color: #fff;}
+                }
+
+                &.subActive:not(:hover)                     { background: $grey-lite;}
+
+
+                @for $i from 1 through length($cellColors)
+                {
+                    $c : nth($cellColors, $i);
+
+                    &:hover .base-#{$i}                     { background: rgba( nth($c,1), 0.15 );}
+                    &:hover .base-#{$i}:hover,
+                    .active.base-#{$i}                      { background: nth($c,1); color: nth($c,2);}
+                }
+            }
+        }
+    }
+}
+
 
 #major-wrap
 {
@@ -127,6 +204,7 @@ body                                                        { overflow-y: auto; 
     #note-5                                                 { bottom: 0; right: -100%;}
     #note-6                                                 { top: 0; left: -100%;}
     #note-7                                                 { bottom: 0; left: -100%;}
+    #note-8,
     #note-7-harmonic                                        { top: 0; right: -33.3333%;}
 }
 
@@ -141,7 +219,72 @@ body                                                        { overflow-y: auto; 
 
 .ruler, .note::before                                       { display: none; content: none;}
 
+#viewFriendly                                               { padding: 0 0 30px;
+    .btn                                                    { position: relative;
+        &::after                                            { content: ""; width: 100%; height: 3px; border-radius: 50%; @include absolute(auto,0,0,0); margin: auto; width: 0; background: rgba($color-1, 0.25); box-shadow: 0px 1px 2px rgba($color-1, 0.25); opacity: 0; transform: scale(0.5); transition: all $speed ease;}
 
+        &.active                                            { color: $color-1; cursor: default;
+            &::after                                        { width: 100%; opacity: 1; transform: scale(1);}
+        }
+    }
+}
+
+#help-tools                                                 { @include fixed(0,0,auto,auto); z-index: 1; background: #fff; /*border-top: 1px solid $grey-lite;*/ padding: 0; color: $color-1; transition: all $speed ease;
+    .btn                                                    { color: $color-1; font-size: $fontSize-bs; border-radius: 0;
+        @include media-breakpoint-down(sm)                  { font-size: $fontSize-md;}
+
+        &:hover, &:focus, &:active                          { color: $color-1-lite; outline: none; box-shadow: none;}
+        &.active                                            { background: $color-1; color: #fff;}
+    }
+}
+
+
+.chooseNewList
+{
+    .lines [class*="line"]
+    {
+        .lines [class*="line"]
+        {
+            span                                            { cursor: pointer;}
+
+            &:hover                                         { z-index: 1;
+                &, [class*="line"]                          { background: $color-1; color: $color-1;}
+            }
+        }
+
+        &:hover
+        {
+            .line                                           { opacity: 0.3333;
+                &:hover { &, [class*="line"]                { opacity: 1;}}
+            }
+        }
+    }
+
+    .note                                                   { cursor: pointer;
+        &:hover                                             { background: $color-1; border-color: $color-1; transform: scale(1);
+            &, .root                                        { color: #fff;}
+        }
+    }
+}
+
+
+.showTable
+{
+    #map-wrap                                               { opacity: 0; pointer-events: none; overflow: hidden;}
+    #tool-wrap                                              { opacity: 1; pointer-events: auto;}
+}
+
+
+.isDev
+{
+    .hideProd                                               { display: none;}
+
+    #app-wrap                                               { bottom: 0;}
+
+    // #tool-wrap table tbody .cell                            { cursor: default;}
+
+    #map-wrap .note                                         { transform: none;}
+}
 
 
 /* 2A. Header

@@ -1,24 +1,47 @@
 @import '~src/sass/my-mixins';
+@import "~node_modules/bootstrap/scss/bootstrap";
 
-#nav-wrap                                                   { display: inline-block; text-align: center;
+#nav-wrap                                                   { @include fixed(0,auto,0,0); z-index: 2; width: $sideNavW; background: #fff; border-right: 1px solid $grey-lite; text-align: center; overflow: hidden; overflow-y: auto;
 
-    > div                                                   { display: inline-block;}
+    > div                                                   { display: block; margin: 0 (-1px);}
 
-    .btn                                                    { display: inline-block; width: 45px; margin: 5px 5px 0 0; padding: 10px; border-radius: 2px; background: #fff; border: 1px solid $grey-lite; text-align: center;
-        &.active                                            { background: $color-1; color: #fff; border-color: $color-1;}
+    .nav-inner                                              { position: relative; padding-bottom: 75px; min-height: 100%;}
+
+    .btn                                                    { width: 100%; margin: 0; padding: 10px; border-radius: 0; background: #fff; border-bottom: 1px solid $grey-lite; border-right: 1px solid $grey-lite; transition: all $speed ease;
+        &:hover                                             { border-color: $color-1;}
+
+        &.active { &, &:hover, &:active, &:focus            { background: $color-1; color: #fff; border-color: $color-1; cursor: default;}}
     }
 
-    .btn-group                                              { margin-top: 15px;
-        .btn                                                { width: auto; margin: 0; text-align: center; padding: 5px 10px; border-radius: 0;}
+    .semi                                                   { border-top: 12px solid $grey-lite; border-bottom: 12px solid $grey-lite;
+        .btn                                                { width: 50%; line-height: 1;}
     }
 
-    .notes                                                  { width: 200px;}
-
-    .semi                                                   { width: 50px; margin: 0 10px;}
-
-    .scale                                                  { width: 60px;
-        .btn                                                { width: 100%;}
+    .scale                                                  {
+        .btn                                                { }
     }
 
-    .submit.btn                                             { display: block; width: 100%; margin: 15px 0 0;}
+    .btn-wrap                                               { padding: 6px; margin: 6px 0;
+        .submit                                             { background: $color-1; color: #fff; border: 1px solid $color-1; border-radius: 3px;
+            &:hover, &:active, &:focus                      { background: $color-1-lite; opacity: 1;}
+        }
+
+        .clear                                              { color: $color-1; text-decoration: underline; margin: 6px 0 0; cursor: pointer; opacity: 1; transition: all $speed ease;
+            &:hover, &:active, &:focus                      { color: $color-1-lite;}
+        }
+
+        &.disabled
+        {
+            .submit { &, &:hover, &:active, &:focus         { background: $grey-lite; color: $grey; border-color: $grey; cursor: default; opacity: 0.35;}}
+            .clear  { &, &:hover, &:active, &:focus         { opacity: 0; pointer-events: none; cursor: default;}}
+        }
+    }
+
+    .new-list                                               { @include absolute(auto,0,0,0); padding: 6px; margin: 6px 0;
+        .btn                                                { background: #fff; color: $grey-dark; border: 1px solid $color-1; border-radius: 3px; font-size: 20px;
+            &:hover, &:active, &:focus                      { background: $color-1-lite; color: #fff;}
+        }
+    }
 }
+
+#saved-lists                                                { @include fixed(auto,0,0,$sideNavW); z-index: 1; height: $sideNavW; background: #fff; border-top: 1px solid $grey-lite; padding: 6px; color: $color-1; transform: translate3d(0,0,0); transition: all $speed ease;}

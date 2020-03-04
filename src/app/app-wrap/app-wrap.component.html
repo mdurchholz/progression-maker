@@ -1,12 +1,62 @@
-<div id="app-wrap" class="va-m">
-	<span class="fill"></span>
-	<div>
-		<div id="wrapper">
-			<heading></heading>
+<navigation></navigation>
 
-            <navigation></navigation>
+<div id="help-tools">
+	<a href="{{this.getInfoUrl()}}" target="_blank" class="btn"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+	<button class="btn" (click)="this.showTable = !this.showTable" [class.active]="showTable"><i class="fa fa-table" aria-hidden="true"></i></button>
+</div>
 
-			<map></map>
+<div id="app-wrap" [class.showTable]="showTable">
+	<div id="map-wrap" class="window va-m">
+		<span class="fill"></span>
+		<div>
+			<div class="inner">
+				<heading></heading>
+
+				<map></map>
+
+				<div id="viewFriendly" class="btn-group" *ngIf="showFriendly">
+					<div id="js_technical" class="btn" [class.active]="!this.isFriendly" (click)="this.global.setFriendly( false )">Technical</div>
+					<div id="js_friendly"  class="btn" [class.active]="this.isFriendly"  (click)="this.global.setFriendly( true )">Friendly</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="tool-wrap" class="window va-m">
+		<span class="fill"></span>
+		<div>
+			<div class="inner">
+				<div class="row">
+					<div class="col-lg-6" *ngFor="let table of this.tableCells">
+						<table>
+							<thead>
+								<tr class="header"><th colspan="7"><h2>{{table.scale.toUpperCase()}}</h2></th></tr>
+								<tr class="positions" *ngIf="table.scale=='major'"><th>I</th><th>ii</th><th>iii</th><th>IV</th><th>V</th><th>vi</th><th>vii<sup>&deg;</sup></th></tr>
+								<tr class="positions" *ngIf="table.scale=='minor'"><th>i</th><th>ii<sup>&deg;</sup></th><th>III</th><th>iv</th><th>V(v)</th><th>VI</th><th>VII</th></tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let row of table.notes" [class.active]="checkActive(row[0]['root'],table.scale)" [class.subActive]="checkSubActive(row[0]['root'],table.scale)">
+									<td *ngFor="let cell of row;let i=index" class="cell base-{{cell.root}}" [class.active]="this.activeCell == cell.root" (click)="noteCellClick( cell.root )">
+										<div class="note va-m">
+											<span class="fill"></span>
+										    <div>
+												<div class="root">
+													<span class="friendly" [innerHTML]="this.global.noteStringToHtml( cell.note.friendly )"></span>
+													<span class="chord-type {{type.class}}" *ngIf="cell.note.extension as type" [innerHTML]="type.html"></span>
+													<!--
+														<span class="technical" *ngIf="this.checkTechnical(note)" [innerHTML]="this.global.noteStringToHtml( note['technical'] )"></span>
+													-->
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -1,23 +1,11 @@
-<div id="note-{{i+1}}" class="note va-m" *ngFor="let note of getNotes; index as i">
+<div id="note-{{i+1}}" class="note va-m" (click)="noteClick(note)" *ngFor="let note of getNotes; index as i">
     <span class="fill"></span>
     <div>
-        <div class="spot">{{!i ? 'TONIC' : i+1}}</div>
+        <div class="spot" [innerHTML]="this.getSpot(i+1)"></div>
         <div class="root">
-            <span class="technical" *ngIf="this.checkTechnical(note)" [innerHTML]="this.global.noteStringToHtml( note['technical'] )"></span>
-            <span class="friendly" *ngIf="this.checkFriendly(note)" [innerHTML]="this.global.noteStringToHtml( note['friendly'] )"></span>
-            <span class="chord-type {{type['class']}}" *ngIf="noteOpts(note,i+1) as type" [innerHTML]="type['html']"></span>
-        </div>
-    </div>
-</div>
-
-<div id="note-7-harmonic" class="note va-m" *ngIf="this.global.isMinor()">
-    <span class="fill"></span>
-    <div>
-        <div class="spot">7<span class="type">(harmonic)</span></div>
-        <div class="root">
-            <span class="technical" *ngIf="this.checkTechnical(this.harmonic)" [innerHTML]="this.global.noteStringToHtml( this.harmonic['technical'] )"></span>
-            <span class="friendly" *ngIf="this.checkFriendly(this.harmonic)" [innerHTML]="this.global.noteStringToHtml( this.harmonic['friendly'] )"></span>
-            <span class="chord-type {{type['class']}}" *ngIf="noteOpts(null,null,true) as type" [innerHTML]="type['html']"></span>
+            <span class="technical" *ngIf="this.checkTechnical(note)" [innerHTML]="this.global.noteStringToHtml( note.technical )"></span>
+            <span class="friendly" *ngIf="this.checkFriendly(note)" [innerHTML]="this.global.noteStringToHtml( note.friendly )"></span>
+            <span class="chord-type {{type.class}}" *ngIf="note.extension as type" [innerHTML]="type.html"></span>
         </div>
     </div>
 </div>

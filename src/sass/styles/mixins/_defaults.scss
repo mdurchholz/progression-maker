@@ -1,0 +1,40 @@
+/********************
+** Defaults
+*********************/
+@mixin absolute($top: auto, $right: auto, $bottom: auto, $left: auto)
+{
+  position: absolute;
+       top: $top;
+     right: $right;
+    bottom: $bottom;
+      left: $left;
+}
+
+
+@mixin fixed($top: auto, $right: auto, $bottom: auto, $left: auto)
+{
+  position: fixed;
+       top: $top;
+     right: $right;
+    bottom: $bottom;
+      left: $left;
+}
+
+
+@mixin animation($name: none, $duration: 0s, $delay: 0s, $ease: ease)
+{
+    @include animation-adv($name, $duration, $ease, $delay, 1, normal, both, running);
+}
+
+
+@mixin animation-adv($name: none, $duration: 0s, $timing-function: ease, $delay: 0s, $iteration-count: 1, $direction: normal, $fill-mode: none, $play-state: running)
+{
+    animation-name: $name;
+    animation-duration: $duration;
+    animation-timing-function: $timing-function;
+    animation-delay: $delay;
+    animation-iteration-count: $iteration-count;
+    animation-direction: $direction;
+    animation-fill-mode: $fill-mode;
+    animation-play-state: $play-state;
+}

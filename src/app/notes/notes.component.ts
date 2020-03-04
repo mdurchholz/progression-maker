@@ -25,29 +25,37 @@ export class NotesComponent implements OnInit {
     this.global.isFriendly.subscribe( value => this.showFriendly = value );
   }
 
-  //
+
+  /////////////////////////////////////////////////////////
+  // If technical exists and is not friendly mode
+  /////////////////////////////////////////////////////////
   public checkTechnical( note ) { return note['technical'] && !this.showFriendly; }
-
-  //
+  /////////////////////////////////////////////////////////
+  // If technical exists, hide if not friendly mode, otherwise always show
+  /////////////////////////////////////////////////////////
   public checkFriendly( note ) { return note['technical'] ? this.showFriendly : true; }
+  /////////////////////////////////////////////////////////
 
-  // Build note HTML of notes 1 - 7
-  public noteOpts( details, i, harmonic:boolean = false ) {
 
-    var noteHTML = null;
-
-    // Check for minor or diminished chords
-    if( ( this.global.isMinor() && (i==1 || i==4 || i==5)) ||
-        (!this.global.isMinor() && (i==2 || i==3 || i==6))  )
-    {
-      noteHTML = {class:'minor', html:'m'};
+  /////////////////////////////////////////////////////////
+  // Return HTML of a note's spot in a scale
+  /////////////////////////////////////////////////////////
+  public getSpot( number ) {
+    switch (number) {
+      case 1  : return 'TONIC'; break;
+      case 8  : return '7<sup>(Harmonic)</sup>'; break;
+      default : return number;
     }
-    else if( (this.global.isMinor() && i==2) || (!this.global.isMinor() && i==7 ) || harmonic )
-    {
-      noteHTML = {class:'dim', html:'&deg;'};
-    }
+   }
+  /////////////////////////////////////////////////////////
 
-    return noteHTML;
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
+  public noteClick( note ) {
+      // console.log( note );
   }
+  /////////////////////////////////////////////////////////
 
 }
