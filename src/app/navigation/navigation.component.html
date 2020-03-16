@@ -1,24 +1,30 @@
 <div id="nav-wrap">
 	<div class="nav-inner">
-		<div class="notes">
-		    <ng-template ngFor [ngForOf]="this.global.getAllNotes" let-note let-i="index">
-			<div class="btn" *ngIf="note.length==1" [class.active]="newKey['base']==note" (click)="buttonClick('note',note)" [innerHTML]="note"></div>
-		    </ng-template>
+		<div class="mobi-l">
+			<div class="notes">
+			    <ng-template ngFor [ngForOf]="this.global.getAllNotes" let-note let-i="index">
+				<div class="btn" *ngIf="note.length==1" [class.active]="newKey['base']==note" (click)="buttonClick('note',note)"><span [innerHTML]="note"></span></div>
+			    </ng-template>
 
-			<!-- <div class="btn disabled">&nbsp;</div> -->
+				<!-- <div class="btn disabled">&nbsp;</div> -->
+			</div>
 		</div>
-		<div class="semi">
-			<div class="btn" [class.active]="newKey['semi']=='#'" (click)="buttonClick('semi','#')">&#9839;</div>
-			<div class="btn" [class.active]="newKey['semi']=='b'"  (click)="buttonClick('semi','b')">&#9837;</div>
-		</div>
-		<div class="scale">
-			<div class="btn" [class.active]="newKey['scale']=='major'" (click)="buttonClick('scale','major')">Major</div>
-			<div class="btn" [class.active]="newKey['scale']=='minor'" (click)="buttonClick('scale','minor')">Minor</div>
+
+		<div class="mobi-r">
+			<div class="semi">
+				<div class="btn" [class.active]="newKey['semi']=='#'" (click)="buttonClick('semi','#')"><span>&#9839;</span></div>
+				<div class="btn" [class.active]="newKey['semi']=='b'"  (click)="buttonClick('semi','b')"><span>&#9837;</span></div>
+			</div>
+
+			<div class="scale">
+				<div class="btn" [class.active]="newKey['scale']=='major'" (click)="buttonClick('scale','major')"><span>Major</span></div>
+				<div class="btn" [class.active]="newKey['scale']=='minor'" (click)="buttonClick('scale','minor')"><span>Minor</span></div>
+			</div>
 		</div>
 
 		<div class="btn-wrap" [class.disabled]="!showBtn">
-			<div class="btn submit" (click)="buttonClick('submit')">Go</div>
-			<div class="clear" (click)="buttonClick('clear')">Clear</div>
+			<div class="btn submit" (click)="buttonClick('submit')"><span>Go</span></div>
+			<div class="clear" (click)="buttonClick('clear')"><span>Clear</span></div>
 		</div>
 
 		<div class="new-list hideProd" (click)="newList()">

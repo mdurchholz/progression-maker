@@ -18,6 +18,7 @@ export class AppWrapComponent implements OnInit {
 
   showTable:boolean;
   activeCell:number;
+  activeCells:any;
   tableCells:object;
 
   constructor( public global:GlobalService ) { }
@@ -37,6 +38,7 @@ export class AppWrapComponent implements OnInit {
     this.showTable = false;
 
     this.activeCell = 0;
+    this.activeCells = [0];
 
     this.tableCells = this.getTableCells();
   }
@@ -103,12 +105,20 @@ export class AppWrapComponent implements OnInit {
     return cells;
   }
 
-  public noteCellClick( note:number ) {
+  public noteCellClick( note:number, base:object = null ) {
     this.activeCell = ( this.activeCell == note ) ? 0 : note;
+
+    this.activeCells = [this.activeCell];
+
+    if( base && this.activeCell ) for(let b in base) if( b ) this.activeCells.push( base[b].root );
+  }
+
+  public isActiveCell( note:any, single:boolean = true ) {
+    return this.activeCells.includes(note);
   }
 
   public checkActive( note:number, scale:string ) {
-    return parseInt(this.getKeyPosi)==note && this.getKey['scale']==scale;
+    return +this.getKeyPosi==note && this.getKey['scale']==scale;
   }
 
   public checkSubActive( note:number, scale:string ) {

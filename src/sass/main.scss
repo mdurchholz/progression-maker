@@ -90,8 +90,12 @@ html, body                                                  { width: 100%; heigh
 
 .symbol                                                     { /*display: inline-block;*/ vertical-align: top; font-size: 45%; letter-spacing: 0.01em;}
 
-#app-wrap                                                   { @include absolute(0,0,$sideNavW,$sideNavW); z-index: 0;
+#app-wrap                                                   { @include absolute(0,0,0,$sideNavD); z-index: 0;
     &::before                                               { content: ""; @include fixed(0,0,0,0); z-index: 0; margin: auto; opacity: 0.05; background: rgb(0,0,0); background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 75%);}
+
+    .showList &                                             { bottom: $sideNavD;}
+
+    @include media-breakpoint-down(sm)                      { left: 0; bottom: $sideNavM;}
 }
 
 .window                                                     { @include absolute(0,auto,auto,0); width: 100%; height: 100%; overflow: auto; text-align: center; transition: all $speed ease;
@@ -279,7 +283,7 @@ html, body                                                  { width: 100%; heigh
 {
     .hideProd                                               { display: none;}
 
-    #app-wrap                                               { bottom: 0;}
+    // #app-wrap                                               { bottom: 0;}
 
     // #tool-wrap table tbody .cell                            { cursor: default;}
 

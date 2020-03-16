@@ -37,7 +37,7 @@
 							</thead>
 							<tbody>
 								<tr *ngFor="let row of table.notes" [class.active]="checkActive(row[0]['root'],table.scale)" [class.subActive]="checkSubActive(row[0]['root'],table.scale)">
-									<td *ngFor="let cell of row;let i=index" class="cell base-{{cell.root}}" [class.active]="this.activeCell == cell.root" (click)="noteCellClick( cell.root )">
+									<td *ngFor="let cell of row;let i=index" class="cell base-{{cell.root}}" [class.active]="isActiveCell( cell.root )" (click)="noteCellClick( cell.root, (!i?row:null) )">
 										<div class="note va-m">
 											<span class="fill"></span>
 										    <div>
