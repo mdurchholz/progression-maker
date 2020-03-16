@@ -17,6 +17,8 @@ export class AppWrapComponent implements OnInit {
   showFriendly:boolean;
 
   showTable:boolean;
+  focusCell:string;
+  focusRow:string;
   activeCell:number;
   activeCells:any;
   tableCells:object;
@@ -35,10 +37,13 @@ export class AppWrapComponent implements OnInit {
 
     this.global.isFriendly.subscribe( value => this.isFriendly = value );
 
-    this.showTable = false;
+    this.showTable = null;
 
-    this.activeCell = 0;
-    this.activeCells = [0];
+    this.focusRow = null;
+
+    this.focusCell = null;
+    this.activeCell = null;
+    this.activeCells = [];
 
     this.tableCells = this.getTableCells();
   }
@@ -105,8 +110,13 @@ export class AppWrapComponent implements OnInit {
     return cells;
   }
 
-  public noteCellClick( note:number, base:object = null ) {
-    this.activeCell = ( this.activeCell == note ) ? 0 : note;
+  public noteCellClick( note:number, row:string, cell:number, base:object = null ) {
+    let cell_ID = row +'-'+ cell;
+
+    this.activeCell = ( this.activeCell == note && this.focusCell == cell_ID ) ? null : note;
+
+    this.focusRow = !this.activeCell ? null : row;
+    this.focusCell = !this.activeCell ? null : cell_ID;
 
     this.activeCells = [this.activeCell];
 
@@ -115,6 +125,14 @@ export class AppWrapComponent implements OnInit {
 
   public isActiveCell( note:any, single:boolean = true ) {
     return this.activeCells.includes(note);
+  }
+
+  public isFocusCell( cell:string ) {
+    return this.focusCell == cell;
+  }
+
+  public isFocusRow( row:string ) {
+    return this.focusRow == row;
   }
 
   public checkActive( note:number, scale:string ) {

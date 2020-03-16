@@ -15,12 +15,21 @@
     }
 
 
-    @include media-breakpoint-between(xs, mb)
+    @include media-breakpoint-between(sm, mb)
     {
         .spot                                               { font-size: 1.4vw;}
 
         .root                                               { font-size: 4.5vw;
             .chord-type                                     { font-size: 3.5vw;}
+        }
+    }
+
+    @include media-breakpoint-between(xs, sm)
+    {
+        .spot                                               { font-size: 8px;}
+
+        .root                                               { font-size: 28px;
+            .chord-type                                     { font-size: 20px;}
         }
     }
 }

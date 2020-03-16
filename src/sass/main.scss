@@ -103,7 +103,7 @@ html, body                                                  { width: 100%; heigh
 }
 
 #map-wrap                                                   { transform: translate3d(0,0,0); text-align: center;
-    .inner                                                  { max-width: 1000px; min-width: 600px; margin: 0 auto;}
+    .inner                                                  { max-width: 1000px; min-width: map-get($grid-breakpoints, 'sm'); margin: 0 auto;}
 }
 
 .note                                                       { display: block; text-align: center;
@@ -167,11 +167,10 @@ html, body                                                  { width: 100%; heigh
 
             tr
             {
-                &.active:not(:hover)                        { background: $color-1;
-                    td:not(.active)                         { color: #fff;}
-                }
+                &.active:not(:hover) td:not(.active)        { background: $color-1; color: #fff;}
 
-                &.subActive:not(:hover)                     { background: $grey-lite;}
+                &.subActive:not(:hover) td:not(.active)     { background: $grey-lite;}
+                &.focus                                     { border-top: 2px solid #000; border-bottom: 2px solid #000;}
 
 
                 @for $i from 1 through length($cellColors)
@@ -179,8 +178,9 @@ html, body                                                  { width: 100%; heigh
                     $c : nth($cellColors, $i);
 
                     &:hover .base-#{$i}                     { background: rgba( nth($c,1), 0.15 );}
+                    .active.base-#{$i}                      { background: rgba( nth($c,1), 0.35 ); color: #000;}
                     &:hover .base-#{$i}:hover,
-                    .active.base-#{$i}                      { background: nth($c,1); color: nth($c,2);}
+                    .focus.base-#{$i} { &, &:hover          { background: nth($c,1); color: nth($c,2);}}
                 }
             }
         }
