@@ -11,7 +11,7 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   // Set Site Cookies
   /////////////////////////////////////////////////////////
-  private setCookie(key:string, value:any) {
+  private setCookie( key:string, value:any ) {
     var getCookie = this.checkCookie() ? this.checkCookie() : {};
 
     getCookie[key] = value;
@@ -21,7 +21,7 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   // If key, check for cookie key. Else get site cookies
   /////////////////////////////////////////////////////////
-  private getCookie(key:string = '') {
+  private getCookie( key:string = '' ) {
     var getCookie = this.checkCookie();
 
     if( key.length ) {
@@ -41,7 +41,7 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   // Check to see is a cookie key exists
   /////////////////////////////////////////////////////////
-  private checkPastCookie(key:string, fallback:any) {
+  private checkPastCookie( key:string, fallback:any ) {
     var cookieChk = this.getCookie(key);
 
     return (typeof cookieChk !== 'undefined') ? cookieChk : fallback;
@@ -60,6 +60,14 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   getAllScales = ['major', 'minor'];
   /////////////////////////////////////////////////////////
+
+
+  /////////////////////////////////////////////////////////
+  // Set to true when you are building a progression
+  /////////////////////////////////////////////////////////
+  isBuilding = false;
+  /////////////////////////////////////////////////////////
+
 
 
   /////////////////////////////////////////////////////////
@@ -171,6 +179,10 @@ export class GlobalService {
     }
 
     return position;
+  }
+  /////////////////////////////////////////////////////////
+  public getNoteID( note:string ) {
+    return this.getNotePosition( note )[0] + 1;
   }
   /////////////////////////////////////////////////////////
 

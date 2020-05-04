@@ -1,11 +1,5 @@
-<navigation></navigation>
+<div id="app-wrap" [class.showTable]="showTable" [class.chooseNewList]="this.global.isBuilding">
 
-<div id="help-tools">
-	<a href="{{this.getInfoUrl()}}" target="_blank" class="btn"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-	<button class="btn" (click)="this.showTable = !this.showTable" [class.active]="showTable"><i class="fa fa-table" aria-hidden="true"></i></button>
-</div>
-
-<div id="app-wrap" [class.showTable]="showTable">
 	<div id="map-wrap" class="window va-m">
 		<span class="fill"></span>
 		<div>
@@ -17,6 +11,18 @@
 				<div id="viewFriendly" class="btn-group" *ngIf="showFriendly">
 					<div id="js_technical" class="btn" [class.active]="!this.isFriendly" (click)="this.global.setFriendly( false )">Technical</div>
 					<div id="js_friendly"  class="btn" [class.active]="this.isFriendly"  (click)="this.global.setFriendly( true )">Friendly</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="saved-lists" class="hideProd">
+			<div class="close" (click)="this.global.isBuilding = false">
+				<i class="fa fa-times-circle" aria-hidden="true"></i>
+			</div>
+
+			<div class="window">
+				<div class="inner">
+					SAVED LISTS
 				</div>
 			</div>
 		</div>
@@ -58,5 +64,12 @@
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<navigation></navigation>
+
+	<div id="help-tools">
+		<a href="{{this.getInfoUrl()}}" data-fancybox class="btn"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+		<button class="btn" (click)="this.showTable = !this.showTable" [class.active]="showTable"><i class="fa fa-table" aria-hidden="true"></i></button>
 	</div>
 </div>

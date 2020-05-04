@@ -6,6 +6,7 @@ import { GlobalService } from '../global.service';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
+
 export class NavigationComponent implements OnInit {
 
   newKey:object;
@@ -62,10 +63,6 @@ export class NavigationComponent implements OnInit {
     this.showBtn = ( object_1['note'] != object_2['note'] || object_1['scale'] != object_2['scale'] );
   }
 
-  public newList( ) {
-      console.log('new list');
-  }
-
   public setNewKey( key:object ) {
     return { base:this.global.getNoteBase(key['note']), semi:this.global.getNoteSemi(key['note']), scale:key['scale'] };
   }
@@ -76,4 +73,5 @@ export class NavigationComponent implements OnInit {
       scale : this.newKey['scale']
     };
   }
+
 }

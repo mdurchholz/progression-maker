@@ -98,27 +98,323 @@ html, body                                                  { width: 100%; heigh
     @include media-breakpoint-down(sm)                      { left: 0; bottom: $sideNavM;}
 }
 
-.window                                                     { @include absolute(0,auto,auto,0); width: 100%; height: 100%; overflow: auto; text-align: center; transition: all $speed ease;
+
+.window                                                     { @include absolute(0,0,0,0); width: auto; height: auto; overflow: auto; text-align: center; transition: all $speed ease;
     > div                                                   { position: relative; z-index: 1; margin: 0 auto; width: 100%;}
 }
 
-#map-wrap                                                   { transform: translate3d(0,0,0); text-align: center;
+
+#map-wrap                                                   { text-align: center;
     .inner                                                  { max-width: 1000px; min-width: map-get($grid-breakpoints, 'sm'); margin: 0 auto;}
 }
 
-.note                                                       { display: block; text-align: center;
-    .root                                                   { position: relative;
 
-        span                                                { vertical-align: baseline;}
+.key-wrap                                                   { position: relative; margin: 90px 12%;
+    &::before                                               { content: ""; display: block; width: 100%; padding: 50% 0 0;}
 
-        .symbol                                             { vertical-align: top; line-height: 0.4;}
+    .map                                                    { width: 100%;}
 
-        .chord-type
+    img                                                     { display: none; @include absolute(0,auto,auto,0); margin: auto; width: 100%;}
+
+    .note                                                       { display: block; @include absolute(auto,0,auto,0); width: 14%; height: 28%; color: #000; font-weight: 700; line-height: 1; text-align: center; margin: auto; background: #fff; border: 1px solid #dedede; box-shadow: 0px 1px 5px -2px rgba(0,0,0,0.5); transform: scale(1); backface-visibility: hidden; transition: all $speed ease;
+
+        .spot                                                   { font-size: 14px; line-height: 1; display: block; @include absolute(-1px,-1px,auto,auto); border: 1px solid #ccc; padding: 2px 4px; min-width: 25px; font-weight: 300; background: #fff; color: $grey-med;
+            @include media-breakpoint-down(sm)                  { min-width: 20px;}
+
+            .type                                               { font-size: 60%; vertical-align: super;}
+        }
+
+        .root                                                   { position: relative; font-size: 45px; color: inherit; color: $color-1;
+            .symbol                                             { line-height: 0.4;}
+            .chord-type                                         { font-size: 35px; vertical-align: baseline;
+                &.dim                                           { vertical-align: top;}
+            }
+        }
+
+
+        @include media-breakpoint-between(sm, mb)
         {
-            &.dim                                           { vertical-align: top;}
+            .spot                                               { font-size: 1.2vw;}
+            .root                                               { font-size: 3.8vw;
+                .chord-type                                     { font-size: 3.2vw;}
+            }
+        }
+
+        @include media-breakpoint-between(xs, sm)
+        {
+            .spot                                               { font-size: 8px;}
+            .root                                               { font-size: 28px;
+                .chord-type                                     { font-size: 20px;}
+            }
         }
     }
 }
+
+
+$lineW : 2px;
+
+.lines                                                      { @include absolute(0,0,0,0); margin: auto; pointer-events: none;
+    [class*="line"]                                         { @include absolute(0,auto,auto,0); z-index: 0; height: $lineW; background: #333; color: #333; transform-origin: top left; transform: rotate(0deg); transition: all $speed ease; backface-visibility: hidden;
+
+        &.pos-r                                             { left: auto; right: 0; transform-origin: top right;}
+
+        span                                                { @include absolute(0,0,0,0); height: 30px; width: auto; margin: auto; display: block;}
+
+        &.top                                               { top: 0; bottom: auto;}
+        &.bot                                               { top: auto; bottom: 0;}
+        &.left                                              { right: auto; left: 0;}
+        &.right                                             { right: 0; left: auto;}
+
+        &[class*="arr"]
+        {
+            span { &::before, &::after                      { @include absolute(auto,auto,auto,auto); width: 20px; height: 20px; margin: auto; border: none; border-width: $lineW; border-color: inherit; box-shadow: none; outline: none; backface-visibility: hidden; transform: rotate(45deg); transition: all $speed ease;
+                @media screen and (max-width: 991px)        { width: 15px; height: 15px;}
+                @media screen and (max-width: 767px)        { width: 12px; height: 12px;}
+                @media screen and (max-width: 575px)        { width: 10px; height: 10px;}
+            }}
+
+            &[class*="-l"] span::before                     { content: ""; top: 0; bottom: 0; left: $lineW; border-right-style: none; border-left-style: solid; border-bottom-style: solid;}
+            &[class*="-r"] span::after                      { content: ""; top: 0; bottom: 0; right: $lineW; border-left-style: none; border-right-style: solid; border-top-style: solid;}
+        }
+    }
+
+    .hook
+    {
+        .line-l                                             { left: $lineW - 1px; right: auto; transform: rotate(-90deg); transform-origin: bottom left;}
+        .line-r                                             { right: $lineW - 1px; left: auto; transform: rotate(90deg); transform-origin: bottom right;}
+
+        .arr
+        {
+            &[class*="-l"] span
+            {
+                &::before                                   { content: none;}
+                &::after                                    { content: ""; top: 0; bottom: 0; right: $lineW - 1px; border-left-style: none; border-right-style: solid; border-top-style: solid;}
+            }
+
+            &[class*="-r"] span
+            {
+                &::before                                   { content: ""; top: 0; bottom: 0; left: $lineW - 1px; border-right-style: none; border-left-style: solid; border-bottom-style: solid;}
+                &::after                                    { content: none;}
+            }
+        }
+
+        &.top
+        {
+            .line-l                                         { transform: rotate(90deg); transform-origin: top left;}
+            .line-r                                         { transform: rotate(270deg); transform-origin: top right;}
+        }
+
+        &.bot
+        {
+            .line-l                                         { transform: rotate(-90deg); transform-origin: bottom left;}
+            .line-r                                         { transform: rotate(90deg); transform-origin: bottom right;}
+        }
+    }
+
+    .line                                                   { pointer-events: auto;}
+}
+
+
+
+#major-wrap
+{
+    #note-1                                                 { top: 0;}
+    #note-2                                                 { bottom: 0; left: -100%;}
+    #note-3                                                 { bottom: 0; left: -33.3333%;}
+    #note-4                                                 { top: 0; right: -66.6667%;}
+    #note-5                                                 { top: 0; left: -66.667%;}
+    #note-6                                                 { bottom: 0; right: -33.3333%;}
+    #note-7                                                 { bottom: 0; right: -100%;}
+
+    #major_line_2-3                                         { top: 85.6667%; left: 7.75%; width: 17.5%;}
+    #major_line_2-4                                         { top: 19%; right: 24.6667%; width: 72.5%; transform: rotate(-20.75deg);}
+    #major_line_2-5                                         { top: 70.5%; left: 0; width: 22.3333%; transform: rotate(-66.5deg);}
+    #major_line_2-7                                         { bottom: -16.5%; left: 0; width: 100%;
+        .line-l                                             { width: 7.6667%;}
+        .line-r                                             { width: 7.3333%;}
+    }
+
+    #major_line_3-4                                         { top: 29.25%; right: 24.5%; width: 40%; transform: rotate(-31deg);}
+    #major_line_3-6                                         { top: 85.6667%; left: 41%; width: 17.5%;}
+
+    #major_line_4-1                                         { top: 14%; left: 57.75%; width: 18%;}
+    #major_line_4-5                                         { top: -11%; left: 16.6667%; width: 67%;
+        .line-l                                             { width: 7%;}
+        .line-r                                             { width: 7.3333%;}
+    }
+    #major_line_4-7                                         { top: 29.25%; left: 91%; width: 22.5%; transform: rotate(66.5deg);}
+
+    #major_line_5-1                                         { top: 14%; left: 24.1667%; width: 18%;}
+    #major_line_5-6                                         { top: 29.25%; left: 24.5%; width: 40%; transform: rotate(31deg);}
+    #major_line_5-7                                         { top: 19%; left: 24.5%; width: 75.5%; transform: rotate(26.1666deg);}
+
+    #major_line_6-2                                         { left: 3.5%; bottom: -10.5%; width: 63.1667%;
+        .line-l                                             { width: 7%;}
+        .line-r                                             { width: 7.5%;}
+    }
+    #major_line_6-4                                         { top: 29.25%; right: 17%; width: 26.5%; transform: rotate(-51.5deg);}
+
+    #major_line_7-1                                         { top: 29.25%; left: 57.75%; width: 40.5%; transform: rotate(30.75deg);}
+}
+
+#minor-wrap
+{
+    #note-1                                                 { top: 0; right: -100%;}
+    #note-2                                                 { bottom: 0; right: -33.3333%;}
+    #note-3                                                 { bottom: 0; left: -33.3333%;}
+    #note-4                                                 { top: 0; left: -33.3333%;}
+    #note-5                                                 { bottom: 0; right: -100%;}
+    #note-6                                                 { top: 0; left: -100%;}
+    #note-7                                                 { bottom: 0; left: -100%;}
+    #note-7-harmonic, #note-8                               { top: 0; right: -33.3333%;}
+
+    #minor_line_2-7h                                        { top: 29.5%; left: 66.6667%; width: 20.5%; transform: rotate(90deg);}
+    #minor_line_2-5                                         { bottom: 14%; left: 74%; width: 18.25%;}
+
+    #minor_line_3-2                                         { bottom: 14%; left: 40.75%; width: 18.25%;}
+    #minor_line_3-4                                         { top: 29.5%; left: 33.333%; width: 20.5%; transform: rotate(90deg);}
+    #minor_line_3-6                                         { top: 29%; left: 7.6667%; width: 28%; transform: rotate(49deg);}
+
+    #minor_line_4-1                                         { top: -11%; left: 33.3333%; width: 67%;
+        .line-l                                             { width: 7.3333%;}
+        .line-r                                             { width: 7%;}
+    }
+    #minor_line_4-2                                         { top: 28.75%; left: 41%; width: 30%; transform: rotate(44deg);}
+    #minor_line_4-5                                         { top: 21%; left: 41%; width: 57%; transform: rotate(25.75deg);}
+    #minor_line_4-7h                                        { top: 14%; left: 40.75%; width: 18.25%;}
+
+    #minor_line_5-1                                         { top: 29.5%; left: 100%; width: 20.5%; transform: rotate(90deg);}
+    #minor_line_5-6                                         { bottom: -10%; left: -12%; width: 109%;
+        .line-l                                             { width: 44%;
+            .line-r                                         { transform: rotate(-90deg); transform-origin: top right; width: 8.75%;}
+        }
+        .line-r                                             { width: 3.75%;}
+    }
+
+    #minor_line_6-2                                         { top: 21%; left: 7.6667%; width: 58%; transform: rotate(28deg);}
+    #minor_line_6-4                                         { top: 14%; left: 7.5%; width: 18%;}
+    #minor_line_6-7                                         { top: 29.5%; left: 0; width: 20.5%; transform: rotate(90deg);}
+
+    #minor_line_7-3                                         { bottom: 14%; left: 7.75%; width: 17.75%;}
+    #minor_line_7-5                                         { bottom: -16.3333%; left: 0; width: 103.5%;
+        .line-l                                             { width: 7.3333%;}
+        .line-r                                             { width: 7%;}
+    }
+
+    #minor_line_7h-1                                        { top: 14%; left: 74%; width: 18.25%;}
+}
+
+
+#viewFriendly                                               { padding: 0 0 30px;
+    .btn                                                    { position: relative;
+        &::after                                            { content: ""; width: 100%; height: 3px; border-radius: 50%; @include absolute(auto,0,0,0); margin: auto; width: 0; background: rgba($color-1, 0.25); box-shadow: 0px 1px 2px rgba($color-1, 0.25); opacity: 0; transform: scale(0.5); transition: all $speed ease;}
+
+        &.active                                            { color: $color-1; cursor: default;
+            &::after                                        { width: 100%; opacity: 1; transform: scale(1);}
+        }
+    }
+}
+
+
+
+#nav-wrap                                                   { @include fixed(0,auto,0,0); z-index: 2; width: $sideNavD; background: #fff; border-right: 1px solid $grey-lite; text-align: center; overflow: hidden; overflow-y: auto;
+
+    > div                                                   { display: block; margin: 0 (-1px);}
+
+    .nav-inner                                              { position: relative; padding-bottom: 75px; min-height: 100%;}
+
+    .btn                                                    { width: 100%; margin: 0; padding: 10px; border-radius: 0; background: #fff; border-bottom: 1px solid $grey-lite; border-right: 1px solid $grey-lite; transition: all $speed ease;
+        &:hover                                             { border-color: $color-1;}
+
+        &.active { &, &:hover, &:active, &:focus            { background: $color-1; color: #fff; border-color: $color-1; cursor: default;}}
+    }
+
+    .semi                                                   { border-top: 12px solid $grey-lite; border-bottom: 12px solid $grey-lite;
+        .btn                                                { width: 50%; line-height: 1;}
+    }
+
+    .scale                                                  {
+        .btn                                                { }
+    }
+
+    .btn-wrap                                               { padding: $btnGap; margin: $btnGap 0;
+        .submit                                             { background: $color-1; color: #fff; border: 1px solid $color-1; border-radius: 3px; width: 100%;
+            &:hover, &:active, &:focus                      { background: $color-1-lite; opacity: 1;}
+        }
+
+        .clear                                              { color: $color-1; text-decoration: underline; margin: $btnGap 0 0; cursor: pointer; opacity: 1; transition: all $speed ease;
+            &:hover, &:active, &:focus                      { color: $color-1-lite;}
+        }
+
+        &.disabled
+        {
+            .submit { &, &:hover, &:active, &:focus         { background: $grey-lite; color: $grey; border-color: $grey; cursor: default; opacity: 0.35;}}
+            .clear  { &, &:hover, &:active, &:focus         { opacity: 0; pointer-events: none; cursor: default;}}
+        }
+    }
+
+    .new-list                                               { @include absolute(auto,0,0,0); padding: $btnGap; margin: $btnGap 0;
+        .btn                                                { background: #fff; color: $grey-dark; border: 1px solid $color-1; border-radius: 3px; font-size: 20px; transform: none;
+            i                                               { transform: none; transition: all $speed ease;}
+            &:hover, &:active, &:focus                      { background: $color-1-lite; color: #fff;}
+        }
+    }
+
+    @include media-breakpoint-down(sm)                      { top: auto; right: 0; z-index: 2; width: auto; height: $sideNavM; border-right: none; border-top: 1px solid $grey-lite; overflow: visible;
+        > div                                               { margin: 0;}
+
+        $vertW : percentage(1/3);
+        .nav-inner                                          { background: #fff; height: 100%; padding: 0;
+            > div                                           { position: relative; z-index: 1; height: 100%; margin: 0;
+                &.hideProd                                  { display: none;}
+            }
+
+            .btn                                           { width: 100%; height: 100%; padding: $btnGap/2; margin: 0;
+                &::before                                  { content: ""; display: inline-block; vertical-align: middle; width: 0; height: 100%;}
+                span                                       { display: inline-block; vertical-align: middle; width: 100%;}
+            }
+
+            .notes                                          {
+                .btn                                        { width: percentage(1/7);}
+            }
+
+            .mobi-l                                         { width: 100%; height: 100%; padding: 0 $vertW 0 0;
+                > div                                       { height: 100%; margin: 0;}
+            }
+
+            .mobi-r                                         { @include absolute(auto,0,0,auto); width: $vertW;
+                > div                                       { display: inline-block; height: 100%; margin: 0;}
+            }
+
+            .semi                                           { width: 50%; border: 0; border-left: $btnGap solid $grey-lite; border-right: $btnGap solid $grey-lite;
+                .btn                                        { height: 50%;}
+            }
+
+            .scale                                          { width: 50%;
+                .btn                                        { height: 50%;}
+            }
+
+            $clearW : 60px;
+            .btn-wrap                                       { @include absolute(auto,0,100%,0); z-index: 0; width: auto; height: auto; padding: 0; padding-right: $clearW; border-top: 1px solid $grey-lite; transform: translate3d(0,0,0); transition: transform 0.25s ease;
+                .submit                                     { height: auto; border: 0; border-bottom: 1px solid $grey-lite; border-radius: 0; padding: $btnGap*2;}
+                .clear                                      { @include absolute(0,0,0,auto); background: #fff; opacity: 1; margin: 0; padding: $btnGap*2; width: $clearW;}
+
+                &.disabled                                  { transform: translate3d(0,100%,0);}
+            }
+        }
+    }
+}
+
+
+#help-tools                                                 { @include fixed(0,0,auto,auto); z-index: 1; background: #fff; /*border-top: 1px solid $grey-lite;*/ padding: 0; color: $color-1; transition: all $speed ease;
+    .btn                                                    { color: $color-1; font-size: $fontSize-bs; border-radius: 0;
+        @include media-breakpoint-down(sm)                  { font-size: $fontSize-md;}
+
+        &:hover, &:focus, &:active                          { color: $color-1-lite; outline: none; box-shadow: none;}
+        &.active                                            { background: $color-1; color: #fff;}
+    }
+}
+
 
 #tool-wrap                                                  { opacity: 0; pointer-events: none; background: #fff;
     .inner                                                  { padding: spacing(1.5) spacing(); min-width: 400px;
@@ -162,7 +458,7 @@ html, body                                                  { width: 100%; heigh
                 .dim                                        { font-size: 200%;}
             }
 
-            /*     A      *//*   A#/Bb    *//*     B      *//*      C     *//*    C#/Db   *//*     D      *//*    D#/Eb   *//*      E     *//*      F     *//*    F#/Gb   *//*      G     *//*   G#/Ab    */
+                           /*     A      *//*   A#/Bb    *//*     B      *//*      C     *//*    C#/Db   *//*     D      *//*    D#/Eb   *//*      E     *//*      F     *//*    F#/Gb   *//*      G     *//*   G#/Ab    */
             $cellColors : ((#ff6300, #000),(#ffec00, #000),(#99ff00, #000),(#28ff00, #000),(#00ffe8, #000),(#007cff, #000),(#0500ff, #fff),(#4500ea, #fff),(#57009e, #fff),(#55004f, #fff),(#740000, #fff),(#ee0000, #000));
 
             tr
@@ -188,29 +484,84 @@ html, body                                                  { width: 100%; heigh
 }
 
 
-#major-wrap
+.showTable
 {
-    #note-1                                                 { top: 0;}
-    #note-2                                                 { bottom: 0; left: -100%;}
-    #note-3                                                 { bottom: 0; left: -33.3333%;}
-    #note-4                                                 { top: 0; right: -66.6667%;}
-    #note-5                                                 { top: 0; left: -66.667%;}
-    #note-6                                                 { bottom: 0; right: -33.3333%;}
-    #note-7                                                 { bottom: 0; right: -100%;}
+    #map-wrap                                               { opacity: 0; pointer-events: none; overflow: hidden;}
+    #tool-wrap                                              { opacity: 1; pointer-events: auto;}
 }
 
-#minor-wrap
-{
-    #note-1                                                 { top: 0; right: -100%;}
-    #note-2                                                 { bottom: 0; right: -33.3333%;}
-    #note-3                                                 { bottom: 0; left: -33.3333%;}
-    #note-4                                                 { top: 0; left: -33.3333%;}
-    #note-5                                                 { bottom: 0; right: -100%;}
-    #note-6                                                 { top: 0; left: -100%;}
-    #note-7                                                 { bottom: 0; left: -100%;}
-    #note-8,
-    #note-7-harmonic                                        { top: 0; right: -33.3333%;}
+
+#saved-lists                                                { @include fixed(auto,0,0,$savedListHeight); z-index: 1; width: auto; height: $sideNavD; background: #fff; border-top: 1px solid $grey-lite; color: $color-1; overflow: hidden; overflow-y: auto; transform: translate3d(0,100%,0); transition: all $speed ease;
+    .close                                                  { @include absolute($btnGap,$btnGap,auto,auto); z-index: 1; float: none; font-size: 20px; color: $color-1; opacity: 1; cursor: pointer;
+        &:hover                                             { color: $color-1-lite;}
+        i                                                   { color: inherit;}
+    }
+
+    .inner                                                  { position: relative; z-index: 0; padding: $btnGap spacing(); height: 500px;}
 }
+
+
+.chooseNewList
+{
+    .key-wrap
+    {
+        .lines
+        {
+            [class*="line"]
+            {
+                span                                        { cursor: pointer;}
+
+                &:hover                                     { z-index: 1;
+                    &, [class*="line"]                      { background: $color-1; color: $color-1;}
+                }
+            }
+
+            &:hover
+            {
+                .line                                       { opacity: 0.3333;
+                    &:hover { &, [class*="line"]            { opacity: 1;}}
+                }
+            }
+        }
+
+        .note                                               { cursor: pointer; transform: scale(0.9);
+            &:hover                                         { background: $color-1; border-color: $color-1; transform: scale(1);
+                &, .root                                    { color: #fff;}
+            }
+        }
+    }
+
+    #nav-wrap
+    {
+        .new-list .btn                                      { color: #fff;
+            &:not(:hover)                                   { background: $color-1;}
+
+            i                                               { transform: rotate(135deg);}
+        }
+    }
+
+    #map-wrap                                               { bottom: $savedListHeight;}
+
+    #saved-lists                                            { transform: translate3d(0,0,0);}
+}
+
+
+
+
+
+
+
+
+
+.isDev
+{
+    .hideProd                                               { display: none;}
+
+    #map-wrap .note                                         { transform: none;}
+}
+
+
+
 
 .note::before                                               { content: ""; @include absolute(0,0,0,0); margin: auto; border: 1px solid #00f; transform: scale(1.11);}
 
@@ -223,72 +574,7 @@ html, body                                                  { width: 100%; heigh
 
 .ruler, .note::before                                       { display: none; content: none;}
 
-#viewFriendly                                               { padding: 0 0 30px;
-    .btn                                                    { position: relative;
-        &::after                                            { content: ""; width: 100%; height: 3px; border-radius: 50%; @include absolute(auto,0,0,0); margin: auto; width: 0; background: rgba($color-1, 0.25); box-shadow: 0px 1px 2px rgba($color-1, 0.25); opacity: 0; transform: scale(0.5); transition: all $speed ease;}
 
-        &.active                                            { color: $color-1; cursor: default;
-            &::after                                        { width: 100%; opacity: 1; transform: scale(1);}
-        }
-    }
-}
-
-#help-tools                                                 { @include fixed(0,0,auto,auto); z-index: 1; background: #fff; /*border-top: 1px solid $grey-lite;*/ padding: 0; color: $color-1; transition: all $speed ease;
-    .btn                                                    { color: $color-1; font-size: $fontSize-bs; border-radius: 0;
-        @include media-breakpoint-down(sm)                  { font-size: $fontSize-md;}
-
-        &:hover, &:focus, &:active                          { color: $color-1-lite; outline: none; box-shadow: none;}
-        &.active                                            { background: $color-1; color: #fff;}
-    }
-}
-
-
-.chooseNewList
-{
-    .lines [class*="line"]
-    {
-        .lines [class*="line"]
-        {
-            span                                            { cursor: pointer;}
-
-            &:hover                                         { z-index: 1;
-                &, [class*="line"]                          { background: $color-1; color: $color-1;}
-            }
-        }
-
-        &:hover
-        {
-            .line                                           { opacity: 0.3333;
-                &:hover { &, [class*="line"]                { opacity: 1;}}
-            }
-        }
-    }
-
-    .note                                                   { cursor: pointer;
-        &:hover                                             { background: $color-1; border-color: $color-1; transform: scale(1);
-            &, .root                                        { color: #fff;}
-        }
-    }
-}
-
-
-.showTable
-{
-    #map-wrap                                               { opacity: 0; pointer-events: none; overflow: hidden;}
-    #tool-wrap                                              { opacity: 1; pointer-events: auto;}
-}
-
-
-.isDev
-{
-    .hideProd                                               { display: none;}
-
-    // #app-wrap                                               { bottom: 0;}
-
-    // #tool-wrap table tbody .cell                            { cursor: default;}
-
-    #map-wrap .note                                         { transform: none;}
-}
 
 
 /* 2A. Header

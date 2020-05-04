@@ -27,12 +27,8 @@
 			<div class="clear" (click)="buttonClick('clear')"><span>Clear</span></div>
 		</div>
 
-		<div class="new-list hideProd" (click)="newList()">
+		<div class="new-list" (click)="this.global.isBuilding = !this.global.isBuilding">
 			<div class="btn"><i class="fa fa-plus" aria-hidden="true"></i></div>
 		</div>
 	</div>
-</div>
-
-<div id="saved-lists" class="hideProd">
-	SAVED LISTS
 </div>

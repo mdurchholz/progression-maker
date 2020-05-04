@@ -31,7 +31,7 @@ export class AppWrapComponent implements OnInit {
       gKey => (
         this.showFriendly = this.checkFriendly(gKey),
         this.getKey = gKey,
-        this.getKeyPosi = this.getNotePosi( gKey['note'] )
+        this.getKeyPosi = this.global.getNoteID( gKey['note'] )
       )
     );
 
@@ -64,7 +64,7 @@ export class AppWrapComponent implements OnInit {
 
     for(let s=0;s<this.global.getAllScales.length;s++) {
       let scale = this.global.getAllScales[s],
-          table = {scale:scale,notes:[]};
+          table = { scale:scale, notes:[] };
 
       for(let n=0;n<this.global.getAllNotes.length;n++) {
         let note = this.global.getAllNotes[n];
@@ -91,10 +91,6 @@ export class AppWrapComponent implements OnInit {
       return 'https://www.youtube.com/watch?v=7eptsTUo8kk&list=PLXmi76euGSyx5LrRF0_czqlJZJYOjwqgL&index=11';
   }
 
-  private getNotePosi( note:string ) {
-      return this.global.getNotePosition( note )[0] + 1;
-  }
-
   public getNoteCells( key:object ) {
     let notes = this.global.getScaleNotes( key ),
         cells = [];
@@ -103,7 +99,7 @@ export class AppWrapComponent implements OnInit {
       if(n<8) {
         let note = notes[n-1];
 
-        cells.push( {root:this.getNotePosi( note['friendly'] ),note:note} );
+        cells.push( {root:this.global.getNoteID( note['friendly'] ),note:note} );
       }
     }
 
