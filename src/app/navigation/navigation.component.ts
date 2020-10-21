@@ -74,4 +74,20 @@ export class NavigationComponent implements OnInit {
     };
   }
 
+  public newListToggle() {
+    this.global.isBuilding = !this.global.isBuilding
+
+    if( this.global.isBuilding )
+    {
+      console.log('start new list');
+      this.global.newChordList = [];
+    }
+    else
+    {
+      this.global.newChordList = null;
+
+      this.global.isBuilding = false;
+    }
+  }
+
 }

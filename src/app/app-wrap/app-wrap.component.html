@@ -8,7 +8,7 @@
 
 				<map></map>
 
-				<div id="viewFriendly" class="btn-group" *ngIf="showFriendly">
+				<div id="viewFriendly" class="btn-group" *ngIf="checkFriendly(getKey)">
 					<div id="js_technical" class="btn" [class.active]="!this.isFriendly" (click)="this.global.setFriendly( false )">Technical</div>
 					<div id="js_friendly"  class="btn" [class.active]="this.isFriendly"  (click)="this.global.setFriendly( true )">Friendly</div>
 				</div>
@@ -22,12 +22,28 @@
 
 			<div class="window">
 				<div class="inner">
-					SAVED LISTS
+					<br>
+					<div class="h5"><b>SAVED LISTS</b></div>
+					<hr>
+					<button class="btn">Start</button>
+					&nbsp;
+					<button class="btn">Save</button>
+					<br>
+					<div class="saved-chord-listing" *ngIf="getLists.length">
+						<ng-template ngFor [ngForOf]="getLists" let-list let-i="index">
+							<!-- <div class="btn" *ngIf="note.length==1" [class.active]="newKey['base']==note" (click)="buttonClick('note',note)"><span [innerHTML]="note"></span></div> -->
+							<br>
+							<list [list]="list" [i]="i"></list>
+						</ng-template>
+					</div>
+					<div class="list-wrap" *ngIf="!getLists.length">
+					    <p>No saved Lists</p>
+					</div>
+
 				</div>
 			</div>
 		</div>
 	</div>
-
 
 	<div id="tool-wrap" class="window va-m">
 		<span class="fill"></span>
@@ -72,4 +88,5 @@
 		<a href="{{this.getInfoUrl()}}" data-fancybox class="btn"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
 		<button class="btn" (click)="this.showTable = !this.showTable" [class.active]="showTable"><i class="fa fa-table" aria-hidden="true"></i></button>
 	</div>
+
 </div>

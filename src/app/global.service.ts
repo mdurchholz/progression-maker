@@ -67,7 +67,34 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   isBuilding = false;
   /////////////////////////////////////////////////////////
+  newChordList = null;
+  /////////////////////////////////////////////////////////
+  // savedChordListsOld = this.checkPastCookie('savedChordLists', []);
+  /////////////////////////////////////////////////////////
+  public chordLists = new BehaviorSubject<array>( this.checkPastCookie('savedChordLists', []) );
+  public savedChordLists = this.chordLists.asObservable();
+  /////////////////////////////////////////////////////////
+  public getChordLists() { return this.savedChordLists.source['_value']; }
+  /////////////////////////////////////////////////////////
+  public setChordLists( value:array = null ) {
+    this.chordLists.next( value );
+    this.setCookie('savedChordLists', value);
+  }
+  /////////////////////////////////////////////////////////
+  public setChordListsOld() {
+    let getList = this.checkPastCookie('savedChordLists', []),
+        newList = {
+          key : this.getKey(),
+          list : this.newChordList
+        };
 
+    getList.push(newList);
+
+    // this.savedChordListsOld = getList;
+
+    // this.setCookie('savedChordLists', this.savedChordLists);
+  }
+  /////////////////////////////////////////////////////////
 
 
   /////////////////////////////////////////////////////////
@@ -99,6 +126,16 @@ export class GlobalService {
 
       this.setCookie('isFriendly', isFriendly);
   }
+  /////////////////////////////////////////////////////////
+  public getFriendly() { return this.isFriendly.source['_value'];  }
+  /////////////////////////////////////////////////////////
+  // If technical exists, hide if not friendly mode, otherwise always show
+  /////////////////////////////////////////////////////////
+  public checkFriendly( note ) { return note['technical'] ? this.getFriendly() : true; }
+  /////////////////////////////////////////////////////////
+  // If technical exists and is not friendly mode
+  /////////////////////////////////////////////////////////
+  public checkTechnical( note ) { return note['technical'] && !this.getFriendly(); }
   /////////////////////////////////////////////////////////
 
 

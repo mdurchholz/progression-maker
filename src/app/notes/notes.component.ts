@@ -10,7 +10,6 @@ export class NotesComponent implements OnInit {
 
   getNotes:object;
   harmonic:object;
-  showFriendly:boolean;
 
   constructor( public global:GlobalService ) { }
 
@@ -21,20 +20,7 @@ export class NotesComponent implements OnInit {
         this.harmonic = this.getNotes[ Object.keys(this.getNotes).length - 1 ]
       )
     )
-
-    this.global.isFriendly.subscribe( value => this.showFriendly = value );
   }
-
-
-  /////////////////////////////////////////////////////////
-  // If technical exists and is not friendly mode
-  /////////////////////////////////////////////////////////
-  public checkTechnical( note ) { return note['technical'] && !this.showFriendly; }
-  /////////////////////////////////////////////////////////
-  // If technical exists, hide if not friendly mode, otherwise always show
-  /////////////////////////////////////////////////////////
-  public checkFriendly( note ) { return note['technical'] ? this.showFriendly : true; }
-  /////////////////////////////////////////////////////////
 
 
   /////////////////////////////////////////////////////////
@@ -51,10 +37,14 @@ export class NotesComponent implements OnInit {
 
 
   /////////////////////////////////////////////////////////
-  //
+  // Add note to list when in build mode
   /////////////////////////////////////////////////////////
-  public noteClick( note ) {
-      // console.log( note );
+  public noteClick( position, note ) {
+    if( !this.global.isBuilding ) { return; }
+
+    note.position = position;
+
+    this.global.newChordList.push(note)
   }
   /////////////////////////////////////////////////////////
 

@@ -14,7 +14,8 @@ export class AppWrapComponent implements OnInit {
   getKeyPosi:string;
 
   isFriendly:boolean;
-  showFriendly:boolean;
+
+  getLists:object;
 
   showTable:boolean;
   focusCell:string;
@@ -29,13 +30,14 @@ export class AppWrapComponent implements OnInit {
 
     this.global.appKey.subscribe(
       gKey => (
-        this.showFriendly = this.checkFriendly(gKey),
         this.getKey = gKey,
         this.getKeyPosi = this.global.getNoteID( gKey['note'] )
       )
     );
 
     this.global.isFriendly.subscribe( value => this.isFriendly = value );
+
+    this.global.savedChordLists.subscribe( value2 => this.getLists = value2 );
 
     this.showTable = null;
 

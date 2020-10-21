@@ -1,0 +1,19 @@
+<div class="list-wrap">
+    <table>
+    <tbody>
+        <tr>
+            <td width="45">
+                <span class="delete" (click)="deleteList(i)">
+                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                </span>
+            </td>
+            <td width="120"><span class="test">{{list.key.note}} {{list.key.scale}}</span></td>
+            <td class="list-items">
+                <span class="list-item" *ngFor="let note of list.list; index as i">
+                    <span class="friendly" [innerHTML]="this.global.noteStringToHtml( note.friendly )"></span>
+                </span>
+            </td>
+        </tr>
+    </tbody>
+    </table>
+</div>
