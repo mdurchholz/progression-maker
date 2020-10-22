@@ -13,6 +13,8 @@ export class AppWrapComponent implements OnInit {
   // Inherit value from parent tempalte
   // @Input() i : number;
 
+  title:string;
+
   getKey:object;
   getKeyPosi:string;
 

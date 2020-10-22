@@ -96,11 +96,11 @@ export class GlobalService {
   }
   /////////////////////////////////////////////////////////
   public deleteList( position ) {
-    let list = this.global.getChordLists();
+    let list = this.getChordLists();
 
     list.splice(position, 1);
 
-    this.global.setChordLists(list);
+    this.setChordLists(list);
   }
   /////////////////////////////////////////////////////////
 
