@@ -495,12 +495,14 @@ $lineW : 2px;
 
 
 #saved-lists                                                { @include fixed(auto,0,0,$sideNavD); z-index: 1; width: auto; height: $savedListHeight; background: #fff; border-top: 1px solid $grey-lite; color: $color-1; overflow: hidden; overflow-y: auto; transform: translate3d(0,100%,0); transition: all $speed ease;
-    .close                                                  { @include absolute($btnGap,$btnGap,auto,auto); z-index: 1; float: none; font-size: 20px; color: $color-1; opacity: 1; cursor: pointer;
+    .close                                                  { @include absolute(spacing(1/2),spacing(1/2),auto,auto); z-index: 1; float: none; font-size: 20px; color: $color-1; opacity: 1; cursor: pointer;
         &:hover                                             { color: $color-1-lite;}
         i                                                   { color: inherit;}
     }
 
     .inner                                                  { position: relative; z-index: 0; padding: $btnGap spacing(1/2); text-align: left;}
+
+    .list-wrap                                              { margin-top: spacing(1/2);}
 }
 
 

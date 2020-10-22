@@ -14,33 +14,33 @@
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div id="saved-lists" class="hideProd">
-			<div class="close" (click)="this.global.isBuilding = false">
-				<i class="fa fa-times-circle" aria-hidden="true"></i>
-			</div>
+	<div id="saved-lists" class="hideProd">
+		<div class="close" (click)="this.global.isBuilding = false">
+			<i class="fa fa-times-circle" aria-hidden="true"></i>
+		</div>
 
-			<div class="window">
-				<div class="inner">
-					<br>
-					<div class="h5"><b>SAVED LISTS</b></div>
-					<hr>
-					<button class="btn">Start</button>
-					&nbsp;
-					<button class="btn">Save</button>
-					<br>
-					<div class="saved-chord-listing" *ngIf="getLists.length">
-						<ng-template ngFor [ngForOf]="getLists" let-list let-i="index">
-							<!-- <div class="btn" *ngIf="note.length==1" [class.active]="newKey['base']==note" (click)="buttonClick('note',note)"><span [innerHTML]="note"></span></div> -->
-							<br>
-							<list [list]="list" [i]="i"></list>
-						</ng-template>
-					</div>
-					<div class="list-wrap" *ngIf="!getLists.length">
-					    <p>No saved Lists</p>
-					</div>
-
+		<div class="window">
+			<div class="inner">
+				<br>
+				<div class="h5"><b>SAVED LISTS</b></div>
+				<hr>
+				<button class="btn">Start</button>
+				&nbsp;
+				<button class="btn">Save</button>
+				<br>
+				<div class="saved-chord-listing" *ngIf="getLists.length">
+					<ng-template ngFor [ngForOf]="getLists" let-list let-i="index">
+						<!-- <div class="btn" *ngIf="note.length==1" [class.active]="newKey['base']==note" (click)="buttonClick('note',note)"><span [innerHTML]="note"></span></div> -->
+						<br>
+						<list [list]="list" [i]="i"></list>
+					</ng-template>
 				</div>
+				<div class="list-wrap" *ngIf="!getLists.length">
+					<p>No saved Lists</p>
+				</div>
+
 			</div>
 		</div>
 	</div>

@@ -71,12 +71,12 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   // savedChordListsOld = this.checkPastCookie('savedChordLists', []);
   /////////////////////////////////////////////////////////
-  public chordLists = new BehaviorSubject<array>( this.checkPastCookie('savedChordLists', []) );
+  public chordLists = new BehaviorSubject<object>( this.checkPastCookie('savedChordLists', []) );
   public savedChordLists = this.chordLists.asObservable();
   /////////////////////////////////////////////////////////
   public getChordLists() { return this.savedChordLists.source['_value']; }
   /////////////////////////////////////////////////////////
-  public setChordLists( value:array = null ) {
+  public setChordLists( value:object = null ) {
     this.chordLists.next( value );
     this.setCookie('savedChordLists', value);
   }
