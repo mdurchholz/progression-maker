@@ -87,6 +87,10 @@ export class GlobalService {
     this.isBuilding = true;
   }
   /////////////////////////////////////////////////////////
+  public cancelList() {
+    this.isBuilding = false;
+  }
+  /////////////////////////////////////////////////////////
   public saveList() {
     this.isBuilding = false;
   }

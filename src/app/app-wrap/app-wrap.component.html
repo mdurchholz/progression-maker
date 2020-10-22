@@ -4,7 +4,6 @@
 		<span class="fill"></span>
 		<div>
 			<div class="inner">
-				<!-- <heading></heading> -->
 				<h1 id="current-scale" [innerHTML]=title></h1>
 
 				<map></map>
@@ -23,14 +22,11 @@
 				<div class="h5"><b>SAVED LISTS</b></div>
 				<hr>
 				<div class="tools">
-					<button class="btn" (click)="this.global.beginList()">Start</button>
-					<button class="btn" (click)="this.global.saveList()">Save</button>
+					<button class="btn start" *ngIf="!this.global.isBuilding" (click)="this.global.beginList()"><i class="fa fa-plus" aria-hidden="true"></i> Start New List</button>
+					<button class="btn cancel" *ngIf="this.global.isBuilding" (click)="this.global.cancelList()">Cancel</button>
+					<button class="btn save" *ngIf="this.global.isBuilding" (click)="this.global.saveList()">Save</button>
 				</div>
 				<div class="saved-chord-listing" *ngIf="getLists.length">
-					<!-- <ng-template ngFor [ngForOf]="getLists" let-list let-i="index">
-						<list [list]="list" [i]="i"></list>
-					</ng-template> -->
-
 					<div class="list-wrap" *ngFor="let list of getLists; index as i">
 					    <table>
 					    <tbody>
@@ -40,7 +36,7 @@
 					                    <i class="fa fa-times-circle" aria-hidden="true"></i>
 					                </span>
 					            </td>
-					            <td width="120"><span class="test">{{list.key.note}} {{list.key.scale}}</span></td>
+					            <td width="120" class="list-key"><span class="test">{{list.key.note}} {{list.key.scale}}</span></td>
 					            <td class="list-items">
 					                <span class="list-item" *ngFor="let note of list.list">
 					                    <span class="friendly" [innerHTML]="this.global.noteStringToHtml( note.friendly )"></span>
