@@ -65,6 +65,8 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   // Set to true when you are building a progression
   /////////////////////////////////////////////////////////
+  viewLists = false;
+  /////////////////////////////////////////////////////////
   isBuilding = false;
   /////////////////////////////////////////////////////////
   newChordList = null;
@@ -81,18 +83,20 @@ export class GlobalService {
     this.setCookie('savedChordLists', value);
   }
   /////////////////////////////////////////////////////////
-  public setChordListsOld() {
-    let getList = this.checkPastCookie('savedChordLists', []),
-        newList = {
-          key : this.getKey(),
-          list : this.newChordList
-        };
+  public beginList() {
+    this.isBuilding = true;
+  }
+  /////////////////////////////////////////////////////////
+  public saveList() {
+    this.isBuilding = false;
+  }
+  /////////////////////////////////////////////////////////
+  public deleteList( position ) {
+    let list = this.global.getChordLists();
 
-    getList.push(newList);
+    list.splice(position, 1);
 
-    // this.savedChordListsOld = getList;
-
-    // this.setCookie('savedChordLists', this.savedChordLists);
+    this.global.setChordLists(list);
   }
   /////////////////////////////////////////////////////////
 
@@ -284,3 +288,44 @@ export class GlobalService {
   }
   /////////////////////////////////////////////////////////
 }
+
+
+/*
+--MAJOR--
+A  : A  Bm  C#m D  E  F#m G#dim
+A# : A# Cm  Dm  D# F  Gm  Adim
+Bb : Bb Cm  Dm  Eb F  Gm  Adim
+B  : B  C#m D#m E  F# G#m A#dim
+C  : C  Dm  Em  F  G  Am  Bdim
+C# : C# D#m Fm  F# G# A#m Cdim
+Db : Db Ebm Fm  Gb Ab Bbm Cdim
+D  : D  Em  F#m G  A  Bm  C#dim
+D# : D# Fm  Gm  G# A# Cm  Ddim
+Eb : Eb Fm  Gm  Ab Bb Cm  Ddim
+E  : E  F#m G#m A  B  C#m D#dim
+F  : F  Gm  Am  Bb C  Dm  Edim
+F# : F# G#m A#m B  C# D#m Fdim
+Gb : Gb Abm Bbm B  Db Ebm Fdim
+G  : G  Am  Bm  C  D  Em  F#dim
+G# : G# A#m Cm  C# D# Fm  Gdim
+Ab : Ab Bbm Cm  Db Eb Fm  Gdim
+
+--MINOR--
+A  : Am  Bdim  C  Dm  Em  F  G
+A# : A#m Cdim  C# D#m Fm  F# G#
+Bb : Bbm Cdim  Db Ebm Fm  Gb Ab
+B  : Bm  C#dim D  Em  F#m G  A
+C  : Cm  Ddim  Eb Fm  Gm  Ab Bb
+C# : C#m D#dim E  F#m G#m A  B
+Db : Dbm Ebdim E  Gbm Abm A  B
+D  : Dm  Edim  F  Gm  Am  Bb C
+D# : D#m Fdim  F# G#m A#m B  C#
+Eb : Ebm Fdim  Gb Abm Bbm B  Db
+E  : Em  F#dim G  Am  Bm  C  D
+F  : Fm  Gdim  Ab Bbm Cm  Db Eb
+F# : F#m G#dim A  Bm  C#m D  E
+Gb : Gbm Abdim A  Bm  Dbm D  E
+G  : Gm  Adim  Bb Cm  Dm  Eb F
+G# : G#m A#dim B  C#m D#m E  F#
+Ab : Abm Bbdim B  Dbm Ebm E  Gb
+*/

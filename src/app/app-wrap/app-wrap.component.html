@@ -1,10 +1,11 @@
-<div id="app-wrap" [class.showTable]="showTable" [class.chooseNewList]="this.global.isBuilding">
+<div id="app-wrap" [class.showTable]="showTable" [class.viewLists]="this.global.viewLists" [class.isBuilding]="this.global.isBuilding">
 
 	<div id="map-wrap" class="window va-m">
 		<span class="fill"></span>
 		<div>
 			<div class="inner">
-				<heading></heading>
+				<!-- <heading></heading> -->
+				<h1 id="current-scale" [innerHTML]=title></h1>
 
 				<map></map>
 
@@ -22,22 +23,40 @@
 				<div class="h5"><b>SAVED LISTS</b></div>
 				<hr>
 				<div class="tools">
-					<button class="btn">Start</button>
-					<button class="btn">Save</button>
+					<button class="btn" (click)="this.global.beginList()">Start</button>
+					<button class="btn" (click)="this.global.saveList()">Save</button>
 				</div>
 				<div class="saved-chord-listing" *ngIf="getLists.length">
-					<ng-template ngFor [ngForOf]="getLists" let-list let-i="index">
-						<!-- <div class="btn" *ngIf="note.length==1" [class.active]="newKey['base']==note" (click)="buttonClick('note',note)"><span [innerHTML]="note"></span></div> -->
-						<br>
+					<!-- <ng-template ngFor [ngForOf]="getLists" let-list let-i="index">
 						<list [list]="list" [i]="i"></list>
-					</ng-template>
+					</ng-template> -->
+
+					<div class="list-wrap" *ngFor="let list of getLists; index as i">
+					    <table>
+					    <tbody>
+					        <tr>
+					            <td width="45">
+					                <span class="delete" (click)="this.global.deleteList(i)">
+					                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+					                </span>
+					            </td>
+					            <td width="120"><span class="test">{{list.key.note}} {{list.key.scale}}</span></td>
+					            <td class="list-items">
+					                <span class="list-item" *ngFor="let note of list.list">
+					                    <span class="friendly" [innerHTML]="this.global.noteStringToHtml( note.friendly )"></span>
+					                </span>
+					            </td>
+					        </tr>
+					    </tbody>
+					    </table>
+					</div>
 				</div>
 				<div class="none list-wrap" *ngIf="!getLists.length">
 					<p>No saved lists</p>
 				</div>
 			</div>
 		</div>
-		<div class="close" (click)="this.global.isBuilding = false">
+		<div class="close" (click)="this.global.viewLists = false">
 			<i class="fa fa-times-circle" aria-hidden="true"></i>
 		</div>
 	</div>

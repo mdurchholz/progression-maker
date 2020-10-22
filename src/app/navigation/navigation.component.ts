@@ -75,9 +75,9 @@ export class NavigationComponent implements OnInit {
   }
 
   public newListToggle() {
-    this.global.isBuilding = !this.global.isBuilding
+    this.global.viewLists = !this.global.viewLists
 
-    if( this.global.isBuilding )
+    if( this.global.viewLists )
     {
       console.log('start new list');
       this.global.newChordList = [];
@@ -86,7 +86,7 @@ export class NavigationComponent implements OnInit {
     {
       this.global.newChordList = null;
 
-      this.global.isBuilding = false;
+      this.global.viewLists = false;
     }
   }
 

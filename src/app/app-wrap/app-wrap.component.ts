@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; // Input
 // import { Router, NavigationEnd } from '@angular/router';
 import { GlobalService } from '../global.service';
 
@@ -9,6 +9,9 @@ import { GlobalService } from '../global.service';
 })
 
 export class AppWrapComponent implements OnInit {
+
+  // Inherit value from parent tempalte
+  // @Input() i : number;
 
   getKey:object;
   getKeyPosi:string;
@@ -31,7 +34,8 @@ export class AppWrapComponent implements OnInit {
     this.global.appKey.subscribe(
       gKey => (
         this.getKey = gKey,
-        this.getKeyPosi = this.global.getNoteID( gKey['note'] )
+        this.getKeyPosi = this.global.getNoteID( gKey['note'] ),
+        this.title = this.formatHeading(gKey)
       )
     );
 
@@ -49,6 +53,18 @@ export class AppWrapComponent implements OnInit {
 
     this.tableCells = this.getTableCells();
   }
+
+
+  /////////////////////////////////////////////////////////
+  // Capitalize the first letter of a string
+  /////////////////////////////////////////////////////////
+  private capitalize(str:string) { return str.charAt(0).toUpperCase() + str.slice(1); }
+  /////////////////////////////////////////////////////////
+  // Format heading HTML
+  /////////////////////////////////////////////////////////
+  public formatHeading( getKey ) { return this.global.noteStringToHtml(getKey.note) + ' ' + this.capitalize(getKey.scale) + ' Chord Map'; }
+  /////////////////////////////////////////////////////////
+
 
   private checkFriendly( key:object ) {
     let getNotes = this.global.getScaleNotes(key),
@@ -152,43 +168,5 @@ export class AppWrapComponent implements OnInit {
 
     return false;
   }
-  /*
-  --MAJOR--
-  A  : A  Bm  C#m D  E  F#m G#dim
-  A# : A# Cm  Dm  D# F  Gm  Adim
-  Bb : Bb Cm  Dm  Eb F  Gm  Adim
-  B  : B  C#m D#m E  F# G#m A#dim
-  C  : C  Dm  Em  F  G  Am  Bdim
-  C# : C# D#m Fm  F# G# A#m Cdim
-  Db : Db Ebm Fm  Gb Ab Bbm Cdim
-  D  : D  Em  F#m G  A  Bm  C#dim
-  D# : D# Fm  Gm  G# A# Cm  Ddim
-  Eb : Eb Fm  Gm  Ab Bb Cm  Ddim
-  E  : E  F#m G#m A  B  C#m D#dim
-  F  : F  Gm  Am  Bb C  Dm  Edim
-  F# : F# G#m A#m B  C# D#m Fdim
-  Gb : Gb Abm Bbm B  Db Ebm Fdim
-  G  : G  Am  Bm  C  D  Em  F#dim
-  G# : G# A#m Cm  C# D# Fm  Gdim
-  Ab : Ab Bbm Cm  Db Eb Fm  Gdim
 
-  --MINOR--
-  A  : Am  Bdim  C  Dm  Em  F  G
-  A# : A#m Cdim  C# D#m Fm  F# G#
-  Bb : Bbm Cdim  Db Ebm Fm  Gb Ab
-  B  : Bm  C#dim D  Em  F#m G  A
-  C  : Cm  Ddim  Eb Fm  Gm  Ab Bb
-  C# : C#m D#dim E  F#m G#m A  B
-  Db : Dbm Ebdim E  Gbm Abm A  B
-  D  : Dm  Edim  F  Gm  Am  Bb C
-  D# : D#m Fdim  F# G#m A#m B  C#
-  Eb : Ebm Fdim  Gb Abm Bbm B  Db
-  E  : Em  F#dim G  Am  Bm  C  D
-  F  : Fm  Gdim  Ab Bbm Cm  Db Eb
-  F# : F#m G#dim A  Bm  C#m D  E
-  Gb : Gbm Abdim A  Bm  Dbm D  E
-  G  : Gm  Adim  Bb Cm  Dm  Eb F
-  G# : G#m A#dim B  C#m D#m E  F#
-  Ab : Abm Bbdim B  Dbm Ebm E  Gb
-  */
 }
