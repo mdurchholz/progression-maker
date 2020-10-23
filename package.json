@@ -19,15 +19,17 @@
     "@angular/platform-browser": "~9.1.4",
     "@angular/platform-browser-dynamic": "~9.1.4",
     "@angular/router": "~9.1.4",
-    "rxjs": "~6.5.4",
-    "tslib": "^1.10.0",
-    "zone.js": "~0.10.2",
+    "@fancyapps/fancybox": "^3.5.7",
     "bootstrap": "^4.4.1",
     "compass-mixins-fixed": "^1.0.1",
     "core-js": "^3.6.4",
     "font-awesome": "^4.7.0",
     "help": "^3.0.2",
-    "ngx-cookie-service": "^2.3.0"
+    "jquery": "^3.5.1",
+    "ngx-cookie-service": "^2.3.0",
+    "rxjs": "~6.5.4",
+    "tslib": "^1.10.0",
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.4",

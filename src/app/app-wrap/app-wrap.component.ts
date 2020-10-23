@@ -68,6 +68,9 @@ export class AppWrapComponent implements OnInit {
   /////////////////////////////////////////////////////////
 
 
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   private checkFriendly( key:object ) {
     let getNotes = this.global.getScaleNotes(key),
         hasTech  = false;
@@ -78,7 +81,12 @@ export class AppWrapComponent implements OnInit {
 
     return hasTech;
   }
+  /////////////////////////////////////////////////////////
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   private getTableCells() {
     let tables = [];
 
@@ -103,14 +111,24 @@ export class AppWrapComponent implements OnInit {
 
     return tables;
   }
+  /////////////////////////////////////////////////////////
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public getInfoUrl() {
     if( this.global.isMinor(this.getKey['scale']) )
       return 'https://www.youtube.com/watch?v=icNB8nIPCYI&list=PLXmi76euGSyx5LrRF0_czqlJZJYOjwqgL&index=7';
     else
       return 'https://www.youtube.com/watch?v=7eptsTUo8kk&list=PLXmi76euGSyx5LrRF0_czqlJZJYOjwqgL&index=11';
   }
+  /////////////////////////////////////////////////////////
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public getNoteCells( key:object ) {
     let notes = this.global.getScaleNotes( key ),
         cells = [];
@@ -125,7 +143,9 @@ export class AppWrapComponent implements OnInit {
 
     return cells;
   }
-
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public noteCellClick( note:number, row:string, cell:number, base:object = null ) {
     let cell_ID = row +'-'+ cell;
 
@@ -138,23 +158,37 @@ export class AppWrapComponent implements OnInit {
 
     if( base && this.activeCell ) for(let b in base) if( b ) this.activeCells.push( base[b].root );
   }
+  /////////////////////////////////////////////////////////
 
-  public isActiveCell( note:any, single:boolean = true ) {
-    return this.activeCells.includes(note);
-  }
 
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public isFocusCell( cell:string ) {
     return this.focusCell == cell;
   }
-
+  /////////////////////////////////////////////////////////
   public isFocusRow( row:string ) {
     return this.focusRow == row;
   }
+  /////////////////////////////////////////////////////////
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
+  public isActiveCell( note:any, single:boolean = true ) {
+    return this.activeCells.includes(note);
+  }
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public checkActive( note:number, scale:string ) {
     return +this.getKeyPosi==note && this.getKey['scale']==scale;
   }
-
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public checkSubActive( note:number, scale:string ) {
     if( this.getKey['scale']!=scale ) {
       let sub = note + (3 * (this.global.isMinor( scale ) ? 1 : -1));
@@ -170,5 +204,6 @@ export class AppWrapComponent implements OnInit {
 
     return false;
   }
+  /////////////////////////////////////////////////////////
 
 }

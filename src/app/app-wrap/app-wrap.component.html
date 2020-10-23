@@ -27,7 +27,7 @@
 					<button class="btn save" *ngIf="this.global.isBuilding" (click)="this.global.saveList()">Save</button>
 				</div>
 				<div class="saved-chord-listing" *ngIf="getLists.length">
-					<div class="list-wrap" *ngFor="let list of getLists; index as i">
+					<div class="list-wrap" *ngFor="let list of getLists.reverse(); index as i">
 					    <table>
 					    <tbody>
 					        <tr>
