@@ -9,19 +9,27 @@ import { GlobalService } from '../global.service';
 
 export class NavigationComponent implements OnInit {
 
+  getKey:object;
   newKey:object;
   hasSemi:boolean;
+
+  isFriendly:boolean;
+
   showBtn:boolean;
+
 
   constructor( public global:GlobalService ) { }
 
   ngOnInit() {
     this.global.appKey.subscribe(
       gKey => (
+        this.getKey = gKey,
         this.newKey = this.setNewKey( gKey ),
         this.hasSemi = this.global.getNoteSemi( gKey['note'] ) !=='' ? true : false
       )
     );
+
+    this.global.isFriendly.subscribe( value => this.isFriendly = value );
 
     this.showBtn = false;
   }
@@ -89,5 +97,21 @@ export class NavigationComponent implements OnInit {
       this.global.viewLists = false;
     }
   }
+
+
+  /////////////////////////////////////////////////////////
+  // Check if current key contains any technical notes
+  /////////////////////////////////////////////////////////
+  private keyHasTechnical( key:object ) {
+    let getNotes = this.global.getScaleNotes(key),
+        hasTech  = false;
+
+    for(let note=0; note<getNotes.length; note++) {
+      if( getNotes[note]['technical'] && !hasTech ) hasTech = true;
+    }
+
+    return hasTech;
+  }
+  /////////////////////////////////////////////////////////
 
 }

@@ -43,7 +43,7 @@ export class AppWrapComponent implements OnInit {
 
     this.global.isFriendly.subscribe( value => this.isFriendly = value );
 
-    this.global.savedChordLists.subscribe( value2 => this.getLists = value2 );
+    this.global.savedChordLists.subscribe( value => this.getLists = value );
 
     this.showTable = null;
 
@@ -65,22 +65,6 @@ export class AppWrapComponent implements OnInit {
   // Format heading HTML
   /////////////////////////////////////////////////////////
   public formatHeading( getKey ) { return this.global.noteStringToHtml(getKey.note) + ' ' + this.capitalize(getKey.scale) + ' Chord Map'; }
-  /////////////////////////////////////////////////////////
-
-
-  /////////////////////////////////////////////////////////
-  //
-  /////////////////////////////////////////////////////////
-  private checkFriendly( key:object ) {
-    let getNotes = this.global.getScaleNotes(key),
-        hasTech  = false;
-
-    for(let note=0; note<getNotes.length; note++) {
-      if( getNotes[note]['technical'] && !hasTech ) hasTech = true;
-    }
-
-    return hasTech;
-  }
   /////////////////////////////////////////////////////////
 
 

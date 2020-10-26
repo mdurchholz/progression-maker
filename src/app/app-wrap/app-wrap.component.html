@@ -4,14 +4,16 @@
 		<span class="fill"></span>
 		<div>
 			<div class="inner">
-				<h1 id="current-scale" [innerHTML]=title></h1>
+				<div class="h1" [innerHTML]=title></div>
 
 				<map></map>
 
-				<div id="viewFriendly" class="btn-group" *ngIf="checkFriendly(getKey)">
+				<!--
+				<div id="viewFriendly" class="btn-group" *ngIf="keyHasTechnical(getKey)">
 					<div id="js_technical" class="btn" [class.active]="!this.isFriendly" (click)="this.global.setFriendly( false )">Technical</div>
 					<div id="js_friendly"  class="btn" [class.active]="this.isFriendly"  (click)="this.global.setFriendly( true )">Friendly</div>
 				</div>
+				-->
 			</div>
 		</div>
 	</div>
@@ -27,7 +29,7 @@
 					<button class="btn save" *ngIf="this.global.isBuilding" (click)="this.global.saveList()">Save</button>
 				</div>
 				<div class="saved-chord-listing" *ngIf="getLists.length">
-					<div class="list-wrap" *ngFor="let list of getLists.reverse(); index as i">
+					<div class="list-wrap" *ngFor="let list of getLists; index as i">
 					    <table>
 					    <tbody>
 					        <tr>
@@ -37,9 +39,11 @@
 					                </span>
 					            </td>
 					            <td width="120" class="list-key"><span class="test">{{list.key.note}} {{list.key.scale}}</span></td>
-					            <td class="list-items">
-					                <span class="list-item" *ngFor="let note of list.list">
-					                    <span class="friendly" [innerHTML]="this.global.noteStringToHtml( note.friendly )"></span>
+					            <td class="list-progression">
+					                <span class="list-note" *ngFor="let note of list.list">
+										<span class="technical" *ngIf="this.global.showTechnical(note)" [innerHTML]="this.global.noteStringToHtml( note.technical )"></span>
+										<span class="friendly" *ngIf="this.global.showFriendly(note)" [innerHTML]="this.global.noteStringToHtml( note.friendly )"></span>
+										<span class="chord-type {{type.class}}" *ngIf="note.extension as type" [innerHTML]="type.html"></span>
 					                </span>
 					            </td>
 					        </tr>
@@ -47,7 +51,7 @@
 					    </table>
 					</div>
 				</div>
-				<div class="none list-wrap" *ngIf="!getLists.length">
+				<div *ngIf="!getLists.length">
 					<p>No saved lists</p>
 				</div>
 			</div>

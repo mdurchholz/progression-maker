@@ -85,13 +85,30 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   public beginList() {
     this.isBuilding = true;
+
+    let list = this.getChordLists();
+
+    list.unshift({
+        key : this.getKey(),
+        list : []
+    });
+
+    this.chordLists.next( list );
   }
   /////////////////////////////////////////////////////////
   public cancelList() {
     this.isBuilding = false;
+
+    let list = this.getChordLists();
+
+    list.shift();
+
+    this.chordLists.next( list );
   }
   /////////////////////////////////////////////////////////
   public saveList() {
+    this.setChordLists( this.getChordLists() );
+
     this.isBuilding = false;
   }
   /////////////////////////////////////////////////////////
@@ -131,19 +148,18 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   public setFriendly( isFriendly:boolean ) {
       this.friendly.next( isFriendly );
-
       this.setCookie('isFriendly', isFriendly);
   }
   /////////////////////////////////////////////////////////
-  public getFriendly() { return this.isFriendly.source['_value'];  }
+  private getFriendly() { return this.isFriendly.source['_value'];  }
   /////////////////////////////////////////////////////////
   // If technical exists, hide if not friendly mode, otherwise always show
   /////////////////////////////////////////////////////////
-  public checkFriendly( note ) { return note['technical'] ? this.getFriendly() : true; }
+  public showFriendly( note ) { return note['technical'] ? this.getFriendly() : true; }
   /////////////////////////////////////////////////////////
   // If technical exists and is not friendly mode
   /////////////////////////////////////////////////////////
-  public checkTechnical( note ) { return note['technical'] && !this.getFriendly(); }
+  public showTechnical( note ) { return note['technical'] && !this.getFriendly(); }
   /////////////////////////////////////////////////////////
 
 

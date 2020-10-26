@@ -1,8 +1,8 @@
 <div id="note-{{i+1}}" class="note" (click)="noteClick(i+1,note)" *ngFor="let note of getNotes; index as i">
     <div class="spot" [innerHTML]="this.getSpot(i+1)"></div>
     <div class="root">
-        <span class="technical" *ngIf="this.global.checkTechnical(note)" [innerHTML]="this.global.noteStringToHtml( note.technical )"></span>
-        <span class="friendly" *ngIf="this.global.checkFriendly(note)" [innerHTML]="this.global.noteStringToHtml( note.friendly )"></span>
+        <span class="technical" *ngIf="this.global.showTechnical(note)" [innerHTML]="this.global.noteStringToHtml( note.technical )"></span>
+        <span class="friendly" *ngIf="this.global.showFriendly(note)" [innerHTML]="this.global.noteStringToHtml( note.friendly )"></span>
         <span class="chord-type {{type.class}}" *ngIf="note.extension as type" [innerHTML]="type.html"></span>
     </div>
 </div>

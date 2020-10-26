@@ -44,7 +44,19 @@ export class NotesComponent implements OnInit {
 
     note.position = position;
 
-    this.global.newChordList.push(note)
+    // this.global.newChordList.push(note);
+
+    let list = this.global.getChordLists();
+
+    list[0].list.push(note);
+
+    this.global.chordLists.next( list );
+
+    /*
+    let list = this.getChordLists();
+
+    list.unshift();
+    */
   }
   /////////////////////////////////////////////////////////
 
