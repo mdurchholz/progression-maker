@@ -27,14 +27,13 @@
 			<div class="clear" (click)="buttonClick('clear')"><span>Clear</span></div>
 		</div>
 
-		<div class="new-list" (click)="this.newListToggle()">
-			<div class="btn"><i class="fa fa-plus" aria-hidden="true"></i></div>
-		</div>
-
 		<div id="viewFriendly" class="radios" [class.hasTech]="keyHasTechnical(getKey)">
 			<div class="radio" [class.active]="this.isFriendly" (click)="this.global.setFriendly( true )">Friendly</div>
 			<div class="radio" [class.active]="!this.isFriendly" (click)="this.global.setFriendly( false )">Technical</div>
 		</div>
 
+		<div class="new-list" (click)="this.newListToggle()">
+			<div class="btn"><i class="fa fa-plus" aria-hidden="true"></i></div>
+		</div>
 	</div>
 </div>

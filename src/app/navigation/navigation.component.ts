@@ -17,7 +17,6 @@ export class NavigationComponent implements OnInit {
 
   showBtn:boolean;
 
-
   constructor( public global:GlobalService ) { }
 
   ngOnInit() {
@@ -34,6 +33,10 @@ export class NavigationComponent implements OnInit {
     this.showBtn = false;
   }
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public buttonClick( type:string, value:string = '' ) {
     switch (type) {
       case 'note':
@@ -70,33 +73,48 @@ export class NavigationComponent implements OnInit {
 
     this.showBtn = ( object_1['note'] != object_2['note'] || object_1['scale'] != object_2['scale'] );
   }
+  /////////////////////////////////////////////////////////
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public setNewKey( key:object ) {
     return { base:this.global.getNoteBase(key['note']), semi:this.global.getNoteSemi(key['note']), scale:key['scale'] };
   }
+  /////////////////////////////////////////////////////////
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public newKeyToObject() {
     return {
       note  : this.global.checkEnharmonic(this.newKey['base']+this.newKey['semi']),
       scale : this.newKey['scale']
     };
   }
+  /////////////////////////////////////////////////////////
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public newListToggle() {
-    this.global.viewLists = !this.global.viewLists
+    this.global.viewLists = !this.global.viewLists;
 
     if( this.global.viewLists )
     {
-      console.log('start new list');
-      this.global.newChordList = [];
+      // console.log('start new list');
     }
     else
     {
-      this.global.newChordList = null;
+      // console.log('end new list');
 
-      this.global.viewLists = false;
+      if( this.global.isBuilding ) this.global.cancelList();
     }
   }
+  /////////////////////////////////////////////////////////
 
 
   /////////////////////////////////////////////////////////
