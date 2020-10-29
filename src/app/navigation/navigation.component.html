@@ -3,22 +3,20 @@
 		<div class="mobi-l">
 			<div class="notes">
 			    <ng-template ngFor [ngForOf]="this.global.getAllNotes" let-note let-i="index">
-				<div class="btn" *ngIf="note.length==1" [class.active]="newKey['base']==note" (click)="buttonClick('note',note)"><span [innerHTML]="note"></span></div>
+				<div class="optn" *ngIf="note.length==1" [class.active]="newKey['base']==note" (click)="buttonClick('note',note)"><span [innerHTML]="note"></span></div>
 			    </ng-template>
-
-				<!-- <div class="btn disabled">&nbsp;</div> -->
 			</div>
 		</div>
 
 		<div class="mobi-r">
 			<div class="semi">
-				<div class="btn" [class.active]="newKey['semi']=='#'" (click)="buttonClick('semi','#')"><span>&#9839;</span></div>
-				<div class="btn" [class.active]="newKey['semi']=='b'"  (click)="buttonClick('semi','b')"><span>&#9837;</span></div>
+				<div class="optn" [class.active]="newKey['semi']=='#'" (click)="buttonClick('semi','#')"><span>&#9839;</span></div>
+				<div class="optn" [class.active]="newKey['semi']=='b'"  (click)="buttonClick('semi','b')"><span>&#9837;</span></div>
 			</div>
 
 			<div class="scale">
-				<div class="btn" [class.active]="newKey['scale']=='major'" (click)="buttonClick('scale','major')"><span>Major</span></div>
-				<div class="btn" [class.active]="newKey['scale']=='minor'" (click)="buttonClick('scale','minor')"><span>Minor</span></div>
+				<div class="optn" [class.active]="newKey['scale']=='major'" (click)="buttonClick('scale','major')"><span>Major</span></div>
+				<div class="optn" [class.active]="newKey['scale']=='minor'" (click)="buttonClick('scale','minor')"><span>Minor</span></div>
 			</div>
 		</div>
 

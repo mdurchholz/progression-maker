@@ -1,4 +1,4 @@
-<div id="note-{{i+1}}" class="note" (click)="noteClick(i+1,note)" *ngFor="let note of getNotes; index as i">
+<div id="note-{{i+1}}" class="note" [class.active]="this.global.activeNote==i" (click)="noteClick(i,note)" *ngFor="let note of getNotes; index as i">
     <div class="spot" [innerHTML]="this.getSpot(i+1)"></div>
     <div class="root">
         <span class="technical" *ngIf="this.global.showTechnical(note)" [innerHTML]="this.global.noteStringToHtml( note.technical )"></span>

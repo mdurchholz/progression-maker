@@ -344,14 +344,15 @@ $lineW : 2px;
 
     .nav-inner                                              { position: relative; padding-bottom: 75px; min-height: 100%;}
 
-    .btn                                                    { width: 100%; margin: 0; padding: 10px; border-radius: 0; background: #fff; border-bottom: 1px solid $grey-lite; border-right: 1px solid $grey-lite; transition: all $speed ease;
-        &:hover                                             { border-color: $color-1;}
+    .optn                                                   { display: flex; justify-content: center; cursor: pointer; position: relative; overflow: hidden; width: 100%; margin: 0; padding: 12px; border-radius: 0; background: $white; border-bottom: 1px solid $grey-lite; border-right: 1px solid $grey-lite; transition: all $speed ease;
+        &::before                                           { content: ""; @include absolute(0,0,0,0); z-index: 0; width: 0; height: 0; margin: auto; border-radius: 50%; background: transparent; transition: all speed() ease;}
+        span                                                { position: relative; z-index: 1; line-height: 1;}
 
         &.active { &, &:hover, &:active, &:focus            { background: $color-1; color: #fff; border-color: $color-1; cursor: default;}}
     }
 
-    .semi                                                   { border-top: 12px solid $grey-lite; border-bottom: 12px solid $grey-lite;
-        .btn                                                { width: 50%; line-height: 1;
+    .semi                                                   { display: flex; border-top: 12px solid $grey-lite; border-bottom: 12px solid $grey-lite;
+        .optn                                               { width: 50%; line-height: 1;
             &.active                                        { cursor: pointer;}
             &:not(.active):not(:hover)                      {
                 @include media-breakpoint-up(md)            { border-bottom-color: $white;}
@@ -360,16 +361,14 @@ $lineW : 2px;
     }
 
     .scale                                                  {
-        .btn                                                { }
+        .optn                                               { }
     }
 
     .btn-wrap                                               { padding: $btnGap; margin: $btnGap 0;
-        .submit                                             { background: $color-1; color: #fff; border: 1px solid $color-1; border-radius: 3px; width: 100%;
-            &:hover, &:active, &:focus                      { background: $color-1-lite; opacity: 1;}
-        }
+        .submit                                             { background: $color-1; color: #fff; padding: $btnGap*2; border-radius: 3px; width: 100%; border: 1px solid $color-1;}
 
-        .clear                                              { color: $color-1; text-decoration: underline; margin: $btnGap 0 0; cursor: pointer; opacity: 1; transition: all $speed ease;
-            &:hover, &:active, &:focus                      { color: $color-1-lite;}
+        .clear                                              { margin: $btnGap 0 0; cursor: pointer; opacity: 1; transition: all $speed ease;
+            &, &:hover, &:active, &:focus                   { color: $color-1; text-decoration: underline;}
         }
 
         &.disabled
@@ -380,11 +379,24 @@ $lineW : 2px;
     }
 
     .new-list                                               { @include absolute(auto,0,0,0); padding: $btnGap; margin: $btnGap 0;
-        .btn                                                { background: #fff; color: $grey-dark; border: 1px solid $color-1; border-radius: 3px; font-size: 20px; transform: none;
+        .btn                                                { background: #fff; color: $grey-dark; border: 1px solid $color-1; border-radius: 3px; font-size: 20px; transform: none; width: 100%; padding: $btnGap*2;
             i                                               { transform: none; transition: all $speed ease;}
             &:hover, &:active, &:focus                      { background: $color-1-lite; color: #fff;}
         }
     }
+
+    #app-wrap:not(.isBuilding) &
+    {
+        // .btn:hover                                          { color: #fff; // border-color: $color-1;
+        //     &::before                                       { width: 20px; height: 20px; background: $color-1;}
+        // }
+
+        .btn-wrap:not(.disabled) .submit
+        {
+            &:hover, &:active, &:focus                       { background: $color-1-lite; color: #fff;}
+        }
+    }
+
 
     @include media-breakpoint-down(sm)                      { top: auto; right: 0; z-index: 2; width: auto; height: $sideNavM; border-right: none; border-top: 1px solid $grey-lite; overflow: visible;
         > div                                               { margin: 0;}
@@ -553,9 +565,7 @@ $lineW : 2px;
     .list-key                                               { background: $color-1; color: $white;}
 
     .list-progression                                       { text-align: left;
-        .list-note                                          { position: relative; display: inline-block; margin: 0; padding: 0 spacing(1/2); min-width: spacing(2); text-align: center;
-            &:not(:first-child)::before                     { content: ""; @include absolute(0,auto,0,0); margin: auto; width: 1px; height: 12px; background: $grey;}
-        }
+        .list-note                                          { margin: 0 2px;}
     }
 
     .delete                                                 { cursor: pointer; opacity: 1;
@@ -603,10 +613,17 @@ $lineW : 2px;
         }
 
         .note                                               { cursor: pointer; transform: scale(0.9);
-            &:hover                                         { background: $color-1; border-color: $color-1; transform: scale(1);
+            &:hover                                         { transform: scale(1);}
+
+            &.active                                        { background: $color-1; border-color: $color-1; transform: scale(1);
                 &, .root                                    { color: #fff;}
             }
         }
+    }
+
+    #nav-wrap
+    {
+        .optn, .btn, .clear                                 { opacity: 0.5; cursor: default;}
     }
 }
 

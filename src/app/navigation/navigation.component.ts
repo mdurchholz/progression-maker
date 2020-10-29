@@ -38,6 +38,9 @@ export class NavigationComponent implements OnInit {
   //
   /////////////////////////////////////////////////////////
   public buttonClick( type:string, value:string = '' ) {
+
+    if( this.global.isBuilding ) return;
+
     switch (type) {
       case 'note':
         this.newKey['base'] = value;
@@ -61,7 +64,7 @@ export class NavigationComponent implements OnInit {
         break;
 
       case 'clear':
-        this.newKey = this.setNewKey( this.global.getKey() );
+        this.clearKeyChange();
         break;
 
       default:
@@ -95,6 +98,14 @@ export class NavigationComponent implements OnInit {
     };
   }
   /////////////////////////////////////////////////////////
+
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
+  public clearKeyChange() {
+      this.newKey = this.setNewKey( this.global.getKey() );
+  }
 
 
   /////////////////////////////////////////////////////////

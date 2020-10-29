@@ -9,15 +9,13 @@ import { GlobalService } from '../global.service';
 export class NotesComponent implements OnInit {
 
   getNotes:object;
-  harmonic:object;
 
   constructor( public global:GlobalService ) { }
 
   ngOnInit() {
     this.global.appKey.subscribe(
       gKey => (
-        this.getNotes = this.global.getScaleNotes(gKey),
-        this.harmonic = this.getNotes[ Object.keys(this.getNotes).length - 1 ]
+        this.getNotes = this.global.getScaleNotes(gKey)
       )
     )
   }
@@ -42,7 +40,9 @@ export class NotesComponent implements OnInit {
   public noteClick( position, note ) {
     if( !this.global.isBuilding ) { return; }
 
-    note.position = position;
+    this.global.activeNote = position;
+
+    note.position = position + 1;
 
     let list = this.global.getChordLists();
 

@@ -69,6 +69,8 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   isBuilding = false;
   /////////////////////////////////////////////////////////
+  activeNote = null;
+  /////////////////////////////////////////////////////////
   public chordLists = new BehaviorSubject<object>( this.checkPastCookie('savedChordLists', []) );
   /////////////////////////////////////////////////////////
   public savedChordLists = this.chordLists.asObservable();
@@ -101,10 +103,16 @@ export class GlobalService {
     list.shift();
 
     this.chordLists.next( list );
+
+    this.activeNote = null;
   }
   /////////////////////////////////////////////////////////
   public saveList() {
-    this.setChordLists( this.getChordLists() );
+    let list = this.getChordLists();
+
+    this.setChordLists( list );
+
+    this.activeNote = null;
 
     this.isBuilding = false;
   }

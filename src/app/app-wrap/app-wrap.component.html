@@ -26,10 +26,10 @@
 				<div class="tools">
 					<button class="btn start" *ngIf="!this.global.isBuilding" (click)="this.global.beginList()"><i class="fa fa-plus" aria-hidden="true"></i> Start New List</button>
 					<button class="btn cancel" *ngIf="this.global.isBuilding" (click)="this.global.cancelList()">Cancel</button>
-					<button class="btn save" *ngIf="this.global.isBuilding" (click)="this.global.saveList()">Save</button>
+					<button class="btn save" *ngIf="this.global.isBuilding && getLists[0].list.length" (click)="this.global.saveList()">Save</button>
 				</div>
 				<div class="saved-chord-listing" *ngIf="getLists.length">
-					<div id="list-{{i}}" class="list-wrap" *ngFor="let list of getLists; index as i">
+					<div class="list-wrap" *ngFor="let list of getLists; index as i">
 					    <table>
 					    <tbody>
 					        <tr>
