@@ -65,9 +65,11 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   // Set to true when you are building a progression
   /////////////////////////////////////////////////////////
-  viewLists = false;
+  viewLists = true;
   /////////////////////////////////////////////////////////
   isBuilding = false;
+  /////////////////////////////////////////////////////////
+  newList = null;
   /////////////////////////////////////////////////////////
   activeNote = null;
   /////////////////////////////////////////////////////////
@@ -88,8 +90,8 @@ export class GlobalService {
     let list = this.getChordLists();
 
     list.unshift({
-        key : this.getKey(),
-        list : []
+      key : this.getKey(),
+      list : []
     });
 
     this.chordLists.next( list );
@@ -137,9 +139,9 @@ export class GlobalService {
   public getKey( object:string = null ) { var key = this.appKey.source['_value']; return object ? key[object] : key; }
   /////////////////////////////////////////////////////////
   public setKey( newKey:object ) {
-      this.keySource.next( Object.assign(this.keySource.value, newKey) );
+    this.keySource.next( Object.assign(this.keySource.value, newKey) );
 
-      this.setCookie('musicKey', this.getKey());
+    this.appKey.subscribe(gKey=>( this.setCookie('musicKey', gKey) ));
   }
   /////////////////////////////////////////////////////////
 
@@ -152,8 +154,8 @@ export class GlobalService {
   public isFriendly = this.friendly.asObservable();
   /////////////////////////////////////////////////////////
   public setFriendly( isFriendly:boolean ) {
-      this.friendly.next( isFriendly );
-      this.setCookie('isFriendly', isFriendly);
+    this.friendly.next( isFriendly );
+    this.setCookie('isFriendly', isFriendly);
   }
   /////////////////////////////////////////////////////////
   private getFriendly() { return this.isFriendly.source['_value'];  }
@@ -179,7 +181,15 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   // Check if key is in minor
   /////////////////////////////////////////////////////////
-  public isMinor( scale:string = null ){ return (scale ? scale : this.getKey('scale')) == 'minor'; }
+  public isMinor( scale:string = null ){
+      var isMinor;
+      this.appKey.subscribe(
+        gKey => (
+          isMinor = (scale ? scale : gKey['scale']) == 'minor'
+        )
+      );
+      return isMinor;
+  }
   /////////////////////////////////////////////////////////
 
 
@@ -303,7 +313,7 @@ export class GlobalService {
       newScale[step] = options;
 
       if( (step == (getSteps.length-1)) && this.isMinor() ) {
-          newScale.push({ technical:options['technical'], friendly:options['friendly'], extension:{class:'dim', html:'&deg;'} });
+        newScale.push({ technical:options['technical'], friendly:options['friendly'], extension:{class:'dim', html:'&deg;'} });
       }
 
       position += getSteps[step];

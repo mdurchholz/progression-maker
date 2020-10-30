@@ -32,6 +32,7 @@ export class AppWrapComponent implements OnInit {
   constructor( public global:GlobalService ) { }
 
   ngOnInit() {
+    console.log( this.global.appKey );
 
     this.global.appKey.subscribe(
       gKey => (
