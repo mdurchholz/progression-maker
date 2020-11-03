@@ -13,8 +13,6 @@ export class AppWrapComponent implements OnInit {
   // Inherit value from parent tempalte
   // @Input() i : number;
 
-  title:string;
-
   getKey:object;
   getKeyPosi:string;
 
@@ -37,8 +35,7 @@ export class AppWrapComponent implements OnInit {
     this.global.appKey.subscribe(
       gKey => (
         this.getKey = gKey,
-        this.getKeyPosi = this.global.getNoteID( gKey['note'] ),
-        this.title = this.formatHeading(gKey)
+        this.getKeyPosi = this.global.getNoteID( gKey['note'] )
       )
     );
 
