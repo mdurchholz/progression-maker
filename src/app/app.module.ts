@@ -7,9 +7,7 @@ import { AppRoutingModule, routingComponents } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { GlobalService } from './global.service';
-import { HeadingComponent } from './heading/heading.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { MapComponent } from './map/map.component';
 import { NotesComponent } from './notes/notes.component';
 
 import { CookieService } from 'ngx-cookie-service';
@@ -19,8 +17,6 @@ import { CookieService } from 'ngx-cookie-service';
     AppComponent,
     NavigationComponent,
     routingComponents,
-    HeadingComponent,
-    MapComponent,
     NotesComponent
   ],
   imports: [

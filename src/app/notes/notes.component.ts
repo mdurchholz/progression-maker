@@ -9,32 +9,16 @@ import { GlobalService } from '../global.service';
 export class NotesComponent implements OnInit {
 
   getNotes:object;
-  harmonic:object;
-  showFriendly:boolean;
 
   constructor( public global:GlobalService ) { }
 
   ngOnInit() {
     this.global.appKey.subscribe(
       gKey => (
-        this.getNotes = this.global.getScaleNotes(gKey),
-        this.harmonic = this.getNotes[ Object.keys(this.getNotes).length - 1 ]
+        this.getNotes = this.global.getScaleNotes(gKey)
       )
     )
-
-    this.global.isFriendly.subscribe( value => this.showFriendly = value );
   }
-
-
-  /////////////////////////////////////////////////////////
-  // If technical exists and is not friendly mode
-  /////////////////////////////////////////////////////////
-  public checkTechnical( note ) { return note['technical'] && !this.showFriendly; }
-  /////////////////////////////////////////////////////////
-  // If technical exists, hide if not friendly mode, otherwise always show
-  /////////////////////////////////////////////////////////
-  public checkFriendly( note ) { return note['technical'] ? this.showFriendly : true; }
-  /////////////////////////////////////////////////////////
 
 
   /////////////////////////////////////////////////////////
@@ -51,10 +35,20 @@ export class NotesComponent implements OnInit {
 
 
   /////////////////////////////////////////////////////////
-  //
+  // Add note to list when in build mode
   /////////////////////////////////////////////////////////
-  public noteClick( note ) {
-      // console.log( note );
+  public noteClick( position, note ) {
+    if( !this.global.isBuilding ) { return; }
+
+    this.global.activeNote = position;
+
+    note.position = position + 1;
+
+    let list = this.global.chordLists;
+
+    list[0].list.push(note);
+
+    this.global.chordLists = list;
   }
   /////////////////////////////////////////////////////////
 

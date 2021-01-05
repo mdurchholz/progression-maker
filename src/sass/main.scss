@@ -99,13 +99,13 @@ html, body                                                  { width: 100%; heigh
 }
 
 
-.window                                                     { @include absolute(0,0,0,0); width: auto; height: auto; overflow: auto; text-align: center; transition: all $speed ease;
+.window                                                     { @include absolute(0,0,0,0); z-index: 1; width: auto; height: auto; overflow: auto; text-align: center; transition: all $speed ease;
     > div                                                   { position: relative; z-index: 1; margin: 0 auto; width: 100%;}
 }
 
 
 #map-wrap                                                   { text-align: center;
-    .inner                                                  { max-width: 1000px; min-width: map-get($grid-breakpoints, 'sm'); margin: 0 auto;}
+    .inner                                                  { max-width: 1000px; min-width: map-get($grid-breakpoints, 'sm'); margin: 0 auto; padding: 30px 0;}
 }
 
 
@@ -116,35 +116,35 @@ html, body                                                  { width: 100%; heigh
 
     img                                                     { display: none; @include absolute(0,auto,auto,0); margin: auto; width: 100%;}
 
-    .note                                                       { display: block; @include absolute(auto,0,auto,0); width: 14%; height: 28%; color: #000; font-weight: 700; line-height: 1; text-align: center; margin: auto; background: #fff; border: 1px solid #dedede; box-shadow: 0px 1px 5px -2px rgba(0,0,0,0.5); transform: scale(1); backface-visibility: hidden; transition: all $speed ease;
+    .note                                                   { display: flex; justify-content: center; align-items: center; @include absolute(auto,0,auto,0); width: 14%; height: 28%; color: #000; font-weight: 700; line-height: 1; text-align: center; margin: auto; background: $white; border: 1px solid #dedede; box-shadow: 0px 1px 5px -2px rgba(0,0,0,0.5); transform: scale(1); backface-visibility: hidden; transition: all $speed ease;
 
-        .spot                                                   { font-size: 14px; line-height: 1; display: block; @include absolute(-1px,-1px,auto,auto); border: 1px solid #ccc; padding: 2px 4px; min-width: 25px; font-weight: 300; background: #fff; color: $grey-med;
-            @include media-breakpoint-down(sm)                  { min-width: 20px;}
+        .spot                                               { font-size: 14px; line-height: 1; display: block; @include absolute(-1px,-1px,auto,auto); border: 1px solid #ccc; padding: 2px 4px; min-width: 25px; font-weight: 300; background: $white; color: $grey-med;
+            @include media-breakpoint-down(sm)              { min-width: 20px;}
 
-            .type                                               { font-size: 60%; vertical-align: super;}
+            .type                                           { font-size: 60%; vertical-align: super;}
         }
 
-        .root                                                   { position: relative; font-size: 45px; color: inherit; color: $color-1;
-            .symbol                                             { line-height: 0.4;}
-            .chord-type                                         { font-size: 35px; vertical-align: baseline;
-                &.dim                                           { vertical-align: top;}
+        .root                                               { position: relative; font-size: 45px; color: inherit; color: $color-1;
+            .symbol                                         { line-height: 0.4;}
+            .chord-type                                     { font-size: 35px; vertical-align: baseline;
+                &.dim                                       { vertical-align: top;}
             }
         }
 
 
         @include media-breakpoint-between(sm, mb)
         {
-            .spot                                               { font-size: 1.2vw;}
-            .root                                               { font-size: 3.8vw;
-                .chord-type                                     { font-size: 3.2vw;}
+            .spot                                           { font-size: 1.2vw;}
+            .root                                           { font-size: 3.8vw;
+                .chord-type                                 { font-size: 3.2vw;}
             }
         }
 
-        @include media-breakpoint-between(xs, sm)
+        @include media-breakpoint-down(sm)
         {
-            .spot                                               { font-size: 8px;}
-            .root                                               { font-size: 28px;
-                .chord-type                                     { font-size: 20px;}
+            .spot                                           { font-size: 8px;}
+            .root                                           { font-size: 28px;
+                .chord-type                                 { font-size: 20px;}
             }
         }
     }
@@ -168,9 +168,9 @@ $lineW : 2px;
         &[class*="arr"]
         {
             span { &::before, &::after                      { @include absolute(auto,auto,auto,auto); width: 20px; height: 20px; margin: auto; border: none; border-width: $lineW; border-color: inherit; box-shadow: none; outline: none; backface-visibility: hidden; transform: rotate(45deg); transition: all $speed ease;
-                @media screen and (max-width: 991px)        { width: 15px; height: 15px;}
-                @media screen and (max-width: 767px)        { width: 12px; height: 12px;}
-                @media screen and (max-width: 575px)        { width: 10px; height: 10px;}
+                @include media-breakpoint-down(lg)          { width: 15px; height: 15px;}
+                @include media-breakpoint-down(md)          { width: 12px; height: 12px;}
+                @include media-breakpoint-down(sm)          { width: 10px; height: 10px;}
             }}
 
             &[class*="-l"] span::before                     { content: ""; top: 0; bottom: 0; left: $lineW; border-right-style: none; border-left-style: solid; border-bottom-style: solid;}
@@ -305,45 +305,80 @@ $lineW : 2px;
 }
 
 
-#viewFriendly                                               { padding: 0 0 30px;
-    .btn                                                    { position: relative;
-        &::after                                            { content: ""; width: 100%; height: 3px; border-radius: 50%; @include absolute(auto,0,0,0); margin: auto; width: 0; background: rgba($color-1, 0.25); box-shadow: 0px 1px 2px rgba($color-1, 0.25); opacity: 0; transform: scale(0.5); transition: all $speed ease;}
+#viewFriendly
+{
+    &.radios                                                { text-align: left; padding: 0 $btnGap; margin-top: spacing();
 
-        &.active                                            { color: $color-1; cursor: default;
-            &::after                                        { width: 100%; opacity: 1; transform: scale(1);}
+        $labelH : $btnGap*2;
+        .radio                                              { opacity: 0.35; position: relative; margin: 0; line-height: $labelH; cursor: pointer; padding-left: $labelH + 3px; transition: all speed() ease;
+            &::before, &::after                             { content: ""; @include absolute(0,auto,0,0); margin: auto; border-radius: 50%; transition: all speed() ease;}
+            &::before                                       { width: $labelH; height: $labelH; border: 1px solid;}
+            &::after                                        { width: 0; height: 0; left: $btnGap; background: $white;}
+
+            &.active                                        { color: $color-1;
+                &::after                                    { width: $btnGap; height: $btnGap; left: $btnGap/2; background: $color-1;}
+            }
+
+            + .radio                                        { margin-top: $btnGap*1.5;}
+        }
+
+        &.hasTech .radio                                    { opacity: 1;}
+    }
+
+    &.btn-group                                             { padding: 0 0 30px;
+
+        .btn                                                { position: relative;
+            &::after                                        { content: ""; width: 100%; height: 3px; border-radius: 50%; @include absolute(auto,0,0,0); margin: auto; width: 0; background: rgba($color-1, 0.25); box-shadow: 0px 1px 2px rgba($color-1, 0.25); opacity: 0; transform: scale(0.5); transition: all $speed ease;}
+
+            &.active                                        { color: $color-1; cursor: default;
+                &::after                                    { width: 100%; opacity: 1; transform: scale(1);}
+            }
         }
     }
 }
 
 
 
-#nav-wrap                                                   { @include fixed(0,auto,0,0); z-index: 2; width: $sideNavD; background: #fff; border-right: 1px solid $grey-lite; text-align: center; overflow: hidden; overflow-y: auto;
+#nav-wrap                                                   { @include fixed(0,auto,0,0); z-index: 2; width: $sideNavD; background: $white; border-right: 1px solid $grey-lite; text-align: center; overflow: hidden; overflow-y: auto;
 
     > div                                                   { display: block; margin: 0 (-1px);}
 
     .nav-inner                                              { position: relative; padding-bottom: 75px; min-height: 100%;}
 
-    .btn                                                    { width: 100%; margin: 0; padding: 10px; border-radius: 0; background: #fff; border-bottom: 1px solid $grey-lite; border-right: 1px solid $grey-lite; transition: all $speed ease;
-        &:hover                                             { border-color: $color-1;}
-
-        &.active { &, &:hover, &:active, &:focus            { background: $color-1; color: #fff; border-color: $color-1; cursor: default;}}
+    .notes
+    {
+        @include media-breakpoint-down(sm)                  { display: flex;}
     }
 
-    .semi                                                   { border-top: 12px solid $grey-lite; border-bottom: 12px solid $grey-lite;
-        .btn                                                { width: 50%; line-height: 1;}
+    .optn                                                   { display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; width: 100%; margin: 0; padding: 12px; border-radius: 0; background: $white; border-bottom: 1px solid $grey-lite; border-right: 1px solid $grey-lite; transition: all $speed ease;
+
+        &::before                                           { content: ""; @include absolute(0,0,0,0); z-index: 0; width: 0; height: 0; margin: auto; border-radius: 50%; background: transparent; transition: all speed() ease;}
+        span                                                { position: relative; z-index: 1; line-height: 1;}
+
+        &.active { &, &:hover, &:active, &:focus            { background: $color-1; color: $white; border-color: $color-1; cursor: default;}}
     }
 
-    .scale                                                  {
-        .btn                                                { }
+    .semi                                                   { display: flex; border-top: 12px solid $grey-lite; border-bottom: 12px solid $grey-lite;
+        .optn                                               { width: 50%;
+            &.sharp span                                    { line-height: 1.5;}
+            &.active                                        { cursor: pointer;}
+            &:not(.active)
+            {
+                @include media-breakpoint-up(md)            { border-bottom-color: $white;}
+            }
+        }
+    }
+
+    .scale
+    {
+        .optn::before                                       { border-radius: 3px;}
     }
 
     .btn-wrap                                               { padding: $btnGap; margin: $btnGap 0;
-        .submit                                             { background: $color-1; color: #fff; border: 1px solid $color-1; border-radius: 3px; width: 100%;
-            &:hover, &:active, &:focus                      { background: $color-1-lite; opacity: 1;}
-        }
+        .submit                                             { background: $color-1; color: $white; padding: $btnGap*2; border-radius: 3px; width: 100%; border: 1px solid $color-1;}
 
-        .clear                                              { color: $color-1; text-decoration: underline; margin: $btnGap 0 0; cursor: pointer; opacity: 1; transition: all $speed ease;
-            &:hover, &:active, &:focus                      { color: $color-1-lite;}
+        .clear                                              { margin: $btnGap 0 0; cursor: pointer; opacity: 1; transition: all $speed ease;
+            &, &:hover, &:active, &:focus                   { color: $color-1; text-decoration: underline;}
         }
 
         &.disabled
@@ -354,69 +389,88 @@ $lineW : 2px;
     }
 
     .new-list                                               { @include absolute(auto,0,0,0); padding: $btnGap; margin: $btnGap 0;
-        .btn                                                { background: #fff; color: $grey-dark; border: 1px solid $color-1; border-radius: 3px; font-size: 20px; transform: none;
+        .btn                                                { background: $white; color: $grey-dark; border: 1px solid $color-1; border-radius: 3px; line-height: 1; font-size: 20px; transform: none; width: 100%; padding: $btnGap*2;
             i                                               { transform: none; transition: all $speed ease;}
-            &:hover, &:active, &:focus                      { background: $color-1-lite; color: #fff;}
+            &:hover, &:active, &:focus                      { background: $color-1-lite; color: $white;}
         }
     }
+
+    #app-wrap:not(.isBuilding) &
+    {
+        .optn:hover                                         { color: $white; // border-color: $color-1;
+            &::before                                       { width: 20px; height: 20px; background: $color-1;}
+        }
+
+        .scale .optn:hover::before                          { width: 50px;}
+
+        .btn-wrap:not(.disabled) .submit
+        {
+            &:hover, &:active, &:focus                      { background: $color-1-lite; color: $white;}
+        }
+    }
+
 
     @include media-breakpoint-down(sm)                      { top: auto; right: 0; z-index: 2; width: auto; height: $sideNavM; border-right: none; border-top: 1px solid $grey-lite; overflow: visible;
         > div                                               { margin: 0;}
 
         $vertW : percentage(1/3);
-        .nav-inner                                          { background: #fff; height: 100%; padding: 0;
+        .nav-inner                                          { background: $white; height: 100%; padding: 0; display: flex;
             > div                                           { position: relative; z-index: 1; height: 100%; margin: 0;
                 &.hideProd                                  { display: none;}
             }
 
-            .btn                                           { width: 100%; height: 100%; padding: $btnGap/2; margin: 0;
-                &::before                                  { content: ""; display: inline-block; vertical-align: middle; width: 0; height: 100%;}
-                span                                       { display: inline-block; vertical-align: middle; width: 100%;}
+            .optn                                           { width: 100%; height: 100%; padding: $btnGap/2; margin: 0; display: inline-flex; justify-content: center; align-items: center;
+                // &::before                                  { content: ""; display: inline-block; vertical-align: middle; width: 0; height: 100%;}
+                // span                                       { display: inline-block; vertical-align: middle; width: 100%;}
             }
 
             .notes                                          {
-                .btn                                        { width: percentage(1/7);}
+                .optn                                       { width: percentage(1/7);}
             }
 
-            .mobi-l                                         { width: 100%; height: 100%; padding: 0 $vertW 0 0;
+            .mobi-l                                         { width: 100%; height: 100%; padding: 0; // padding: 0 $vertW 0 0;
                 > div                                       { height: 100%; margin: 0;}
             }
 
-            .mobi-r                                         { @include absolute(auto,0,0,auto); width: $vertW;
+            .mobi-r                                         { width: spacing(6); display: flex; // @include absolute(auto,0,0,auto); width: $vertW;
                 > div                                       { display: inline-block; height: 100%; margin: 0;}
             }
 
             .semi                                           { width: 50%; border: 0; border-left: $btnGap solid $grey-lite; border-right: $btnGap solid $grey-lite;
-                .btn                                        { height: 50%;}
+                .optn                                       { height: 50%;}
             }
 
             .scale                                          { width: 50%;
-                .btn                                        { height: 50%;}
+                .optn                                       { height: 50%;}
             }
+
+            #viewFriendly                                   { display: flex; justify-content: center; flex-direction: column; background: $white}
 
             $clearW : 60px;
             .btn-wrap                                       { @include absolute(auto,0,100%,0); z-index: 0; width: auto; height: auto; padding: 0; padding-right: $clearW; border-top: 1px solid $grey-lite; transform: translate3d(0,0,0); transition: transform 0.25s ease;
                 .submit                                     { height: auto; border: 0; border-bottom: 1px solid $grey-lite; border-radius: 0; padding: $btnGap*2;}
-                .clear                                      { @include absolute(0,0,0,auto); background: #fff; opacity: 1; margin: 0; padding: $btnGap*2; width: $clearW;}
+                .clear                                      { @include absolute(0,0,0,auto); background: $white; opacity: 1; margin: 0; padding: $btnGap*2; width: $clearW;}
 
                 &.disabled                                  { transform: translate3d(0,100%,0);}
             }
+
+            .new-list                                       { background: $grey-lite; width: spacing(2.5);}
         }
     }
 }
 
 
-#help-tools                                                 { @include fixed(0,0,auto,auto); z-index: 1; background: #fff; /*border-top: 1px solid $grey-lite;*/ padding: 0; color: $color-1; transition: all $speed ease;
+#help-tools                                                 { @include fixed(0,0,auto,auto); z-index: 1; background: $white; /*border-top: 1px solid $grey-lite;*/ padding: 0; color: $color-1; transition: all $speed ease;
     .btn                                                    { color: $color-1; font-size: $fontSize-bs; border-radius: 0;
         @include media-breakpoint-down(sm)                  { font-size: $fontSize-md;}
 
         &:hover, &:focus, &:active                          { color: $color-1-lite; outline: none; box-shadow: none;}
-        &.active                                            { background: $color-1; color: #fff;}
+        &.active                                            { background: $color-1; color: $white;}
     }
 }
 
 
-#tool-wrap                                                  { opacity: 0; pointer-events: none; background: #fff;
+#tool-wrap                                                  { opacity: 0; pointer-events: none; background: $white;
     .inner                                                  { padding: spacing(1.5) spacing(); min-width: 400px;
         @include media-breakpoint-down(md)                  { padding: spacing(1/2);}
     }
@@ -459,11 +513,11 @@ $lineW : 2px;
             }
 
                            /*     A      *//*   A#/Bb    *//*     B      *//*      C     *//*    C#/Db   *//*     D      *//*    D#/Eb   *//*      E     *//*      F     *//*    F#/Gb   *//*      G     *//*   G#/Ab    */
-            $cellColors : ((#ff6300, #000),(#ffec00, #000),(#99ff00, #000),(#28ff00, #000),(#00ffe8, #000),(#007cff, #000),(#0500ff, #fff),(#4500ea, #fff),(#57009e, #fff),(#55004f, #fff),(#740000, #fff),(#ee0000, #000));
+            $cellColors : ((#ff6300, #000),(#ffec00, #000),(#99ff00, #000),(#28ff00, #000),(#00ffe8, #000),(#007cff, #000),(#0500ff, $white),(#4500ea, $white),(#57009e, $white),(#55004f, $white),(#740000, $white),(#ee0000, #000));
 
             tr
             {
-                &.active:not(:hover) td:not(.active)        { background: $color-1; color: #fff;}
+                &.active:not(:hover) td:not(.active)        { background: $color-1; color: $white;}
 
                 &.subActive:not(:hover) td:not(.active)     { background: $grey-lite;}
                 &.focus                                     { border-top: 2px solid #000; border-bottom: 2px solid #000;}
@@ -491,17 +545,65 @@ $lineW : 2px;
 }
 
 
-#saved-lists                                                { @include fixed(auto,0,0,$savedListHeight); z-index: 1; width: auto; height: $sideNavD; background: #fff; border-top: 1px solid $grey-lite; color: $color-1; overflow: hidden; overflow-y: auto; transform: translate3d(0,100%,0); transition: all $speed ease;
-    .close                                                  { @include absolute($btnGap,$btnGap,auto,auto); z-index: 1; float: none; font-size: 20px; color: $color-1; opacity: 1; cursor: pointer;
+#saved-lists                                                { @include fixed(auto,0,$sideNavM,0); z-index: 1; width: auto; height: $savedListHeight; background: $white; border-top: 1px solid $grey-lite; color: $color-1; overflow: hidden; overflow-y: auto; transform: translate3d(0,100%,0); transition: all $speed ease;
+    @include media-breakpoint-up(md)                        { left: $sideNavD; bottom: 0;}
+
+    .close                                                  { display: none; @include absolute(spacing(1/2),spacing(1/2),auto,auto); z-index: 1; float: none; font-size: 20px; color: $color-1; opacity: 1; cursor: pointer;
         &:hover                                             { color: $color-1-lite;}
         i                                                   { color: inherit;}
     }
 
-    .inner                                                  { position: relative; z-index: 0; padding: $btnGap spacing(); height: 500px;}
+    .inner                                                  { position: relative; z-index: 0; padding: spacing(1/2); text-align: left;}
+
+    .tools                                                  { margin: spacing(1/2) -2px;
+        .btn                                                { margin: 0 2px; border: 1px solid $grey-lite;
+            i                                               { color: $color-1; margin-right: 2px;}
+
+            &.start                                         { }
+            &.save                                          { background: $color-1; border-color: $color-1; color: $white;}
+
+            &:hover                                         {
+                i                                           { color: inherit;}
+            }
+        }
+    }
+
+    .saved-chord-listing                                    { }
+
+    .list-wrap:not(:first-child)                            { margin-top: 4px;}
+
+    table                                                   { width: 100%;
+        tbody td                                            { border: 1px solid $grey-lite; text-align: center; padding: 8px 4px; line-height: 1;}
+    }
+
+    .list-key                                               { background: $color-1; color: $white;}
+
+    .list-progression                                       { text-align: left;
+        .list-note                                          { margin: 0 2px;}
+    }
+
+    .delete                                                 { cursor: pointer; opacity: 1;
+        &:hover                                             { opacity: 0.75;}
+    }
 }
 
+.viewLists
+{
+    #nav-wrap
+    {
+        .new-list .btn                                      { color: $white;
+            &:not(:hover)                                   { background: $color-1;}
 
-.chooseNewList
+            i                                               { transform: rotate(135deg);}
+        }
+    }
+
+    #map-wrap                                               { bottom: $savedListHeight;}
+
+    #saved-lists                                            { transform: translate3d(0,0,0);}
+}
+
+.isBuilding
 {
     .key-wrap
     {
@@ -525,32 +627,19 @@ $lineW : 2px;
         }
 
         .note                                               { cursor: pointer; transform: scale(0.9);
-            &:hover                                         { background: $color-1; border-color: $color-1; transform: scale(1);
-                &, .root                                    { color: #fff;}
+            &:hover                                         { transform: scale(1);}
+
+            &.active                                        { background: $color-1; border-color: $color-1; transform: scale(1);
+                &, .root                                    { color: $white;}
             }
         }
     }
 
     #nav-wrap
     {
-        .new-list .btn                                      { color: #fff;
-            &:not(:hover)                                   { background: $color-1;}
-
-            i                                               { transform: rotate(135deg);}
-        }
+        .optn, .btn-wrap, .clear                            { opacity: 0.5; cursor: default;}
     }
-
-    #map-wrap                                               { bottom: $savedListHeight;}
-
-    #saved-lists                                            { transform: translate3d(0,0,0);}
 }
-
-
-
-
-
-
-
 
 
 .isDev

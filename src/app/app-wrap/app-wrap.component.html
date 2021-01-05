@@ -1,33 +1,166 @@
-<div id="app-wrap" [class.showTable]="showTable" [class.chooseNewList]="this.global.isBuilding">
+<div id="app-wrap" [class.showTable]="showTable" [class.viewLists]="this.global.viewLists" [class.isBuilding]="this.global.isBuilding">
 
 	<div id="map-wrap" class="window va-m">
 		<span class="fill"></span>
 		<div>
 			<div class="inner">
-				<heading></heading>
+				<div class="h1" [innerHTML]="this.formatHeading(this.getKey)"></div>
 
+				<div id="{{this.getKey['scale']}}-wrap" class="key-wrap">
+					<div class="{{this.getKey['scale']}} map">
+
+						<img src="assets/img/{{this.getKey['scale']}}-key-map.jpg" alt="{{(this.getKey['scale'])}} Key Map">
+
+						<div *ngIf="!this.global.isMinor()" class="lines">
+							<div id="major_line_2-3" class="line arr-l-r"><span></span></div>
+							<div id="major_line_2-4" class="line arr-l pos-r"><span></span></div>
+							<div id="major_line_2-5" class="line arr-r"><span></span></div>
+							<div id="major_line_2-7" class="line hook bot">
+								<div class="line-l"><span></span></div>
+								<span></span>
+								<div class="line-r arr"><span></span></div>
+							</div>
+
+							<div id="major_line_3-4" class="line arr-l-r pos-r"><span></span></div>
+							<div id="major_line_3-6" class="line arr-r"><span></span></div>
+
+							<div id="major_line_4-1" class="line arr-l"><span></span></div>
+							<div id="major_line_4-5" class="line hook top">
+								<div class="line-l arr"><span></span></div>
+								<span></span>
+								<div class="line-r"><span></span></div>
+							</div>
+							<div id="major_line_4-7" class="line arr-r"><span></span></div>
+
+							<div id="major_line_5-1" class="line arr-r"><span></span></div>
+							<div id="major_line_5-6" class="line arr-l-r"><span></span></div>
+							<div id="major_line_5-7" class="line arr-l-r"><span></span></div>
+
+							<div id="major_line_6-2" class="line hook bot">
+								<div class="line-l arr"><span></span></div>
+								<span></span>
+								<div class="line-r"><span></span></div>
+							</div>
+							<div id="major_line_6-4" class="line arr-r pos-r"><span></span></div>
+
+							<div id="major_line_7-1" class="line arr-l"><span></span></div>
+						</div>
+
+						<div *ngIf="this.global.isMinor()" class="lines">
+							<div id="minor_line_2-5" class="line bot arr-r"><span></span></div>
+							<div id="minor_line_2-7h" class="line bot arr-l"><span></span></div>
+							<div id="minor_line_3-2" class="line bot arr-r"><span></span></div>
+							<div id="minor_line_3-4" class="line arr-l"><span></span></div>
+							<div id="minor_line_3-6" class="line arr-l"><span></span></div>
+							<div id="minor_line_4-2" class="line arr-r"><span></span></div>
+							<div id="minor_line_4-1" class="line hook top">
+								<div class="line-l"><span></span></div>
+								<span></span>
+								<div class="line-r arr"><span></span></div>
+							</div>
+							<div id="minor_line_4-5" class="line arr-r"><span></span></div>
+							<div id="minor_line_4-7h" class="line arr-r"><span></span></div>
+							<div id="minor_line_5-1" class="line bot arr-l"><span></span></div>
+							<div id="minor_line_5-6" class="line hook bot">
+								<div class="line-l"><div class="line-r arr"><span></span></div><span></span></div>
+								<span></span>
+								<div class="line-r arr"><span></span></div>
+							</div>
+							<div id="minor_line_6-2" class="line arr-r"><span></span></div>
+							<div id="minor_line_6-4" class="line arr-r"><span></span></div>
+							<div id="minor_line_6-7" class="line arr-l arr-r"><span></span></div>
+							<div id="minor_line_7-3" class="line bot arr-l arr-r"><span></span></div>
+							<div id="minor_line_7-5" class="line hook bot">
+								<div class="line-l"><span></span></div>
+								<span></span>
+								<div class="line-r arr"><span></span></div>
+							</div>
+							<div id="minor_line_7h-1" class="line arr-r"><span></span></div>
+						</div>
+					</div>
+
+					<notes></notes>
+
+					<div class="rulers">
+						<div class="ruler h top"></div>
+						<div class="ruler h top" style="top: 14%"></div>
+						<!-- <div class="ruler h top" style="top: 28%"></div> -->
+						<div class="ruler"></div>
+						<div class="ruler" style="right: auto;"></div>
+						<div class="ruler" style="left: -33.3333%;"></div>
+						<div class="ruler" style="left: -66.6667%;"></div>
+						<div class="ruler" style="left: auto; right: 33.3333%;"></div>
+						<div class="ruler" style="left: auto; right: 16.6667%;"></div>
+						<div class="ruler" style="left: auto;"></div>
+
+						<!-- <div class="ruler h" style="bottom: -41.6667%"></div> -->
+						<div class="ruler h" style=""></div>
+						<!-- <div class="ruler h" style="top: -41.6667%"></div> -->
+
+						<div class="ruler h bot" style="bottom: 14%"></div>
+						<div class="ruler h bot"></div>
+					</div>
+				</div>
+
+				<!--
 				<map></map>
 
-				<div id="viewFriendly" class="btn-group" *ngIf="showFriendly">
+				<div id="viewFriendly" class="btn-group" *ngIf="keyHasTechnical(getKey)">
 					<div id="js_technical" class="btn" [class.active]="!this.isFriendly" (click)="this.global.setFriendly( false )">Technical</div>
 					<div id="js_friendly"  class="btn" [class.active]="this.isFriendly"  (click)="this.global.setFriendly( true )">Friendly</div>
 				</div>
-			</div>
-		</div>
-
-		<div id="saved-lists" class="hideProd">
-			<div class="close" (click)="this.global.isBuilding = false">
-				<i class="fa fa-times-circle" aria-hidden="true"></i>
-			</div>
-
-			<div class="window">
-				<div class="inner">
-					SAVED LISTS
-				</div>
+				-->
 			</div>
 		</div>
 	</div>
 
+	<div id="saved-lists" class="hideProd">
+		<div class="window">
+			<div class="inner">
+				<div class="h5"><b>SAVED LISTS</b></div>
+				<hr>
+				<div class="tools">
+					<button class="btn start" *ngIf="!this.global.isBuilding" (click)="this.global.beginList()"><i class="fa fa-plus" aria-hidden="true"></i> Start New List</button>
+					<button class="btn cancel" *ngIf="this.global.isBuilding" (click)="this.global.cancelList()">Cancel</button>
+					<button class="btn save" *ngIf="this.global.isBuilding && getLists[0].list.length" (click)="this.global.saveList()">Save</button>
+				</div>
+				<div class="saved-chord-listing" *ngIf="getLists.length">
+					<div class="list-wrap" *ngFor="let list of getLists; index as i">
+					    <table>
+					    <tbody>
+					        <tr>
+					            <td width="45">
+					                <span class="delete" (click)="this.global.deleteList(i)" *ngIf="!(this.global.isBuilding && i==0)">
+					                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+					                </span>
+					            </td>
+					            <td width="120" class="list-key">
+									<span [innerHTML]="this.global.noteStringToHtml( list.key.note )"></span>
+									{{list.key.scale}}
+								</td>
+					            <td class="list-progression">
+					                <span class="list-note" *ngFor="let note of list.list">
+										<span class="technical" *ngIf="this.global.showTechnical(note)" [innerHTML]="this.global.noteStringToHtml( note.technical )"></span>
+										<span class="friendly" *ngIf="this.global.showFriendly(note)" [innerHTML]="this.global.noteStringToHtml( note.friendly )"></span>
+										<span class="chord-type {{type.class}}" *ngIf="note.extension as type" [innerHTML]="type.html"></span>
+					                </span>
+					            </td>
+					        </tr>
+					    </tbody>
+					    </table>
+					</div>
+				</div>
+				<div *ngIf="!getLists.length">
+					<p>No saved lists</p>
+				</div>
+			</div>
+		</div>
+		<div class="close" (click)="this.global.viewLists = false">
+			<i class="fa fa-times-circle" aria-hidden="true"></i>
+		</div>
+	</div>
+
+	<navigation></navigation>
 
 	<div id="tool-wrap" class="window va-m">
 		<span class="fill"></span>
@@ -66,10 +199,9 @@
 		</div>
 	</div>
 
-	<navigation></navigation>
-
 	<div id="help-tools">
 		<a href="{{this.getInfoUrl()}}" data-fancybox class="btn"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
 		<button class="btn" (click)="this.showTable = !this.showTable" [class.active]="showTable"><i class="fa fa-table" aria-hidden="true"></i></button>
 	</div>
+
 </div>

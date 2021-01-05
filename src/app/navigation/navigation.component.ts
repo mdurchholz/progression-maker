@@ -9,8 +9,12 @@ import { GlobalService } from '../global.service';
 
 export class NavigationComponent implements OnInit {
 
+  getKey:object;
   newKey:object;
   hasSemi:boolean;
+
+  isFriendly:boolean;
+
   showBtn:boolean;
 
   constructor( public global:GlobalService ) { }
@@ -18,15 +22,25 @@ export class NavigationComponent implements OnInit {
   ngOnInit() {
     this.global.appKey.subscribe(
       gKey => (
+        this.getKey = gKey,
         this.newKey = this.setNewKey( gKey ),
         this.hasSemi = this.global.getNoteSemi( gKey['note'] ) !=='' ? true : false
       )
     );
 
+    this.global.isFriendly.subscribe( value => this.isFriendly = value );
+
     this.showBtn = false;
   }
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public buttonClick( type:string, value:string = '' ) {
+
+    if( this.global.isBuilding ) return;
+
     switch (type) {
       case 'note':
         this.newKey['base'] = value;
@@ -50,7 +64,7 @@ export class NavigationComponent implements OnInit {
         break;
 
       case 'clear':
-        this.newKey = this.setNewKey( this.global.getKey() );
+        this.clearKeyChange();
         break;
 
       default:
@@ -62,16 +76,71 @@ export class NavigationComponent implements OnInit {
 
     this.showBtn = ( object_1['note'] != object_2['note'] || object_1['scale'] != object_2['scale'] );
   }
+  /////////////////////////////////////////////////////////
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public setNewKey( key:object ) {
     return { base:this.global.getNoteBase(key['note']), semi:this.global.getNoteSemi(key['note']), scale:key['scale'] };
   }
+  /////////////////////////////////////////////////////////
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public newKeyToObject() {
     return {
       note  : this.global.checkEnharmonic(this.newKey['base']+this.newKey['semi']),
       scale : this.newKey['scale']
     };
   }
+  /////////////////////////////////////////////////////////
+
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
+  public clearKeyChange() {
+      this.newKey = this.setNewKey( this.global.getKey() );
+  }
+
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
+  public newListToggle() {
+    this.global.viewLists = !this.global.viewLists;
+
+    if( this.global.viewLists )
+    {
+      // console.log('start new list');
+    }
+    else
+    {
+      // console.log('end new list');
+
+      if( this.global.isBuilding ) this.global.cancelList();
+    }
+  }
+  /////////////////////////////////////////////////////////
+
+
+  /////////////////////////////////////////////////////////
+  // Check if current key contains any technical notes
+  /////////////////////////////////////////////////////////
+  private keyHasTechnical( key:object ) {
+    let getNotes = this.global.getScaleNotes(key),
+        hasTech  = false;
+
+    for(let note=0; note<getNotes.length; note++) {
+      if( getNotes[note]['technical'] && !hasTech ) hasTech = true;
+    }
+
+    return hasTech;
+  }
+  /////////////////////////////////////////////////////////
 
 }

@@ -1,50 +1,52 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
+// import { CookieService } from 'ngx-cookie-service';
 
 @Injectable( )
 
 export class GlobalService {
 
-  constructor( private cookieService:CookieService ) { }
+  // constructor( private cookieService:CookieService ) { }
+  // this.cookieService.set(KEY,VALUE);
+  // this.cookieService.get(KEY);
 
   /////////////////////////////////////////////////////////
-  // Set Site Cookies
+  // Set Site Storage
   /////////////////////////////////////////////////////////
-  private setCookie( key:string, value:any ) {
-    var getCookie = this.checkCookie() ? this.checkCookie() : {};
+  private setStorage( key:string, value:any ) {
+    var getStorage = this.checkStorage() ? this.checkStorage() : {};
 
-    getCookie[key] = value;
+    getStorage[key] = value;
 
-    this.cookieService.set( '_pm', JSON.stringify( getCookie ) );
+    localStorage.setItem('_pm', JSON.stringify( getStorage ) );
   }
   /////////////////////////////////////////////////////////
-  // If key, check for cookie key. Else get site cookies
+  // If key, check for cookie/storage key. Else get site cookies/storage
   /////////////////////////////////////////////////////////
-  private getCookie( key:string = '' ) {
-    var getCookie = this.checkCookie();
+  private getStorage( key:string = '' ) {
+    var getStorage = this.checkStorage();
 
     if( key.length ) {
-      return (typeof getCookie !== 'undefined') ? getCookie[key] : undefined;
+      return (typeof getStorage !== 'undefined') ? getStorage[key] : undefined;
     } else {
-      return getCookie;
+      return getStorage;
     }
   }
   /////////////////////////////////////////////////////////
-  // Check is cookie object exists
+  // Check is cookie/storage object exists
   /////////////////////////////////////////////////////////
-  private checkCookie() {
-    var getCookie = this.cookieService.get('_pm');
+  private checkStorage() {
+    var getStorage = localStorage.getItem('_pm')
 
-    return getCookie ? JSON.parse(getCookie) : undefined;
+    return getStorage ? JSON.parse(getStorage) : undefined;
   }
   /////////////////////////////////////////////////////////
-  // Check to see is a cookie key exists
+  // Check to see is a cookie/storage key exists
   /////////////////////////////////////////////////////////
-  private checkPastCookie( key:string, fallback:any ) {
-    var cookieChk = this.getCookie(key);
+  private checkPastStorage( key:string, fallback:any ) {
+    var storageChk = this.getStorage(key);
 
-    return (typeof cookieChk !== 'undefined') ? cookieChk : fallback;
+    return (typeof storageChk !== 'undefined') ? storageChk : fallback;
   }
   /////////////////////////////////////////////////////////
 
@@ -65,24 +67,78 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   // Set to true when you are building a progression
   /////////////////////////////////////////////////////////
+  viewLists = true;
+  /////////////////////////////////////////////////////////
   isBuilding = false;
   /////////////////////////////////////////////////////////
+  newList = null;
+  /////////////////////////////////////////////////////////
+  activeNote = null;
+  /////////////////////////////////////////////////////////
+  public chordLists = this.checkPastStorage('savedChordLists', []);
+  /////////////////////////////////////////////////////////
+  public setChordLists( value:object = null ) {
+    this.setStorage('savedChordLists', value);
+  }
+  /////////////////////////////////////////////////////////
+  public beginList() {
+    this.isBuilding = true;
 
+    let list = this.chordLists;
+
+    list.unshift({
+      key : this.getStaticKey(),
+      list : []
+    });
+
+    this.chordLists = list;
+  }
+  /////////////////////////////////////////////////////////
+  public cancelList() {
+    this.isBuilding = false;
+
+    let list = this.chordLists;
+
+    list.shift();
+
+    this.chordLists = list;
+
+    this.activeNote = null;
+  }
+  /////////////////////////////////////////////////////////
+  public saveList() {
+    this.setChordLists( this.chordLists );
+
+    this.activeNote = null;
+
+    this.isBuilding = false;
+  }
+  /////////////////////////////////////////////////////////
+  public deleteList( position ) {
+    let list = this.chordLists;
+
+    list.splice(position, 1);
+
+    this.setChordLists(list);
+  }
+  /////////////////////////////////////////////////////////
 
 
   /////////////////////////////////////////////////////////
   // Set/Get app key
   /////////////////////////////////////////////////////////
-  private keySource = new BehaviorSubject<object>( this.checkPastCookie('musicKey', {note:'C',scale:'major'}) );
+  public getStaticKey() { return this.checkPastStorage('musicKey', {note:'C',scale:'major'}); }
+  /////////////////////////////////////////////////////////
+  private keySource = new BehaviorSubject<object>( this.getStaticKey() );
   /////////////////////////////////////////////////////////
   public appKey = this.keySource.asObservable();
   /////////////////////////////////////////////////////////
   public getKey( object:string = null ) { var key = this.appKey.source['_value']; return object ? key[object] : key; }
   /////////////////////////////////////////////////////////
   public setKey( newKey:object ) {
-      this.keySource.next( Object.assign(this.keySource.value, newKey) );
+    this.keySource.next( Object.assign(this.keySource.value, newKey) );
 
-      this.setCookie('musicKey', this.getKey());
+    this.appKey.subscribe(gKey=>( this.setStorage('musicKey', gKey) ));
   }
   /////////////////////////////////////////////////////////
 
@@ -90,15 +146,24 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   // Set friendly status
   /////////////////////////////////////////////////////////
-  private friendly = new BehaviorSubject<boolean>( this.checkPastCookie('isFriendly', true) );
+  private friendly = new BehaviorSubject<boolean>( this.checkPastStorage('isFriendly', true) );
   /////////////////////////////////////////////////////////
   public isFriendly = this.friendly.asObservable();
   /////////////////////////////////////////////////////////
   public setFriendly( isFriendly:boolean ) {
-      this.friendly.next( isFriendly );
-
-      this.setCookie('isFriendly', isFriendly);
+    this.friendly.next( isFriendly );
+    this.setStorage('isFriendly', isFriendly);
   }
+  /////////////////////////////////////////////////////////
+  private getFriendly() { return this.isFriendly.source['_value'];  }
+  /////////////////////////////////////////////////////////
+  // If technical exists, hide if not friendly mode, otherwise always show
+  /////////////////////////////////////////////////////////
+  public showFriendly( note ) { return note['technical'] ? this.getFriendly() : true; }
+  /////////////////////////////////////////////////////////
+  // If technical exists and is not friendly mode
+  /////////////////////////////////////////////////////////
+  public showTechnical( note ) { return note['technical'] && !this.getFriendly(); }
   /////////////////////////////////////////////////////////
 
 
@@ -113,7 +178,15 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   // Check if key is in minor
   /////////////////////////////////////////////////////////
-  public isMinor( scale:string = null ){ return (scale ? scale : this.getKey('scale')) == 'minor'; }
+  public isMinor( scale:string = null ){
+      var isMinor;
+      this.appKey.subscribe(
+        gKey => (
+          isMinor = (scale ? scale : gKey['scale']) == 'minor'
+        )
+      );
+      return isMinor;
+  }
   /////////////////////////////////////////////////////////
 
 
@@ -237,7 +310,7 @@ export class GlobalService {
       newScale[step] = options;
 
       if( (step == (getSteps.length-1)) && this.isMinor() ) {
-          newScale.push({ technical:options['technical'], friendly:options['friendly'], extension:{class:'dim', html:'&deg;'} });
+        newScale.push({ technical:options['technical'], friendly:options['friendly'], extension:{class:'dim', html:'&deg;'} });
       }
 
       position += getSteps[step];
@@ -247,3 +320,44 @@ export class GlobalService {
   }
   /////////////////////////////////////////////////////////
 }
+
+
+/*
+--MAJOR--
+A  : A  Bm  C#m D  E  F#m G#dim
+A# : A# Cm  Dm  D# F  Gm  Adim
+Bb : Bb Cm  Dm  Eb F  Gm  Adim
+B  : B  C#m D#m E  F# G#m A#dim
+C  : C  Dm  Em  F  G  Am  Bdim
+C# : C# D#m Fm  F# G# A#m Cdim
+Db : Db Ebm Fm  Gb Ab Bbm Cdim
+D  : D  Em  F#m G  A  Bm  C#dim
+D# : D# Fm  Gm  G# A# Cm  Ddim
+Eb : Eb Fm  Gm  Ab Bb Cm  Ddim
+E  : E  F#m G#m A  B  C#m D#dim
+F  : F  Gm  Am  Bb C  Dm  Edim
+F# : F# G#m A#m B  C# D#m Fdim
+Gb : Gb Abm Bbm B  Db Ebm Fdim
+G  : G  Am  Bm  C  D  Em  F#dim
+G# : G# A#m Cm  C# D# Fm  Gdim
+Ab : Ab Bbm Cm  Db Eb Fm  Gdim
+
+--MINOR--
+A  : Am  Bdim  C  Dm  Em  F  G
+A# : A#m Cdim  C# D#m Fm  F# G#
+Bb : Bbm Cdim  Db Ebm Fm  Gb Ab
+B  : Bm  C#dim D  Em  F#m G  A
+C  : Cm  Ddim  Eb Fm  Gm  Ab Bb
+C# : C#m D#dim E  F#m G#m A  B
+Db : Dbm Ebdim E  Gbm Abm A  B
+D  : Dm  Edim  F  Gm  Am  Bb C
+D# : D#m Fdim  F# G#m A#m B  C#
+Eb : Ebm Fdim  Gb Abm Bbm B  Db
+E  : Em  F#dim G  Am  Bm  C  D
+F  : Fm  Gdim  Ab Bbm Cm  Db Eb
+F# : F#m G#dim A  Bm  C#m D  E
+Gb : Gbm Abdim A  Bm  Dbm D  E
+G  : Gm  Adim  Bb Cm  Dm  Eb F
+G# : G#m A#dim B  C#m D#m E  F#
+Ab : Abm Bbdim B  Dbm Ebm E  Gb
+*/

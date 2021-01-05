@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; // Input
 // import { Router, NavigationEnd } from '@angular/router';
 import { GlobalService } from '../global.service';
 
@@ -10,11 +10,15 @@ import { GlobalService } from '../global.service';
 
 export class AppWrapComponent implements OnInit {
 
+  // Inherit value from parent tempalte
+  // @Input() i : number;
+
   getKey:object;
   getKeyPosi:string;
 
   isFriendly:boolean;
-  showFriendly:boolean;
+
+  getLists:object;
 
   showTable:boolean;
   focusCell:string;
@@ -29,13 +33,14 @@ export class AppWrapComponent implements OnInit {
 
     this.global.appKey.subscribe(
       gKey => (
-        this.showFriendly = this.checkFriendly(gKey),
         this.getKey = gKey,
         this.getKeyPosi = this.global.getNoteID( gKey['note'] )
       )
     );
 
     this.global.isFriendly.subscribe( value => this.isFriendly = value );
+
+    this.getLists = this.global.chordLists;
 
     this.showTable = null;
 
@@ -48,17 +53,21 @@ export class AppWrapComponent implements OnInit {
     this.tableCells = this.getTableCells();
   }
 
-  private checkFriendly( key:object ) {
-    let getNotes = this.global.getScaleNotes(key),
-        hasTech  = false;
 
-    for(let note=0; note<getNotes.length; note++) {
-      if( getNotes[note]['technical'] && !hasTech ) hasTech = true;
-    }
+  /////////////////////////////////////////////////////////
+  // Capitalize the first letter of a string
+  /////////////////////////////////////////////////////////
+  private capitalize(str:string) { return str.charAt(0).toUpperCase() + str.slice(1); }
+  /////////////////////////////////////////////////////////
+  // Format heading HTML
+  /////////////////////////////////////////////////////////
+  public formatHeading( getKey ) { return this.global.noteStringToHtml(getKey.note) + ' ' + this.capitalize(getKey.scale) + ' Chord Map'; }
+  /////////////////////////////////////////////////////////
 
-    return hasTech;
-  }
 
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   private getTableCells() {
     let tables = [];
 
@@ -83,14 +92,24 @@ export class AppWrapComponent implements OnInit {
 
     return tables;
   }
+  /////////////////////////////////////////////////////////
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public getInfoUrl() {
     if( this.global.isMinor(this.getKey['scale']) )
       return 'https://www.youtube.com/watch?v=icNB8nIPCYI&list=PLXmi76euGSyx5LrRF0_czqlJZJYOjwqgL&index=7';
     else
       return 'https://www.youtube.com/watch?v=7eptsTUo8kk&list=PLXmi76euGSyx5LrRF0_czqlJZJYOjwqgL&index=11';
   }
+  /////////////////////////////////////////////////////////
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public getNoteCells( key:object ) {
     let notes = this.global.getScaleNotes( key ),
         cells = [];
@@ -105,7 +124,9 @@ export class AppWrapComponent implements OnInit {
 
     return cells;
   }
-
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public noteCellClick( note:number, row:string, cell:number, base:object = null ) {
     let cell_ID = row +'-'+ cell;
 
@@ -116,25 +137,41 @@ export class AppWrapComponent implements OnInit {
 
     this.activeCells = [this.activeCell];
 
-    if( base && this.activeCell ) for(let b in base) if( b ) this.activeCells.push( base[b].root );
+    if( base && this.activeCell )
+        for(let b in base) if( b )
+            this.activeCells.push( base[b].root );
   }
+  /////////////////////////////////////////////////////////
 
-  public isActiveCell( note:any, single:boolean = true ) {
-    return this.activeCells.includes(note);
-  }
 
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public isFocusCell( cell:string ) {
     return this.focusCell == cell;
   }
-
+  /////////////////////////////////////////////////////////
   public isFocusRow( row:string ) {
     return this.focusRow == row;
   }
+  /////////////////////////////////////////////////////////
 
+
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
+  public isActiveCell( note:any, single:boolean = true ) {
+    return this.activeCells.includes(note);
+  }
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public checkActive( note:number, scale:string ) {
     return +this.getKeyPosi==note && this.getKey['scale']==scale;
   }
-
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
   public checkSubActive( note:number, scale:string ) {
     if( this.getKey['scale']!=scale ) {
       let sub = note + (3 * (this.global.isMinor( scale ) ? 1 : -1));
@@ -150,43 +187,6 @@ export class AppWrapComponent implements OnInit {
 
     return false;
   }
-  /*
-  --MAJOR--
-  A  : A  Bm  C#m D  E  F#m G#dim
-  A# : A# Cm  Dm  D# F  Gm  Adim
-  Bb : Bb Cm  Dm  Eb F  Gm  Adim
-  B  : B  C#m D#m E  F# G#m A#dim
-  C  : C  Dm  Em  F  G  Am  Bdim
-  C# : C# D#m Fm  F# G# A#m Cdim
-  Db : Db Ebm Fm  Gb Ab Bbm Cdim
-  D  : D  Em  F#m G  A  Bm  C#dim
-  D# : D# Fm  Gm  G# A# Cm  Ddim
-  Eb : Eb Fm  Gm  Ab Bb Cm  Ddim
-  E  : E  F#m G#m A  B  C#m D#dim
-  F  : F  Gm  Am  Bb C  Dm  Edim
-  F# : F# G#m A#m B  C# D#m Fdim
-  Gb : Gb Abm Bbm B  Db Ebm Fdim
-  G  : G  Am  Bm  C  D  Em  F#dim
-  G# : G# A#m Cm  C# D# Fm  Gdim
-  Ab : Ab Bbm Cm  Db Eb Fm  Gdim
+  /////////////////////////////////////////////////////////
 
-  --MINOR--
-  A  : Am  Bdim  C  Dm  Em  F  G
-  A# : A#m Cdim  C# D#m Fm  F# G#
-  Bb : Bbm Cdim  Db Ebm Fm  Gb Ab
-  B  : Bm  C#dim D  Em  F#m G  A
-  C  : Cm  Ddim  Eb Fm  Gm  Ab Bb
-  C# : C#m D#dim E  F#m G#m A  B
-  Db : Dbm Ebdim E  Gbm Abm A  B
-  D  : Dm  Edim  F  Gm  Am  Bb C
-  D# : D#m Fdim  F# G#m A#m B  C#
-  Eb : Ebm Fdim  Gb Abm Bbm B  Db
-  E  : Em  F#dim G  Am  Bm  C  D
-  F  : Fm  Gdim  Ab Bbm Cm  Db Eb
-  F# : F#m G#dim A  Bm  C#m D  E
-  Gb : Gbm Abdim A  Bm  Dbm D  E
-  G  : Gm  Adim  Bb Cm  Dm  Eb F
-  G# : G#m A#dim B  C#m D#m E  F#
-  Ab : Abm Bbdim B  Dbm Ebm E  Gb
-  */
 }
