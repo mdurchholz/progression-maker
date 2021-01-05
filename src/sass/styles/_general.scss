@@ -52,3 +52,5 @@ blockquote *                                                { font-size: 100%;}
 dl                                                          { }
 dt                                                          { margin-top: $mobileSpacing;}
 dd                                                          { }
+
+table                                                       { backface-visibility: visible;}
