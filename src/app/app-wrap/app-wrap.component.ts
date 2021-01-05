@@ -30,7 +30,6 @@ export class AppWrapComponent implements OnInit {
   constructor( public global:GlobalService ) { }
 
   ngOnInit() {
-    console.log( this.global.appKey );
 
     this.global.appKey.subscribe(
       gKey => (
@@ -41,7 +40,7 @@ export class AppWrapComponent implements OnInit {
 
     this.global.isFriendly.subscribe( value => this.isFriendly = value );
 
-    this.global.savedChordLists.subscribe( value => this.getLists = value );
+    this.getLists = this.global.chordLists;
 
     this.showTable = null;
 
@@ -138,7 +137,9 @@ export class AppWrapComponent implements OnInit {
 
     this.activeCells = [this.activeCell];
 
-    if( base && this.activeCell ) for(let b in base) if( b ) this.activeCells.push( base[b].root );
+    if( base && this.activeCell )
+        for(let b in base) if( b )
+            this.activeCells.push( base[b].root );
   }
   /////////////////////////////////////////////////////////
 

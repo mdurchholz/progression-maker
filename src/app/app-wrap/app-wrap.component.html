@@ -45,38 +45,38 @@
 
 							<div id="major_line_7-1" class="line arr-l"><span></span></div>
 						</div>
-					</div>
 
-					<div *ngIf="this.global.isMinor()" class="lines">
-						<div id="minor_line_2-5" class="line bot arr-r"><span></span></div>
-						<div id="minor_line_2-7h" class="line bot arr-l"><span></span></div>
-						<div id="minor_line_3-2" class="line bot arr-r"><span></span></div>
-						<div id="minor_line_3-4" class="line arr-l"><span></span></div>
-						<div id="minor_line_3-6" class="line arr-l"><span></span></div>
-						<div id="minor_line_4-2" class="line arr-r"><span></span></div>
-						<div id="minor_line_4-1" class="line hook top">
-							<div class="line-l"><span></span></div>
-							<span></span>
-							<div class="line-r arr"><span></span></div>
+						<div *ngIf="this.global.isMinor()" class="lines">
+							<div id="minor_line_2-5" class="line bot arr-r"><span></span></div>
+							<div id="minor_line_2-7h" class="line bot arr-l"><span></span></div>
+							<div id="minor_line_3-2" class="line bot arr-r"><span></span></div>
+							<div id="minor_line_3-4" class="line arr-l"><span></span></div>
+							<div id="minor_line_3-6" class="line arr-l"><span></span></div>
+							<div id="minor_line_4-2" class="line arr-r"><span></span></div>
+							<div id="minor_line_4-1" class="line hook top">
+								<div class="line-l"><span></span></div>
+								<span></span>
+								<div class="line-r arr"><span></span></div>
+							</div>
+							<div id="minor_line_4-5" class="line arr-r"><span></span></div>
+							<div id="minor_line_4-7h" class="line arr-r"><span></span></div>
+							<div id="minor_line_5-1" class="line bot arr-l"><span></span></div>
+							<div id="minor_line_5-6" class="line hook bot">
+								<div class="line-l"><div class="line-r arr"><span></span></div><span></span></div>
+								<span></span>
+								<div class="line-r arr"><span></span></div>
+							</div>
+							<div id="minor_line_6-2" class="line arr-r"><span></span></div>
+							<div id="minor_line_6-4" class="line arr-r"><span></span></div>
+							<div id="minor_line_6-7" class="line arr-l arr-r"><span></span></div>
+							<div id="minor_line_7-3" class="line bot arr-l arr-r"><span></span></div>
+							<div id="minor_line_7-5" class="line hook bot">
+								<div class="line-l"><span></span></div>
+								<span></span>
+								<div class="line-r arr"><span></span></div>
+							</div>
+							<div id="minor_line_7h-1" class="line arr-r"><span></span></div>
 						</div>
-						<div id="minor_line_4-5" class="line arr-r"><span></span></div>
-						<div id="minor_line_4-7h" class="line arr-r"><span></span></div>
-						<div id="minor_line_5-1" class="line bot arr-l"><span></span></div>
-						<div id="minor_line_5-6" class="line hook bot">
-							<div class="line-l"><div class="line-r arr"><span></span></div><span></span></div>
-							<span></span>
-							<div class="line-r arr"><span></span></div>
-						</div>
-						<div id="minor_line_6-2" class="line arr-r"><span></span></div>
-						<div id="minor_line_6-4" class="line arr-r"><span></span></div>
-						<div id="minor_line_6-7" class="line arr-l arr-r"><span></span></div>
-						<div id="minor_line_7-3" class="line bot arr-l arr-r"><span></span></div>
-						<div id="minor_line_7-5" class="line hook bot">
-							<div class="line-l"><span></span></div>
-							<span></span>
-							<div class="line-r arr"><span></span></div>
-						</div>
-						<div id="minor_line_7h-1" class="line arr-r"><span></span></div>
 					</div>
 
 					<notes></notes>
@@ -134,7 +134,10 @@
 					                    <i class="fa fa-times-circle" aria-hidden="true"></i>
 					                </span>
 					            </td>
-					            <td width="120" class="list-key"><span class="test">{{list.key.note}} {{list.key.scale}}</span></td>
+					            <td width="120" class="list-key">
+									<span [innerHTML]="this.global.noteStringToHtml( list.key.note )"></span>
+									{{list.key.scale}}
+								</td>
 					            <td class="list-progression">
 					                <span class="list-note" *ngFor="let note of list.list">
 										<span class="technical" *ngIf="this.global.showTechnical(note)" [innerHTML]="this.global.noteStringToHtml( note.technical )"></span>

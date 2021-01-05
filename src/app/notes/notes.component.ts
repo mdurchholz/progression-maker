@@ -44,11 +44,11 @@ export class NotesComponent implements OnInit {
 
     note.position = position + 1;
 
-    let list = this.global.getChordLists();
+    let list = this.global.chordLists;
 
     list[0].list.push(note);
 
-    this.global.chordLists.next( list );
+    this.global.chordLists = list;
   }
   /////////////////////////////////////////////////////////
 

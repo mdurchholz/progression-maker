@@ -1,50 +1,52 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
+// import { CookieService } from 'ngx-cookie-service';
 
 @Injectable( )
 
 export class GlobalService {
 
-  constructor( private cookieService:CookieService ) { }
+  // constructor( private cookieService:CookieService ) { }
+  // this.cookieService.set(KEY,VALUE);
+  // this.cookieService.get(KEY);
 
   /////////////////////////////////////////////////////////
-  // Set Site Cookies
+  // Set Site Storage
   /////////////////////////////////////////////////////////
-  private setCookie( key:string, value:any ) {
-    var getCookie = this.checkCookie() ? this.checkCookie() : {};
+  private setStorage( key:string, value:any ) {
+    var getStorage = this.checkStorage() ? this.checkStorage() : {};
 
-    getCookie[key] = value;
+    getStorage[key] = value;
 
-    this.cookieService.set( '_pm', JSON.stringify( getCookie ) );
+    localStorage.setItem('_pm', JSON.stringify( getStorage ) );
   }
   /////////////////////////////////////////////////////////
-  // If key, check for cookie key. Else get site cookies
+  // If key, check for cookie/storage key. Else get site cookies/storage
   /////////////////////////////////////////////////////////
-  private getCookie( key:string = '' ) {
-    var getCookie = this.checkCookie();
+  private getStorage( key:string = '' ) {
+    var getStorage = this.checkStorage();
 
     if( key.length ) {
-      return (typeof getCookie !== 'undefined') ? getCookie[key] : undefined;
+      return (typeof getStorage !== 'undefined') ? getStorage[key] : undefined;
     } else {
-      return getCookie;
+      return getStorage;
     }
   }
   /////////////////////////////////////////////////////////
-  // Check is cookie object exists
+  // Check is cookie/storage object exists
   /////////////////////////////////////////////////////////
-  private checkCookie() {
-    var getCookie = this.cookieService.get('_pm');
+  private checkStorage() {
+    var getStorage = localStorage.getItem('_pm')
 
-    return getCookie ? JSON.parse(getCookie) : undefined;
+    return getStorage ? JSON.parse(getStorage) : undefined;
   }
   /////////////////////////////////////////////////////////
-  // Check to see is a cookie key exists
+  // Check to see is a cookie/storage key exists
   /////////////////////////////////////////////////////////
-  private checkPastCookie( key:string, fallback:any ) {
-    var cookieChk = this.getCookie(key);
+  private checkPastStorage( key:string, fallback:any ) {
+    var storageChk = this.getStorage(key);
 
-    return (typeof cookieChk !== 'undefined') ? cookieChk : fallback;
+    return (typeof storageChk !== 'undefined') ? storageChk : fallback;
   }
   /////////////////////////////////////////////////////////
 
@@ -73,46 +75,39 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   activeNote = null;
   /////////////////////////////////////////////////////////
-  public chordLists = new BehaviorSubject<object>( this.checkPastCookie('savedChordLists', []) );
-  /////////////////////////////////////////////////////////
-  public savedChordLists = this.chordLists.asObservable();
-  /////////////////////////////////////////////////////////
-  public getChordLists() { return this.savedChordLists.source['_value']; }
+  public chordLists = this.checkPastStorage('savedChordLists', []);
   /////////////////////////////////////////////////////////
   public setChordLists( value:object = null ) {
-    this.chordLists.next( value );
-    this.setCookie('savedChordLists', value);
+    this.setStorage('savedChordLists', value);
   }
   /////////////////////////////////////////////////////////
   public beginList() {
     this.isBuilding = true;
 
-    let list = this.getChordLists();
+    let list = this.chordLists;
 
     list.unshift({
-      key : this.getKey(),
+      key : this.getStaticKey(),
       list : []
     });
 
-    this.chordLists.next( list );
+    this.chordLists = list;
   }
   /////////////////////////////////////////////////////////
   public cancelList() {
     this.isBuilding = false;
 
-    let list = this.getChordLists();
+    let list = this.chordLists;
 
     list.shift();
 
-    this.chordLists.next( list );
+    this.chordLists = list;
 
     this.activeNote = null;
   }
   /////////////////////////////////////////////////////////
   public saveList() {
-    let list = this.getChordLists();
-
-    this.setChordLists( list );
+    this.setChordLists( this.chordLists );
 
     this.activeNote = null;
 
@@ -120,7 +115,7 @@ export class GlobalService {
   }
   /////////////////////////////////////////////////////////
   public deleteList( position ) {
-    let list = this.getChordLists();
+    let list = this.chordLists;
 
     list.splice(position, 1);
 
@@ -132,7 +127,9 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   // Set/Get app key
   /////////////////////////////////////////////////////////
-  private keySource = new BehaviorSubject<object>( this.checkPastCookie('musicKey', {note:'C',scale:'major'}) );
+  public getStaticKey() { return this.checkPastStorage('musicKey', {note:'C',scale:'major'}); }
+  /////////////////////////////////////////////////////////
+  private keySource = new BehaviorSubject<object>( this.getStaticKey() );
   /////////////////////////////////////////////////////////
   public appKey = this.keySource.asObservable();
   /////////////////////////////////////////////////////////
@@ -141,7 +138,7 @@ export class GlobalService {
   public setKey( newKey:object ) {
     this.keySource.next( Object.assign(this.keySource.value, newKey) );
 
-    this.appKey.subscribe(gKey=>( this.setCookie('musicKey', gKey) ));
+    this.appKey.subscribe(gKey=>( this.setStorage('musicKey', gKey) ));
   }
   /////////////////////////////////////////////////////////
 
@@ -149,13 +146,13 @@ export class GlobalService {
   /////////////////////////////////////////////////////////
   // Set friendly status
   /////////////////////////////////////////////////////////
-  private friendly = new BehaviorSubject<boolean>( this.checkPastCookie('isFriendly', true) );
+  private friendly = new BehaviorSubject<boolean>( this.checkPastStorage('isFriendly', true) );
   /////////////////////////////////////////////////////////
   public isFriendly = this.friendly.asObservable();
   /////////////////////////////////////////////////////////
   public setFriendly( isFriendly:boolean ) {
     this.friendly.next( isFriendly );
-    this.setCookie('isFriendly', isFriendly);
+    this.setStorage('isFriendly', isFriendly);
   }
   /////////////////////////////////////////////////////////
   private getFriendly() { return this.isFriendly.source['_value'];  }
