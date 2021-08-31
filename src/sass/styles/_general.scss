@@ -53,4 +53,7 @@ dl                                                          { }
 dt                                                          { margin-top: $mobileSpacing;}
 dd                                                          { }
 
-table                                                       { backface-visibility: visible;}
+table
+{
+    &, *                                                    { backface-visibility: visible;}
+}
