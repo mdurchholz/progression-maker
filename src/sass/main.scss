@@ -156,7 +156,7 @@ $lineW : 2px;
 .lines                                                      { @include absolute(0,0,0,0); margin: auto; pointer-events: none;
     [class*="line"]                                         { @include absolute(0,auto,auto,0); z-index: 0; height: $lineW; background: #333; color: #333; transform-origin: top left; transform: rotate(0deg); transition: all $speed ease; backface-visibility: hidden;
 
-        &.pos-r                                             { left: auto; right: 0; transform-origin: top right;}
+        &.flip                                              { left: auto; right: 0; transform-origin: top right;}
 
         span                                                { @include absolute(0,0,0,0); height: 30px; width: auto; margin: auto; display: block;}
 
@@ -521,6 +521,7 @@ $lineW : 2px;
 
                 &.subActive:not(:hover) td:not(.active)     { background: $grey-lite;}
                 &.focus                                     { border-top: 2px solid #000; border-bottom: 2px solid #000;}
+                &.hide                                      { display: none;}
 
 
                 @for $i from 1 through length($cellColors)

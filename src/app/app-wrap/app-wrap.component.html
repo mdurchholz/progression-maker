@@ -11,71 +11,71 @@
 
 						<img src="assets/img/{{this.getKey['scale']}}-key-map.jpg" alt="{{(this.getKey['scale'])}} Key Map">
 
-						<div *ngIf="!this.global.isMinor()" class="lines">
-							<div id="major_line_2-3" class="line arr-l-r"><span></span></div>
-							<div id="major_line_2-4" class="line arr-l pos-r"><span></span></div>
-							<div id="major_line_2-5" class="line arr-r"><span></span></div>
-							<div id="major_line_2-7" class="line hook bot">
+						<div *ngIf="!this.global.isMinor()" class="lines major">
+							<div id="major_line_2-3" data-path="2-3" class="line arr-l-r"><span></span></div>
+							<div id="major_line_2-5" data-path="2-5" class="line arr-r"><span></span></div>
+							<div id="major_line_2-7" data-path="2-7" class="line hook bot">
 								<div class="line-l"><span></span></div>
 								<span></span>
 								<div class="line-r arr"><span></span></div>
 							</div>
 
-							<div id="major_line_3-4" class="line arr-l-r pos-r"><span></span></div>
-							<div id="major_line_3-6" class="line arr-r"><span></span></div>
+							<div id="major_line_3-4" data-path="3-4" class="line arr-l-r flip"><span></span></div>
+							<div id="major_line_3-6" data-path="3-6" class="line arr-r"><span></span></div>
 
-							<div id="major_line_4-1" class="line arr-l"><span></span></div>
-							<div id="major_line_4-5" class="line hook top">
+							<div id="major_line_4-1" data-path="4-1" class="line arr-l"><span></span></div>
+							<div id="major_line_4-2" data-path="2-4" class="line arr-l flip"><span></span></div>
+							<div id="major_line_4-5" data-path="4-5" class="line hook top">
 								<div class="line-l arr"><span></span></div>
 								<span></span>
 								<div class="line-r"><span></span></div>
 							</div>
-							<div id="major_line_4-7" class="line arr-r"><span></span></div>
+							<div id="major_line_4-7" data-path="4-7" class="line arr-r"><span></span></div>
 
-							<div id="major_line_5-1" class="line arr-r"><span></span></div>
-							<div id="major_line_5-6" class="line arr-l-r"><span></span></div>
-							<div id="major_line_5-7" class="line arr-l-r"><span></span></div>
+							<div id="major_line_5-1" data-path="5-1" class="line arr-r"><span></span></div>
+							<div id="major_line_5-6" data-path="5-6" class="line arr-l-r"><span></span></div>
+							<div id="major_line_5-7" data-path="5-7" class="line arr-l-r"><span></span></div>
 
-							<div id="major_line_6-2" class="line hook bot">
+							<div id="major_line_6-2" data-path="6-2" class="line hook bot">
 								<div class="line-l arr"><span></span></div>
 								<span></span>
 								<div class="line-r"><span></span></div>
 							</div>
-							<div id="major_line_6-4" class="line arr-r pos-r"><span></span></div>
+							<div id="major_line_6-4" data-path="6-4" class="line arr-r flip"><span></span></div>
 
-							<div id="major_line_7-1" class="line arr-l"><span></span></div>
+							<div id="major_line_7-1" data-path="7-1" class="line arr-l"><span></span></div>
 						</div>
 
-						<div *ngIf="this.global.isMinor()" class="lines">
-							<div id="minor_line_2-5" class="line bot arr-r"><span></span></div>
-							<div id="minor_line_2-7h" class="line bot arr-l"><span></span></div>
-							<div id="minor_line_3-2" class="line bot arr-r"><span></span></div>
-							<div id="minor_line_3-4" class="line arr-l"><span></span></div>
-							<div id="minor_line_3-6" class="line arr-l"><span></span></div>
-							<div id="minor_line_4-2" class="line arr-r"><span></span></div>
-							<div id="minor_line_4-1" class="line hook top">
+						<div *ngIf="this.global.isMinor()" class="lines minor">
+							<div id="minor_line_2-5" data-path="2-5" class="line bot arr-r"><span></span></div>
+							<div id="minor_line_2-7h" data-path="2-7h" class="line bot arr-l"><span></span></div>
+							<div id="minor_line_3-2" data-path="3-2" class="line bot arr-r"><span></span></div>
+							<div id="minor_line_3-4" data-path="3-4" class="line arr-l"><span></span></div>
+							<div id="minor_line_3-6" data-path="3-6" class="line arr-l"><span></span></div>
+							<div id="minor_line_4-2" data-path="4-2" class="line arr-r"><span></span></div>
+							<div id="minor_line_4-1" data-path="4-1" class="line hook top">
 								<div class="line-l"><span></span></div>
 								<span></span>
 								<div class="line-r arr"><span></span></div>
 							</div>
-							<div id="minor_line_4-5" class="line arr-r"><span></span></div>
-							<div id="minor_line_4-7h" class="line arr-r"><span></span></div>
-							<div id="minor_line_5-1" class="line bot arr-l"><span></span></div>
-							<div id="minor_line_5-6" class="line hook bot">
+							<div id="minor_line_4-5" data-path="4-5" class="line arr-r"><span></span></div>
+							<div id="minor_line_4-7h" data-path="4-7h" class="line arr-r"><span></span></div>
+							<div id="minor_line_5-1" data-path="5-1" class="line bot arr-l"><span></span></div>
+							<div id="minor_line_5-6" data-path="5-6" class="line hook bot">
 								<div class="line-l"><div class="line-r arr"><span></span></div><span></span></div>
 								<span></span>
 								<div class="line-r arr"><span></span></div>
 							</div>
-							<div id="minor_line_6-2" class="line arr-r"><span></span></div>
-							<div id="minor_line_6-4" class="line arr-r"><span></span></div>
-							<div id="minor_line_6-7" class="line arr-l arr-r"><span></span></div>
-							<div id="minor_line_7-3" class="line bot arr-l arr-r"><span></span></div>
-							<div id="minor_line_7-5" class="line hook bot">
+							<div id="minor_line_6-2" data-path="6-2" class="line arr-r"><span></span></div>
+							<div id="minor_line_6-4" data-path="6-4" class="line arr-r"><span></span></div>
+							<div id="minor_line_6-7" data-path="6-7" class="line arr-l-r"><span></span></div>
+							<div id="minor_line_7-3" data-path="7-3" class="line bot arr-l-r"><span></span></div>
+							<div id="minor_line_7-5" data-path="7-5" class="line hook bot">
 								<div class="line-l"><span></span></div>
 								<span></span>
 								<div class="line-r arr"><span></span></div>
 							</div>
-							<div id="minor_line_7h-1" class="line arr-r"><span></span></div>
+							<div id="minor_line_7h-1" data-path="7h-1" class="line arr-r"><span></span></div>
 						</div>
 					</div>
 
@@ -175,7 +175,7 @@
 								<tr class="positions" *ngIf="table.scale=='minor'"><th>i</th><th>ii<sup>&deg;</sup></th><th>III</th><th>iv</th><th>V(v)</th><th>VI</th><th>VII</th></tr>
 							</thead>
 							<tbody>
-								<tr *ngFor="let row of table.notes;let tr=index" [class.active]="checkActive(row[0]['root'],table.scale)" [class.subActive]="checkSubActive(row[0]['root'],table.scale)" [class.focus]="isFocusRow( table.scale+'-'+tr )">
+								<tr *ngFor="let row of table.notes;let tr=index" [class.hide]="!checkSemi(row[0])" [class.active]="checkActive(row[0]['root'],table.scale)" [class.subActive]="checkSubActive(row[0]['root'],table.scale)" [class.focus]="isFocusRow( table.scale+'-'+tr )">
 									<td id="{{ table.scale+'-'+tr+'-'+td }}" *ngFor="let cell of row;let td=index" class="cell base-{{cell.root}}" [class.active]="isActiveCell( cell.root )" [class.focus]="isFocusCell( table.scale+'-'+tr+'-'+td )" (click)="noteCellClick( cell.root, table.scale+'-'+tr, td, (!td?row:null) )">
 										<div class="note va-m">
 											<span class="fill"></span>

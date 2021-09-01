@@ -188,5 +188,43 @@ export class AppWrapComponent implements OnInit {
     return false;
   }
   /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
+  public checkSemi( note:object ) {
+      let currentSemi = this.global.getNoteSemi(this.global.getKey()['note']),
+          chckForSemi = this.global.getNoteSemi(note['note']['friendly']);
+
+      currentSemi = currentSemi.length > 0 ? currentSemi : '#';
+
+      return chckForSemi.length > 0 ? (currentSemi == chckForSemi) : true;
+  }
+  /////////////////////////////////////////////////////////
+  //
+  /////////////////////////////////////////////////////////
+  public testLines( ) {
+    let lines = {
+      major : [
+      /* 1  */ null,
+      /* 2  */ [3,5,7],
+      /* 3  */ [2,4,6],
+      /* 4  */ [2,3,5,7],
+      /* 5  */ [5,6,7],
+      /* 6  */ [2,4,5],
+      /* 7  */ [1,5],
+      /* 8 = 7h */ []
+      ],
+      minor : [
+      /* 1  */ null,
+      /* 2  */ [5,8],
+      /* 3  */ [2,4,6,7],
+      /* 4  */ [2,5,8],
+      /* 5  */ [1,6],
+      /* 6  */ [2,4,5,7],
+      /* 7  */ [3,5,6],
+      /* 8 = 7h */ []
+      ]
+    };
+  }
+  /////////////////////////////////////////////////////////
 
 }
