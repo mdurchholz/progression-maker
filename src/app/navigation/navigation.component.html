@@ -25,7 +25,7 @@
 			<div class="clear" (click)="buttonClick('clear')"><span>Clear</span></div>
 		</div>
 
-		<div id="viewFriendly" class="radios" [class.hasTech]="keyHasTechnical(getKey)">
+		<div id="viewFriendly" class="radios" [class.hasTech]="keyHasTechnical(getKey) || this.global.showTable">
 			<div class="radio" [class.active]="this.isFriendly" (click)="this.global.setFriendly( true )">Friendly</div>
 			<div class="radio" [class.active]="!this.isFriendly" (click)="this.global.setFriendly( false )">Technical</div>
 		</div>

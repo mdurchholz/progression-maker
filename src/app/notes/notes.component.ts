@@ -44,6 +44,8 @@ export class NotesComponent implements OnInit {
 
     note.position = position + 1;
 
+    this.global.setLines( position );
+
     let list = this.global.chordLists;
 
     list[0].list.push(note);

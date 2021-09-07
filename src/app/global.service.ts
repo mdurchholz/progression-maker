@@ -94,24 +94,28 @@ export class GlobalService {
     this.chordLists = list;
   }
   /////////////////////////////////////////////////////////
-  public cancelList() {
-    this.isBuilding = false;
+  private resetBuildVariables() {
+      this.activeNote = null;
 
+      this.isBuilding = false;
+
+      this.newLineList = [];
+  }
+  /////////////////////////////////////////////////////////
+  public cancelList() {
     let list = this.chordLists;
 
     list.shift();
 
     this.chordLists = list;
 
-    this.activeNote = null;
+    this.resetBuildVariables();
   }
   /////////////////////////////////////////////////////////
   public saveList() {
     this.setChordLists( this.chordLists );
 
-    this.activeNote = null;
-
-    this.isBuilding = false;
+    this.resetBuildVariables();
   }
   /////////////////////////////////////////////////////////
   public deleteList( position ) {
@@ -199,6 +203,58 @@ export class GlobalService {
                          // a b c d e f g a
       case 'minor' : return [2,1,2,2,1,2,2]; break;
     }
+  }
+  /////////////////////////////////////////////////////////
+
+
+  /////////////////////////////////////////////////////////
+  // Display scale table panel
+  /////////////////////////////////////////////////////////
+  showTable = false;
+  /////////////////////////////////////////////////////////
+
+
+  /////////////////////////////////////////////////////////
+  // Line directions
+  /////////////////////////////////////////////////////////
+  getLines = {
+    major : [
+      /* 1  */ [],
+      /* 2  */ [3,5,7],
+      /* 3  */ [2,4,6],
+      /* 4  */ [1,2,3,5,7],
+      /* 5  */ [1,6,7],
+      /* 6  */ [2,4,5],
+      /* 7  */ [1,5]
+    ],
+    minor : [
+      /* 1  */ [],
+      /* 2  */ [5,8],
+      /* 3  */ [2,4,6,7],
+      /* 4  */ [2,5,8],
+      /* 5  */ [1,6],
+      /* 6  */ [2,4,5,7],
+      /* 7  */ [3,5,6],
+      /* 8 = 7h */ [1]
+    ]
+  };
+  /////////////////////////////////////////////////////////
+  newLineList = [];
+  /////////////////////////////////////////////////////////
+  public setLines( position:number ) {
+    var getLineOpt = this.getLines[this.getKey().scale][position],
+        rootNumber = position+1;
+
+    this.newLineList = [];
+
+    getLineOpt.forEach(path => {
+        this.newLineList.push(rootNumber+'-'+path);
+        this.newLineList.push(path+'-'+rootNumber);
+    });
+
+
+    console.log( this.newLineList );
+    console.log( rootNumber, getLineOpt );
   }
   /////////////////////////////////////////////////////////
 

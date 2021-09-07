@@ -1,4 +1,4 @@
-<div id="app-wrap" [class.showTable]="showTable" [class.viewLists]="this.global.viewLists" [class.isBuilding]="this.global.isBuilding">
+<div id="app-wrap" [class.showTable]="this.global.showTable" [class.viewLists]="this.global.viewLists" [class.isBuilding]="this.global.isBuilding">
 
 	<div id="map-wrap" class="window va-m">
 		<span class="fill"></span>
@@ -8,74 +8,73 @@
 
 				<div id="{{this.getKey['scale']}}-wrap" class="key-wrap">
 					<div class="{{this.getKey['scale']}} map">
-
 						<img src="assets/img/{{this.getKey['scale']}}-key-map.jpg" alt="{{(this.getKey['scale'])}} Key Map">
 
 						<div *ngIf="!this.global.isMinor()" class="lines major">
-							<div id="major_line_2-3" data-path="2-3" class="line arr-l-r"><span></span></div>
-							<div id="major_line_2-5" data-path="2-5" class="line arr-r"><span></span></div>
-							<div id="major_line_2-7" data-path="2-7" class="line hook bot">
+							<div id="major_line_2-3" (click)="lineClick([2,3],true)" [class.active]="this.checkLines('2-3')" class="line arr-l-r"><span></span></div>
+							<div id="major_line_2-5" (click)="lineClick([2,5])" [class.active]="this.checkLines('2-5')" class="line arr-r"><span></span></div>
+							<div id="major_line_2-7" (click)="lineClick([2,7])" [class.active]="this.checkLines('2-7')" class="line hook bot">
 								<div class="line-l"><span></span></div>
 								<span></span>
 								<div class="line-r arr"><span></span></div>
 							</div>
 
-							<div id="major_line_3-4" data-path="3-4" class="line arr-l-r flip"><span></span></div>
-							<div id="major_line_3-6" data-path="3-6" class="line arr-r"><span></span></div>
+							<div id="major_line_3-4" (click)="lineClick([3,4],true)" [class.active]="this.checkLines('3-4')" class="line arr-l-r flip"><span></span></div>
+							<div id="major_line_3-6" (click)="lineClick([3,6])" [class.active]="this.checkLines('3-6')" class="line arr-r"><span></span></div>
 
-							<div id="major_line_4-1" data-path="4-1" class="line arr-l"><span></span></div>
-							<div id="major_line_4-2" data-path="2-4" class="line arr-l flip"><span></span></div>
-							<div id="major_line_4-5" data-path="4-5" class="line hook top">
+							<div id="major_line_4-1" (click)="lineClick([4,1])" [class.active]="this.checkLines('4-1')" class="line arr-l"><span></span></div>
+							<div id="major_line_4-2" (click)="lineClick([2,4])" [class.active]="this.checkLines('2-4')" class="line arr-l flip"><span></span></div>
+							<div id="major_line_4-5" (click)="lineClick([4,5])" [class.active]="this.checkLines('4-5')" class="line hook top">
 								<div class="line-l arr"><span></span></div>
 								<span></span>
 								<div class="line-r"><span></span></div>
 							</div>
-							<div id="major_line_4-7" data-path="4-7" class="line arr-r"><span></span></div>
+							<div id="major_line_4-7" (click)="lineClick([4,7])" [class.active]="this.checkLines('4-7')" class="line arr-r"><span></span></div>
 
-							<div id="major_line_5-1" data-path="5-1" class="line arr-r"><span></span></div>
-							<div id="major_line_5-6" data-path="5-6" class="line arr-l-r"><span></span></div>
-							<div id="major_line_5-7" data-path="5-7" class="line arr-l-r"><span></span></div>
+							<div id="major_line_5-1" (click)="lineClick([5,1])" [class.active]="this.checkLines('5-1')" class="line arr-r"><span></span></div>
+							<div id="major_line_5-6" (click)="lineClick([5,6],true)" [class.active]="this.checkLines('5-6')" class="line arr-l-r"><span></span></div>
+							<div id="major_line_5-7" (click)="lineClick([5,7],true)" [class.active]="this.checkLines('5-7')" class="line arr-l-r"><span></span></div>
 
-							<div id="major_line_6-2" data-path="6-2" class="line hook bot">
+							<div id="major_line_6-2" (click)="lineClick([6,2])" [class.active]="this.checkLines('6-2')" class="line hook bot">
 								<div class="line-l arr"><span></span></div>
 								<span></span>
 								<div class="line-r"><span></span></div>
 							</div>
-							<div id="major_line_6-4" data-path="6-4" class="line arr-r flip"><span></span></div>
+							<div id="major_line_6-4" (click)="lineClick([6,4])" [class.active]="this.checkLines('6-4')" class="line arr-r flip"><span></span></div>
 
-							<div id="major_line_7-1" data-path="7-1" class="line arr-l"><span></span></div>
+							<div id="major_line_7-1" (click)="lineClick([7,1])" [class.active]="this.checkLines('7-1')" class="line arr-l"><span></span></div>
 						</div>
 
 						<div *ngIf="this.global.isMinor()" class="lines minor">
-							<div id="minor_line_2-5" data-path="2-5" class="line bot arr-r"><span></span></div>
-							<div id="minor_line_2-7h" data-path="2-7h" class="line bot arr-l"><span></span></div>
-							<div id="minor_line_3-2" data-path="3-2" class="line bot arr-r"><span></span></div>
-							<div id="minor_line_3-4" data-path="3-4" class="line arr-l"><span></span></div>
-							<div id="minor_line_3-6" data-path="3-6" class="line arr-l"><span></span></div>
-							<div id="minor_line_4-2" data-path="4-2" class="line arr-r"><span></span></div>
-							<div id="minor_line_4-1" data-path="4-1" class="line hook top">
+							<div id="minor_line_2-5" (click)="lineClick([2,5])" [class.active]="this.checkLines('2-5')" class="line bot arr-r"><span></span></div>
+							<div id="minor_line_2-8" (click)="lineClick([2,8])" [class.active]="this.checkLines('2-8')" class="line bot arr-l"><span></span></div>
+							<div id="minor_line_3-2" (click)="lineClick([3,2])" [class.active]="this.checkLines('3-2')" class="line bot arr-r"><span></span></div>
+							<div id="minor_line_3-4" (click)="lineClick([3,4])" [class.active]="this.checkLines('3-4')" class="line arr-l"><span></span></div>
+							<div id="minor_line_3-6" (click)="lineClick([3,6])" [class.active]="this.checkLines('3-6')" class="line arr-l"><span></span></div>
+							<div id="minor_line_4-2" (click)="lineClick([4,2])" [class.active]="this.checkLines('4-2')" class="line arr-r"><span></span></div>
+							<div id="minor_line_4-1" (click)="lineClick([4,1])" [class.active]="this.checkLines('4-1')" class="line hook top">
 								<div class="line-l"><span></span></div>
 								<span></span>
 								<div class="line-r arr"><span></span></div>
 							</div>
-							<div id="minor_line_4-5" data-path="4-5" class="line arr-r"><span></span></div>
-							<div id="minor_line_4-7h" data-path="4-7h" class="line arr-r"><span></span></div>
-							<div id="minor_line_5-1" data-path="5-1" class="line bot arr-l"><span></span></div>
-							<div id="minor_line_5-6" data-path="5-6" class="line hook bot">
+							<div id="minor_line_4-5" (click)="lineClick([4,5])" [class.active]="this.checkLines('4-5')" class="line arr-r"><span></span></div>
+							<div id="minor_line_4-8" (click)="lineClick([4,8])" [class.active]="this.checkLines('4-8')" class="line arr-r"><span></span></div>
+							<div id="minor_line_5-1" (click)="lineClick([5,1])" [class.active]="this.checkLines('5-1')" class="line bot arr-l"><span></span></div>
+							<div id="minor_line_5-6" (click)="lineClick([5,6])" [class.active]="this.checkLines('5-6')" class="line hook bot">
 								<div class="line-l"><div class="line-r arr"><span></span></div><span></span></div>
 								<span></span>
 								<div class="line-r arr"><span></span></div>
 							</div>
-							<div id="minor_line_6-2" data-path="6-2" class="line arr-r"><span></span></div>
-							<div id="minor_line_6-4" data-path="6-4" class="line arr-r"><span></span></div>
-							<div id="minor_line_6-7" data-path="6-7" class="line arr-l-r"><span></span></div>
-							<div id="minor_line_7-3" data-path="7-3" class="line bot arr-l-r"><span></span></div>
-							<div id="minor_line_7-5" data-path="7-5" class="line hook bot">
+							<div id="minor_line_6-2" (click)="lineClick([6,2])" [class.active]="this.checkLines('6-2')" class="line arr-r"><span></span></div>
+							<div id="minor_line_6-4" (click)="lineClick([6,4])" [class.active]="this.checkLines('6-4')" class="line arr-r"><span></span></div>
+							<div id="minor_line_6-7" (click)="lineClick([6,7],true)" [class.active]="this.checkLines('6-7')" class="line arr-l-r"><span></span></div>
+							<div id="minor_line_7-3" (click)="lineClick([7,3],true)" [class.active]="this.checkLines('7-3')" class="line bot arr-l-r"><span></span></div>
+							<div id="minor_line_7-5" (click)="lineClick([7,5])" [class.active]="this.checkLines('7-5')" class="line hook bot">
 								<div class="line-l"><span></span></div>
 								<span></span>
 								<div class="line-r arr"><span></span></div>
 							</div>
-							<div id="minor_line_7h-1" data-path="7h-1" class="line arr-r"><span></span></div>
+							<div id="minor_line_8-1" (click)="lineClick([8,1])" [class.active]="this.checkLines('8-1')" class="line arr-r"><span></span></div>
 						</div>
 					</div>
 
@@ -175,17 +174,15 @@
 								<tr class="positions" *ngIf="table.scale=='minor'"><th>i</th><th>ii<sup>&deg;</sup></th><th>III</th><th>iv</th><th>V(v)</th><th>VI</th><th>VII</th></tr>
 							</thead>
 							<tbody>
-								<tr *ngFor="let row of table.notes;let tr=index" [class.hide]="!checkSemi(row[0])" [class.active]="checkActive(row[0]['root'],table.scale)" [class.subActive]="checkSubActive(row[0]['root'],table.scale)" [class.focus]="isFocusRow( table.scale+'-'+tr )">
-									<td id="{{ table.scale+'-'+tr+'-'+td }}" *ngFor="let cell of row;let td=index" class="cell base-{{cell.root}}" [class.active]="isActiveCell( cell.root )" [class.focus]="isFocusCell( table.scale+'-'+tr+'-'+td )" (click)="noteCellClick( cell.root, table.scale+'-'+tr, td, (!td?row:null) )">
+								<tr *ngFor="let row of table.notes;let tr=index" [class.hide]="!checkSemi(row[0])" [class.active]="checkActive(row[0]['root'],table.scale)" [class.subActive]="checkSubActive(row[0]['root'],table.scale)" [class.focus]="isFocusRow( table.scale+'-'+row[0]['root'] )">
+									<td *ngFor="let cell of row;let td=index" class="cell base-{{cell.root}}" [class.active]="isActiveCell( cell.root )" [class.focus]="isFocusCell( table.scale+'-'+row[0]['root']+'-'+td )" (click)="noteCellClick( cell.root, table.scale+'-'+row[0]['root'], td, (!td?row:null) )">
 										<div class="note va-m">
 											<span class="fill"></span>
 										    <div>
 												<div class="root">
-													<span class="friendly" [innerHTML]="this.global.noteStringToHtml( cell.note.friendly )"></span>
+													<span class="friendly" *ngIf="this.global.showFriendly(cell.note)" [innerHTML]="this.global.noteStringToHtml( cell.note.friendly )"></span>
+													<span class="technical" *ngIf="this.global.showTechnical(cell.note)" [innerHTML]="this.global.noteStringToHtml( cell.note.technical )"></span>
 													<span class="chord-type {{type.class}}" *ngIf="cell.note.extension as type" [innerHTML]="type.html"></span>
-													<!--
-														<span class="technical" *ngIf="this.checkTechnical(note)" [innerHTML]="this.global.noteStringToHtml( note['technical'] )"></span>
-													-->
 												</div>
 											</div>
 										</div>
@@ -201,7 +198,7 @@
 
 	<div id="help-tools">
 		<a href="{{this.getInfoUrl()}}" data-fancybox class="btn"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-		<button class="btn" (click)="this.showTable = !this.showTable" [class.active]="showTable"><i class="fa fa-table" aria-hidden="true"></i></button>
+		<button class="btn" (click)="this.global.showTable = !this.global.showTable" [class.active]="showTable"><i class="fa fa-table" aria-hidden="true"></i></button>
 	</div>
 
 </div>

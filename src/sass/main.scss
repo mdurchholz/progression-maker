@@ -268,7 +268,7 @@ $lineW : 2px;
     #note-7                                                 { bottom: 0; left: -100%;}
     #note-7-harmonic, #note-8                               { top: 0; right: -33.3333%;}
 
-    #minor_line_2-7h                                        { top: 29.5%; left: 66.6667%; width: 20.5%; transform: rotate(90deg);}
+    #minor_line_2-8                                         { top: 29.5%; left: 66.6667%; width: 20.5%; transform: rotate(90deg);}
     #minor_line_2-5                                         { bottom: 14%; left: 74%; width: 18.25%;}
 
     #minor_line_3-2                                         { bottom: 14%; left: 40.75%; width: 18.25%;}
@@ -281,7 +281,7 @@ $lineW : 2px;
     }
     #minor_line_4-2                                         { top: 28.75%; left: 41%; width: 30%; transform: rotate(44deg);}
     #minor_line_4-5                                         { top: 21%; left: 41%; width: 57%; transform: rotate(25.75deg);}
-    #minor_line_4-7h                                        { top: 14%; left: 40.75%; width: 18.25%;}
+    #minor_line_4-8                                         { top: 14%; left: 40.75%; width: 18.25%;}
 
     #minor_line_5-1                                         { top: 29.5%; left: 100%; width: 20.5%; transform: rotate(90deg);}
     #minor_line_5-6                                         { bottom: -10%; left: -12%; width: 109%;
@@ -301,7 +301,7 @@ $lineW : 2px;
         .line-r                                             { width: 7%;}
     }
 
-    #minor_line_7h-1                                        { top: 14%; left: 74%; width: 18.25%;}
+    #minor_line_8-1                                         { top: 14%; left: 74%; width: 18.25%;}
 }
 
 
@@ -617,7 +617,12 @@ $lineW : 2px;
                 &:hover                                     { z-index: 1;
                     &, [class*="line"]                      { background: $color-1; color: $color-1;}
                 }
+
+                &.active                                    { opacity: 1;
+                    &, [class*="line"]                      { background: red; color: red;}
+                }
             }
+
 
             &:hover
             {
