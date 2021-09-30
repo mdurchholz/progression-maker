@@ -571,7 +571,7 @@ $lineW : 2px;
 
     .saved-chord-listing                                    { }
 
-    .list-wrap:not(:first-child)                            { margin-top: 4px;}
+    .list-wrap:not(:first-child)                            { margin-top: 10px;}
 
     table                                                   { width: 100%;
         tbody td                                            { border: 1px solid $grey-lite; text-align: center; padding: 8px 4px; line-height: 1;}
@@ -579,8 +579,11 @@ $lineW : 2px;
 
     .list-key                                               { background: $color-1; color: $white;}
 
-    .list-progression                                       { text-align: left;
-        .list-note                                          { margin: 0 2px;}
+    .list-progression                                       { text-align: left; padding: 0;
+        .list-wrap                                          { display: flex;}
+        .list-note                                          { padding: 10px 0; min-width: 35px; text-align: center; border-right: 1px solid $grey-lite; cursor: pointer;
+            &:hover                                         { background: #eee;}
+        }
     }
 
     .delete                                                 { cursor: pointer; opacity: 1;
